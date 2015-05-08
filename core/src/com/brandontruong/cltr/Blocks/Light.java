@@ -14,7 +14,7 @@ public class Light extends Block {
      */
     public Light(int x, int y){
         // Default attractiveness
-        this.setAttractiveness(10.0);
+        this.setAttractiveness(1.0);
     }
 
 }

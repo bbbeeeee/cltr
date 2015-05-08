@@ -17,5 +17,4 @@ public class i extends Block {
         this.setAttractiveness(.2);
     }
 
-
 }
