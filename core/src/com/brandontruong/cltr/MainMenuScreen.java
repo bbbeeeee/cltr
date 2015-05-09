@@ -42,8 +42,10 @@ public class MainMenuScreen implements Screen, GestureDetector.GestureListener{
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
 
+
         Grid g = new Grid(3, 3);
         String h = Boolean.toString(g.isOutOfBounds(2, 2));
+
         game.batch.begin();
         game.font.draw(game.batch, h, 100, 100);
         game.batch.end();

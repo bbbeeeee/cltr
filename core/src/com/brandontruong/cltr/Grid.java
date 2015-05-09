@@ -1,21 +1,33 @@
 package com.brandontruong.cltr;
 
+import java.util.ArrayList;
+
 /**
  * Created by btru on 5/6/15.
  */
 public class Grid {
     private int rows;
     private int cols;
-    public Block[][] g;
+    public BlockSpace[][] g;
 
     /**
-     * Basic grid constructor that places starting block (type i) in center
+     * Basic grid constructor
      * @param rows Number of rows in grid
      * @param cols Number of columns in grid
      */
     public Grid(int rows, int cols){
         setRows(rows);
         setCols(cols);
+        g = new BlockSpace[cols][rows];
+
+        // Let each block space know what its coordinates are.
+        for(int _x = 0; _x < rows; _x++){
+            for(int _y = 0; _y < cols; _y++){
+                g[_x][_y].x = _x;
+                g[_x][_y].y = _y;
+
+            }
+        }
     }
 
     /**
@@ -24,8 +36,8 @@ public class Grid {
      * @param cols Number of columns in grid
      * @param start array of the layout of the starting grid.
      */
-    public Grid(int rows, int cols, Block[][] start){
-        g = start;
+    public Grid(int rows, int cols, BlockSpace[][] start){
+        g = start; // need to validate that it has same rows and columns
         setRows(rows);
         setCols(cols);
     }
