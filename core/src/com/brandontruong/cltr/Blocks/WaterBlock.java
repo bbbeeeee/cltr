@@ -9,7 +9,7 @@ public class WaterBlock extends Block {
         private final double attractiveness = .2;
 
         /**
-         * Standard LightBlock constructor.
+         * Standard WaterBlock constructor.
          * @param x X position
          * @param y Y position
          */
