@@ -12,8 +12,13 @@ public class Environment {
         toolbelt = _toolbelt;
     }
 
-    public void place(){
-
+    public void placeBlock(Block b, int x, int y){
+        grid.g[x][y].add(b);
     }
+
+    public void placeBlock(String type, int x, int y){
+        grid.g[x][y].add(BlockSpace.newBlock(type, x, y));
+    }
+
 
 }

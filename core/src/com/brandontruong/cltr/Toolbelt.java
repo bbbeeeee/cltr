@@ -5,6 +5,7 @@ package com.brandontruong.cltr;
  */
 public class Toolbelt {
     private int blazeNum,
+                emptyNum,
                 iNum,
                 lightNum,
                 voidNum,
@@ -18,8 +19,9 @@ public class Toolbelt {
      * @param v Number of void blocks
      * @param w number of water blocks
      */
-    public Toolbelt(int b, int i, int l, int v, int w){
+    public Toolbelt(int b, int e, int i, int l, int v, int w){
         blazeNum = b;
+        emptyNum = e;
         iNum = i;
         lightNum = l;
         voidNum = v;

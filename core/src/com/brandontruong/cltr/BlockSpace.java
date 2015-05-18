@@ -1,6 +1,7 @@
 package com.brandontruong.cltr;
 
 import com.brandontruong.cltr.Blocks.BlazeBlock;
+import com.brandontruong.cltr.Blocks.EmptyBlock;
 import com.brandontruong.cltr.Blocks.LightBlock;
 import com.brandontruong.cltr.Blocks.VoidBlock;
 import com.brandontruong.cltr.Blocks.WaterBlock;
@@ -24,7 +25,7 @@ public class BlockSpace extends ArrayList<Block> {
 
     public void replace(String type){
         this.clear();
-        this.add(newBlock(type));
+        this.add(newBlock(type, x, y));
     }
 
     public void destroy(Block b){
@@ -37,10 +38,12 @@ public class BlockSpace extends ArrayList<Block> {
         this.add(new VoidBlock(x, y));
     }
 
-    public static Block newBlock(String type){
+    public static Block newBlock(String type, int x, int y){
         switch (type){
             case "Blaze":
                 return new BlazeBlock(x, y);
+            case "Empty":
+                return new EmptyBlock(x, y);
             case "i":
                 return new iBlock(x, y);
             case "Light":
