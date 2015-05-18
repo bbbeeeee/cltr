@@ -1,12 +1,14 @@
 package com.brandontruong.cltr.Blocks;
 
+import com.badlogic.gdx.graphics.Color;
 import com.brandontruong.cltr.Block;
 
 /**
  * Created by btru on 5/9/15.
  */
 public class WaterBlock extends Block {
-        private final double attractiveness = .2;
+        public final double attractiveness = .2;
+        public final Color color = new Color(102, 153, 153, 1);
 
         /**
          * Standard WaterBlock constructor.

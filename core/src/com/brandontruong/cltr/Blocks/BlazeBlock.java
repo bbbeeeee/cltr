@@ -2,11 +2,14 @@ package com.brandontruong.cltr.Blocks;
 
 import com.brandontruong.cltr.Block;
 
+import com.badlogic.gdx.graphics.Color;
+
 /**
  * Created by btru on 5/8/15.
  */
 public class BlazeBlock extends Block {
-    private final double attractiveness = .9;
+    public final double attractiveness = .9;
+    public final Color color = new Color(204, 102, 154, 1);
 
     /**
      * Standard BlazeBlock constructor. Default attractiveness.

@@ -1,5 +1,6 @@
 package com.brandontruong.cltr.Blocks;
 
+import com.badlogic.gdx.graphics.Color;
 import com.brandontruong.cltr.Block;
 
 /**
@@ -7,7 +8,8 @@ import com.brandontruong.cltr.Block;
  * when the other block gets onto the same block space, it is destroyed/it won't grow onto it.
  */
 public class VoidBlock extends Block{
-    private final double attractiveness = 0;
+    public final double attractiveness = 0;
+    public final Color color = new Color(0, 0, 0, 1);
 
     /**
      * Standard void constructor.

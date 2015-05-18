@@ -1,13 +1,14 @@
 package com.brandontruong.cltr.Blocks;
 
+import com.badlogic.gdx.graphics.Color;
 import com.brandontruong.cltr.Block;
 
 /**
  * Created by btru on 5/6/15.
  */
 public class iBlock extends Block {
-    private final double attractiveness = 0.2;
-
+    public final double attractiveness = 0.2;
+    public final Color color = new Color(102, 204, 102, 1);
     /**
      * Standard iBlock constructor.
      * @param x X position
