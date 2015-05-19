@@ -1,6 +1,9 @@
 package com.brandontruong.cltr;
 
+import com.badlogic.gdx.Gdx;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by btru on 5/6/15.
@@ -42,6 +45,42 @@ public class Grid {
         setCols(cols);
     }
 
+    /**
+     * Initialize the grid based on array of starting blockspaces.
+     * @param rows
+     * @param cols
+     * @param start
+     */
+    public Grid(int rows, int cols, BlockSpace[] start){
+        setRows(rows);
+        setCols(cols);
+        g = new BlockSpace[rows][cols];
+
+        // Fill in the rest as empty
+        for(int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                g[i][j] = new BlockSpace(i, j);
+                g[i][j].add(BlockSpace.newBlock("Empty", i, j));
+            }
+        }
+
+        // Add in the starting blocks
+        for(int i = 0; i < start.length; i++) {
+            BlockSpace space = start[i];
+
+            if (isNotOutOfBounds(space.x, space.y)){
+                g[space.x][space.y] = space;
+            }
+        }
+
+        for(int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                Gdx.app.log("grid", g[i][j].toString());
+            }
+        }
+
+    }
+
     public int getRows() {
         return rows;
     }
@@ -64,7 +103,7 @@ public class Grid {
      * @param y Y position of position in question
      * @return Boolean value of whether the position is out of bounds
      */
-    public boolean isOutOfBounds(int x, int y){
+    public boolean isNotOutOfBounds(int x, int y){
         return (x > this.rows || x < 0 || y > this.cols || y < 0) ? false : true;
     }
 

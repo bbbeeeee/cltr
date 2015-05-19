@@ -3,28 +3,33 @@ package com.brandontruong.cltr;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.input.GestureDetector;
+import com.badlogic.gdx.math.Vector2;
 
 /**
- * Created by btru on 5/5/15.
+ * Created by btroo on 5/18/15.
  */
-public class MainMenuScreen implements Screen{
-
-    final CltrGame game;
+public class GameScreen implements Screen{
+    private Environment environment;
+    private EnvironmentRenderer renderer;
 
     OrthographicCamera camera;
     private BitmapFont font;
     private ShapeRenderer sr = new ShapeRenderer();
 
-    public MainMenuScreen(CltrGame gam) {
-        this.game = gam;
+    public GameScreen(Grid grid) {
+        float screenWidth = Gdx.graphics.getWidth();
+        float screenHeight = Gdx.graphics.getHeight();
+        float gameWidth = 800;
+        float gameHeight = 480;
+        int midpointY = (int) (gameHeight / 2);
+        environment = new Environment(grid);
+        renderer = new EnvironmentRenderer(environment);
 
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, 800, 480);
     }
-
 
     @Override
     public void show() {
@@ -33,21 +38,8 @@ public class MainMenuScreen implements Screen{
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(1, 1, 1, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        camera.update();
-        game.batch.setProjectionMatrix(camera.combined);
-
-
-        Grid g = new Grid(3, 3);
-
-
-
-        sr.begin(ShapeRenderer.ShapeType.Filled);
-        sr.setColor(0, 0, 0, 0);
-        sr.rect(20, 20, 40, 40);
-        sr.end();
+        environment.update(delta);
+        renderer.render();
     }
 
     @Override
@@ -74,4 +66,5 @@ public class MainMenuScreen implements Screen{
     public void dispose() {
 
     }
+
 }
