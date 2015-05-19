@@ -1,15 +1,31 @@
 package com.brandontruong.cltr;
 
-import java.util.ArrayList;
+import com.badlogic.gdx.graphics.Color;
+import com.brandontruong.cltr.Blocks.BlazeBlock;
+import com.brandontruong.cltr.Blocks.EmptyBlock;
+import com.brandontruong.cltr.Blocks.LightBlock;
+import com.brandontruong.cltr.Blocks.VoidBlock;
+import com.brandontruong.cltr.Blocks.WaterBlock;
+import com.brandontruong.cltr.Blocks.iBlock;
 
 /**
- * Created by btru on 5/6/15.
+ * Created by btroo on 5/6/15.
  */
 public class Block {
     /**
      * Coordinates of block. Easier if everything in the game readily knows its coordinates.
      */
     public int x, y;
+
+    public Color color;
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
 
     /**
      *  Factor that determines how attractive type iBlock is towards this block. Negative means type iBlock will move away from this block.

@@ -7,8 +7,9 @@ import com.brandontruong.cltr.Block;
  * Created by btru on 5/9/15.
  */
 public class WaterBlock extends Block {
-        public static final double attractiveness = .2;
-        public static final Color color = new Color(102, 153, 153, 1);
+        public final String type = "Water";
+        public final double attractiveness = .2;
+        // public static final Color color = new Color(102/255f, 153/255f, 153/255f, 1);
 
         /**
          * Standard WaterBlock constructor.
@@ -16,6 +17,7 @@ public class WaterBlock extends Block {
          * @param y Y position
          */
         public WaterBlock(int x, int y){
+            setColor(new Color(102/255f, 153/255f, 153/255f, 1));
             setX(x);
             setY(y);
             setSymbiosis(1);

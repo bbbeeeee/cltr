@@ -7,8 +7,9 @@ import com.brandontruong.cltr.Block;
  * Created by btru on 5/6/15.
  */
 public class LightBlock extends Block {
-    public static final double attractiveness = .9;
-    public static final Color color = new Color(255, 204, 102, 1);
+    public final String type = "Light";
+    public final double attractiveness = .9;
+//    public static final Color color = new Color(1, 204/255f, 102/255f, 1);
 
     /**
      * Standard LightBlock constructor.
@@ -16,6 +17,7 @@ public class LightBlock extends Block {
      * @param y Y position
      */
     public LightBlock(int x, int y){
+        setColor(new Color(1, 204/255f, 102/255f, 1));
         setX(x);
         setY(y);
         setSymbiosis(1);

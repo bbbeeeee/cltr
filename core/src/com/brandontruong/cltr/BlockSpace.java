@@ -1,5 +1,6 @@
 package com.brandontruong.cltr;
 
+import com.badlogic.gdx.graphics.Color;
 import com.brandontruong.cltr.Blocks.BlazeBlock;
 import com.brandontruong.cltr.Blocks.EmptyBlock;
 import com.brandontruong.cltr.Blocks.LightBlock;
@@ -13,10 +14,15 @@ import java.util.ArrayList;
  * Created by btru on 5/8/15.
  */
 public class BlockSpace extends ArrayList<Block> {
-    public static int x;
-    public static int y;
+    public int x;
+    public int y;
 
     public double attractiveness;
+
+    public BlockSpace(int x, int y){
+        setX(x);
+        setY(y);
+    }
 
     public void replace(Block b){
         this.clear();
@@ -39,38 +45,36 @@ public class BlockSpace extends ArrayList<Block> {
     }
 
     public static Block newBlock(String type, int x, int y){
-        switch (type){
-            case "Blaze":
-                return new BlazeBlock(x, y);
-            case "Empty":
-                return new EmptyBlock(x, y);
-            case "i":
-                return new iBlock(x, y);
-            case "Light":
-                return new LightBlock(x, y);
-            case "Void":
-                return new VoidBlock(x, y);
-            case "Water":
-                return new WaterBlock(x, y);
-            default:
-                return new iBlock(x, y);
-        }
+        if(type == "Blaze")
+            return new BlazeBlock(x, y);
+        else if(type == "Empty")
+            return new EmptyBlock(x, y);
+        else if(type == "i")
+            return new iBlock(x, y);
+        else if(type == "Light")
+            return new LightBlock(x, y);
+        else if(type == "Void")
+            return new VoidBlock(x, y);
+        else if(type == "Water")
+            return new WaterBlock(x, y);
+        else
+            return new iBlock(x, y);
     }
 
-    public static int getX() {
+    public int getX() {
         return x;
     }
 
-    public static void setX(int x) {
-        BlockSpace.x = x;
+    public void setX(int x) {
+        this.x = x;
     }
 
-    public static int getY() {
+    public int getY() {
         return y;
     }
 
-    public static void setY(int y) {
-        BlockSpace.y = y;
+    public void setY(int y) {
+        this.y = y;
     }
 
     public double getAttractiveness() {
