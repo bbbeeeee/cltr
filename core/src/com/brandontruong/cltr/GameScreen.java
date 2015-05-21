@@ -28,7 +28,6 @@ public class GameScreen implements Screen{
         int midpointY = (int) (gameHeight / 2);
         environment = new Environment(grid);
         renderer = new EnvironmentRenderer(environment);
-
     }
 
     @Override

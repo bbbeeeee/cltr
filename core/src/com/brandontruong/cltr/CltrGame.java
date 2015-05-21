@@ -25,7 +25,7 @@ public class CltrGame extends Game {
         blockspaces[1] = new BlockSpace(1, 4);
         blockspaces[0].add(BlockSpace.newBlock("i", 3, 2));
         blockspaces[1].add(BlockSpace.newBlock("Blaze", 3, 2));
-        Grid grid = new Grid(5, 10, blockspaces);
+        Grid grid = new Grid("1.cltr");
         this.setScreen(new GameScreen(grid));
 	}
 

@@ -1,5 +1,12 @@
 package com.brandontruong.cltr;
 
+import com.brandontruong.cltr.Blocks.BlazeBlock;
+import com.brandontruong.cltr.Blocks.EmptyBlock;
+import com.brandontruong.cltr.Blocks.LightBlock;
+import com.brandontruong.cltr.Blocks.VoidBlock;
+import com.brandontruong.cltr.Blocks.WaterBlock;
+import com.brandontruong.cltr.Blocks.iBlock;
+
 /**
  * Created by btru on 5/10/15.
  */
@@ -32,53 +39,90 @@ public class Toolbelt {
      * Add a block to the toolbelt. Should be called either when a block is acquired or returned from grid.
      * @param type Type of block to be added
      */
-    public void add(int type){
-        switch (type){
-            case 1:
-                blazeNum++;
-                break;
-            case 2:
-                iNum++;
-                break;
-            case 3:
-                lightNum++;
-                break;
-            case 4:
-                voidNum++;
-                break;
-            case 5:
-                waterNum++;
-                break;
-        }
+    public void add(String type){
+        if(type == "Blaze")
+            blazeNum++;
+        else if(type == "Empty")
+            emptyNum++;
+        else if(type == "i")
+            iNum++;
+        else if(type == "Light")
+            lightNum++;
+        else if(type == "Void")
+            voidNum++;
+        else if(type == "Water")
+            waterNum++;
+        else
+            iNum++;
+    }
+
+    public void add(String type, int count){
+        if(type == "Blaze")
+            blazeNum += count;
+        else if(type == "Empty")
+            emptyNum += count;
+        else if(type == "i")
+            iNum += count;
+        else if(type == "Light")
+            lightNum += count;
+        else if(type == "Void")
+            voidNum += count;
+        else if(type == "Water")
+            waterNum += count;
+        else
+            iNum += count;
     }
 
     /**
      * Use a block from the toolbelt. Should be called when a block is lost.
      * @param type
      */
-    public void remove(int type){
-        switch (type){
-            case 1:
-                if(blazeNum >= 1)
-                    blazeNum--;
-                break;
-            case 2:
-                if(iNum >= 1)
-                    iNum--;
-                break;
-            case 3:
-                if(lightNum >= 1)
-                    lightNum--;
-                break;
-            case 4:
-                if(voidNum >= 1)
-                    voidNum--;
-                break;
-            case 5:
-                if(waterNum >= 1)
-                    waterNum--;
-                break;
+    public void remove(String type){
+        if(type == "Blaze"){
+            if(blazeNum >= 1)
+                blazeNum--;
         }
+        else if(type == "Empty") {
+            if(emptyNum >= 1)
+                emptyNum--;
+        }
+        else if(type == "i"){
+            if(iNum >= 1)
+                iNum--;
+        }
+        else if(type == "Light"){
+            if(lightNum >= 1)
+                lightNum--;
+        }
+        else if(type == "Void"){
+            if(voidNum >= 1)
+                voidNum--;
+        }
+        else if(type == "Water"){
+            if(waterNum >= 1)
+                waterNum--;
+        }
+        else {
+            if (iNum >= 1)
+                iNum--;
+        }
+    }
+
+    public void remove(String type, int count){
+        if(type == "Blaze")
+            blazeNum -= count;
+        else if(type == "Empty")
+            emptyNum -= count;
+        else if(type == "i")
+            iNum -= count;
+        else if(type == "Light")
+            lightNum -= count;
+        else if(type == "Void")
+            voidNum -= count;
+        else if(type == "Water")
+            waterNum -= count;
+        else
+            iNum -= count;
     }
 
     public int getBlazeNum() {

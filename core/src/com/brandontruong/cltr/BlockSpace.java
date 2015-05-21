@@ -45,17 +45,17 @@ public class BlockSpace extends ArrayList<Block> {
     }
 
     public static Block newBlock(String type, int x, int y){
-        if(type == "Blaze")
+        if(type.contains("Blaze"))
             return new BlazeBlock(x, y);
-        else if(type == "Empty")
+        else if(type.contains("Empty"))
             return new EmptyBlock(x, y);
-        else if(type == "i")
+        else if(type.contains("i"))
             return new iBlock(x, y);
-        else if(type == "Light")
+        else if(type.contains("Light"))
             return new LightBlock(x, y);
-        else if(type == "Void")
+        else if(type.contains("Void"))
             return new VoidBlock(x, y);
-        else if(type == "Water")
+        else if(type.contains("Water"))
             return new WaterBlock(x, y);
         else
             return new iBlock(x, y);

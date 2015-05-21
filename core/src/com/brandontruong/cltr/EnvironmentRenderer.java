@@ -41,7 +41,6 @@ public class EnvironmentRenderer {
 
     public void renderBlockSpace(BlockSpace blockspace, int x, int y){
         for(int i = 0; i < blockspace.size(); i++){
-            Gdx.app.log("color", blockspace.get(i).getColor().toString());
             shapeRenderer.setColor(blockspace.get(i).color);
             shapeRenderer.rect((x - 1) * 50, (y - 1) * 50, 50, 50);
         }
