@@ -15,6 +15,10 @@ public class Grid {
     public BlockSpace[][] g;
     public Toolbelt toolbelt;
 
+    /**
+     * Takes in map file and returns grid for use in Environment. File should contain dimensions, layout, and toolbelt
+     * @param file
+     */
     public Grid(String file){
         int step = 1;
         FileHandle f = Gdx.files.internal("maps/" + file);
@@ -29,8 +33,9 @@ public class Grid {
                 cols = Integer.parseInt(dimensions[0]);
                 rows = Integer.parseInt(dimensions[1]);
                 g = new BlockSpace[cols][rows];
-                for (int k = 0; k < rows; k++) {
-                    for (int j = 0; j < cols; j++) {
+
+                for (int k = 0; k < cols; k++) {
+                    for (int j = 0; j < rows; j++) {
                         g[k][j] = new BlockSpace(k, j);
                         g[k][j].add(BlockSpace.newBlock("Empty", k, j));
                     }
@@ -51,7 +56,6 @@ public class Grid {
                 int x = Integer.parseInt(block[1]);
                 int y = Integer.parseInt(block[2]);
                 String type = block[0];
-
                 g[x][y].add(BlockSpace.newBlock(type, x, y));
             }
 

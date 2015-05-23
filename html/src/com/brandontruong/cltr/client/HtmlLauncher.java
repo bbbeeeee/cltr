@@ -3,7 +3,7 @@ package com.brandontruong.cltr.client;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
-import com.brandontruong.cltr.Cltr;
+import com.brandontruong.cltr.CltrGame;
 
 public class HtmlLauncher extends GwtApplication {
 
@@ -14,6 +14,6 @@ public class HtmlLauncher extends GwtApplication {
 
         @Override
         public ApplicationListener getApplicationListener () {
-                return new Cltr();
+                return new CltrGame();
         }
 }

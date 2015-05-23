@@ -9,23 +9,23 @@ import com.brandontruong.cltr.Blocks.WaterBlock;
 import com.brandontruong.cltr.Blocks.iBlock;
 
 /**
- * Created by btroo on 5/6/15.
+ * Block parent class. Need to update Toolbelt and BlockSpace when new Blocks are added.
  */
 public class Block {
+    public static final int BLAZEBLOCK = 1,
+        EMPTYBLOCK = 2,
+        GOALBLOCK = 3,
+        IBLOCK = 4,
+        LIGHTBLOCK = 5,
+        VOIDBLOCK = 6,
+        WATERBLOCK = 7;
+
     /**
      * Coordinates of block. Easier if everything in the game readily knows its coordinates.
      */
     public int x, y;
 
     public Color color;
-
-    public Color getColor() {
-        return color;
-    }
-
-    public void setColor(Color color) {
-        this.color = color;
-    }
 
     /**
      *  Factor that determines how attractive type iBlock is towards this block. Negative means type iBlock will move away from this block.
@@ -78,6 +78,14 @@ public class Block {
 
     public void setSymbiosis(int symbiosis) {
         this.symbiosis = symbiosis;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
     }
 
 }

@@ -1,5 +1,6 @@
 package com.brandontruong.cltr;
 
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.brandontruong.cltr.Blocks.BlazeBlock;
 import com.brandontruong.cltr.Blocks.EmptyBlock;
 import com.brandontruong.cltr.Blocks.LightBlock;
@@ -10,7 +11,7 @@ import com.brandontruong.cltr.Blocks.iBlock;
 /**
  * Created by btru on 5/10/15.
  */
-public class Toolbelt {
+public class Toolbelt{
     private int blazeNum,
                 emptyNum,
                 iNum,

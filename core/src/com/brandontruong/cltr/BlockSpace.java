@@ -1,8 +1,10 @@
 package com.brandontruong.cltr;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.brandontruong.cltr.Blocks.BlazeBlock;
 import com.brandontruong.cltr.Blocks.EmptyBlock;
+import com.brandontruong.cltr.Blocks.GoalBlock;
 import com.brandontruong.cltr.Blocks.LightBlock;
 import com.brandontruong.cltr.Blocks.VoidBlock;
 import com.brandontruong.cltr.Blocks.WaterBlock;
@@ -13,7 +15,7 @@ import java.util.ArrayList;
 /**
  * Created by btru on 5/8/15.
  */
-public class BlockSpace extends ArrayList<Block> {
+public class BlockSpace extends ArrayList<Block>{
     public int x;
     public int y;
 
@@ -49,6 +51,8 @@ public class BlockSpace extends ArrayList<Block> {
             return new BlazeBlock(x, y);
         else if(type.contains("Empty"))
             return new EmptyBlock(x, y);
+        else if(type.contains("Goal"))
+            return new GoalBlock(x, y);
         else if(type.contains("i"))
             return new iBlock(x, y);
         else if(type.contains("Light"))
