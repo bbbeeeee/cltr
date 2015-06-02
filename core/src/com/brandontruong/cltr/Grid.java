@@ -131,6 +131,10 @@ public class Grid {
         }
     }
 
+    public void refresh(){
+
+    }
+
     public int getRows() {
         return rows;
     }

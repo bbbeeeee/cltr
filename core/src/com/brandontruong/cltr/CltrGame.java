@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 
@@ -18,7 +19,9 @@ public class CltrGame extends Game {
 	@Override
 	public void create () {
         Grid grid = new Grid("1.cltr");
-        this.setScreen(new GameScreen(grid));
+        camera = new OrthographicCamera();
+        ExtendViewport viewport = new ExtendViewport(800, 480, camera);
+        this.setScreen(new GameScreen(grid, viewport));
 	}
 
 	@Override

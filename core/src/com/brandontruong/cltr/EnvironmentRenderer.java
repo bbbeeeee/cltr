@@ -1,11 +1,13 @@
 package com.brandontruong.cltr;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -16,7 +18,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 public class EnvironmentRenderer {
 
     private Environment environment;
-    private OrthographicCamera camera;
+    private Camera camera;
     private ShapeRenderer shapeRenderer;
     private Viewport viewport;
     // private float WORLD_WIDTH, WORLD_HEIGHT;
@@ -24,28 +26,29 @@ public class EnvironmentRenderer {
     private float aspectRatio;
     private Stage stage;
 
-    public EnvironmentRenderer(Environment e){
+    public EnvironmentRenderer(Environment e, Viewport viewport){
 
         environment = e;
-        camera = new OrthographicCamera();
-        viewport = new FitViewport(800, 400, camera);
-        viewport.apply(true);
+        // camera = new OrthographicCamera();
+        //viewport = new ExtendViewport(800, 400, camera);
+        //viewport.apply(true);
 
-        camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
-        aspectRatio = (float)Gdx.graphics.getHeight() / (float)Gdx.graphics.getWidth();
-        blockHeight = Gdx.graphics.getHeight() /  environment.grid.getRows();
-        blockWidth = blockHeight;
-
+        // camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
+        // aspectRatio = (float)Gdx.graphics.getHeight() / (float)Gdx.graphics.getWidth();
+        // blockHeight = Gdx.graphics.getHeight() /  environment.grid.getRows();
+        // blockWidth = blockHeight;
+        camera = viewport.getCamera();
         shapeRenderer = new ShapeRenderer();
-        shapeRenderer.setProjectionMatrix(camera.combined);
 
-        stage = new ToolbeltStage(new FitViewport(800, 400), e.toolbelt);
+        shapeRenderer.setProjectionMatrix(viewport.getCamera().combined);
 
+        stage = new ToolbeltStage(viewport, e.toolbelt);
+        stage.setViewport(viewport);
         Gdx.input.setInputProcessor(stage);
 
         BlockActor block = new BlockActor(Block.BLAZEBLOCK, blockWidth, blockHeight);
 
-        stage.addActor(block);
+        // stage.addActor(block);
 
     }
 
@@ -78,11 +81,11 @@ public class EnvironmentRenderer {
 
     public void resize(int width, int height){
 
-        stage.getViewport().update( (int)(width * aspectRatio), height, false);
+        // stage.getViewport().update( (int)(width * aspectRatio), height, false);
     }
 
     /**
-     * Render individual blockspace
+     * Render individual blockspace --- will probably have to remake with stage and actors.
      * @param blockspace
      * @param x
      * @param y
@@ -90,7 +93,7 @@ public class EnvironmentRenderer {
     public void renderBlockSpace(BlockSpace blockspace, int x, int y, float blockWidth, float blockHeight){
         for(int i = 0; i < blockspace.size(); i++){
             shapeRenderer.setColor(blockspace.get(i).color);
-            shapeRenderer.rect((x-1) * blockWidth + (2 * blockWidth), (y-1) * blockHeight,  blockWidth, blockHeight);
+            shapeRenderer.rect((x-1) * blockWidth, (y-1) * blockHeight,  blockWidth, blockHeight);
         }
     }
 

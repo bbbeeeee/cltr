@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -19,15 +20,22 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 public class GameScreen implements Screen, InputProcessor{
     private Environment environment;
     private EnvironmentRenderer environmentRenderer;
-    private Viewport viewport;
     OrthographicCamera camera;
     private BitmapFont font;
     private ShapeRenderer sr = new ShapeRenderer();
     private Stage stage;
 
-    public GameScreen(Grid grid) {
+    public GameScreen(Grid grid, Viewport viewport) {
         environment = new Environment(grid);
-        environmentRenderer = new EnvironmentRenderer(environment);
+        environmentRenderer = new EnvironmentRenderer(environment, viewport);
+
+        Timer.schedule(new Timer.Task() {
+                @Override
+                public void run() {
+                    environment.refresh();
+                }
+            }, 1000, 1000
+        );
     }
 
     @Override
