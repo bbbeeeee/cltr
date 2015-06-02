@@ -25,6 +25,16 @@ public class Block {
      */
     public int x, y;
 
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    private int type;
+
     public Color color;
 
     /**

@@ -4,12 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.brandontruong.cltr.Blocks.BlazeBlock;
 
 /**
  * Created by btru on 5/21/15.
  */
 public class BlockActor extends Actor {
-    Texture texture = new Texture(Gdx.files.internal("blaze.png"));
+    Texture texture;
 
     public BlockActor(int type, float height, float width){
         switch(type){

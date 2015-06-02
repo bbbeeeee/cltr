@@ -31,7 +31,7 @@ public class BlockSpace extends ArrayList<Block>{
         this.add(b);
     }
 
-    public void replace(String type){
+    public void replace(int type){
         this.clear();
         this.add(newBlock(type, x, y));
     }
@@ -46,23 +46,25 @@ public class BlockSpace extends ArrayList<Block>{
         this.add(new VoidBlock(x, y));
     }
 
-    public static Block newBlock(String type, int x, int y){
-        if(type.contains("Blaze"))
-            return new BlazeBlock(x, y);
-        else if(type.contains("Empty"))
-            return new EmptyBlock(x, y);
-        else if(type.contains("Goal"))
-            return new GoalBlock(x, y);
-        else if(type.contains("i"))
-            return new iBlock(x, y);
-        else if(type.contains("Light"))
-            return new LightBlock(x, y);
-        else if(type.contains("Void"))
-            return new VoidBlock(x, y);
-        else if(type.contains("Water"))
-            return new WaterBlock(x, y);
-        else
-            return new iBlock(x, y);
+    public static Block newBlock(int type, int x, int y){
+        switch(type){
+            case Block.BLAZEBLOCK:
+                return new BlazeBlock(x, y);
+            case Block.EMPTYBLOCK:
+                return new EmptyBlock(x, y);
+            case Block.GOALBLOCK:
+                return new GoalBlock(x, y);
+            case Block.IBLOCK:
+                return new iBlock(x, y);
+            case Block.LIGHTBLOCK:
+                return new LightBlock(x, y);
+            case Block.VOIDBLOCK:
+                return new VoidBlock(x, y);
+            case Block.WATERBLOCK:
+                return new WaterBlock(x, y);
+            default:
+                return new EmptyBlock(x, y);
+        }
     }
 
     public int getX() {
@@ -88,4 +90,5 @@ public class BlockSpace extends ArrayList<Block>{
     public void setAttractiveness(double attractiveness) {
         this.attractiveness = attractiveness;
     }
+
 }
