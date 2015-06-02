@@ -8,7 +8,6 @@ import com.brandontruong.cltr.Block;
  * when the other block gets onto the same block space, it is destroyed/it won't grow onto it.
  */
 public class VoidBlock extends Block{
-    public final String type = "Void";
     public final double attractiveness = 0;
 //    public static final Color color = new Color(0, 0, 0, 1);
 
@@ -21,6 +20,7 @@ public class VoidBlock extends Block{
         setColor(new Color(0, 0, 0, 1));
         setX(x);
         setY(y);
+        setType(VOIDBLOCK);
         setSymbiosis(0);
     }
 }

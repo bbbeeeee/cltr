@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.Color;
  * Created by btru on 5/8/15.
  */
 public class BlazeBlock extends Block {
-    public final String type = "Blaze";
     public final double attractiveness = .9;
     //public static final Color color = new Color(204/255f, 102/255f, 154/255f, 1);
 
@@ -21,6 +20,7 @@ public class BlazeBlock extends Block {
         setColor(new Color(204/255f, 102/255f, 154/255f, 1));
         setX(x);
         setY(y);
+        setType(BLAZEBLOCK);
         setSymbiosis(0);
     }
 

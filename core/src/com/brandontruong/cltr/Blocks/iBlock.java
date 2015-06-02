@@ -7,7 +7,6 @@ import com.brandontruong.cltr.Block;
  * Created by btru on 5/6/15.
  */
 public class iBlock extends Block {
-    public final String type = "i";
     public final double attractiveness = 0.2;
     //public static final Color color = new Color(0.4f, 0.8f, 0.4f, 1);
     /**
@@ -19,6 +18,7 @@ public class iBlock extends Block {
         setColor(new Color(0.4f, 0.8f, 0.4f, 1));
         setX(x);
         setY(y);
+        setType(IBLOCK);
         setSymbiosis(1);
     }
 
