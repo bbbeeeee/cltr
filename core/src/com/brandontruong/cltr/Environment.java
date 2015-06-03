@@ -33,7 +33,7 @@ public class Environment {
                     // Make changes to blockspaces as needed
                     switch(b.getType()){
                         case Block.BLAZEBLOCK:
-
+                            // Increase Blaze probability around this block
                             break;
                         case Block.EMPTYBLOCK:
                             // Do nothing
@@ -45,12 +45,15 @@ public class Environment {
                             // Increase probability around to become i
                             break;
                         case Block.LIGHTBLOCK:
-                            // Increase probability of
+                            // Increase probability of i in the direction of this light when you
+                            // analyze for an iBlock.
                             break;
                         case Block.VOIDBLOCK:
                             // Do nothing
                             break;
                         case Block.WATERBLOCK:
+                            // Has small chance of growing, increases probability of i in direction,
+                            // less strong of a pull than water
                             break;
                         default:
                             // Do nothing
