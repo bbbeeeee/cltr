@@ -10,6 +10,11 @@ import java.util.HashMap;
  * Created by btru on 5/6/15.
  */
 public class Grid {
+    public static final int TOP = 1;
+    public static final int RIGHT = 2;
+    public static final int BOTTOM = 3;
+    public static final int LEFT  = 4;
+
     private int rows;
     private int cols;
     public BlockSpace[][] g;
@@ -131,22 +136,87 @@ public class Grid {
         }
     }
 
+    /**
+     * Loop through and apply necessary changes
+     */
     public void refresh(){
+        for(int x = 0; x < getCols(); x++){
+            for(int y = 0; y < getRows(); y++){
+
+            }
+        }
+    }
+
+    public void changeProbability(int type, int x, int y, int factor){
+        g[x][y].potential[type] += factor;
+    }
+
+    /**
+     * Change the probability of a certain blocktype around given x,y position to grow
+     * @param type
+     * @param x
+     * @param y
+     * @param factor
+     * @param distance
+     */
+    public void changeProbabilityAround(int type, int x, int y, int factor, int distance){
+        int[] top = getSpace(TOP, x, y, distance);
+        int[] right = getSpace(RIGHT, x, y, distance);
+        int[] bottom = getSpace(BOTTOM, x, y, distance);
+        int[] left = getSpace(LEFT, x, y, distance);
+
+        changeProbability(type, top[0], top[1], factor);
+        changeProbability(type, right[0], right[1], factor);
+        changeProbability(type, bottom[0], bottom[1], factor);
+        changeProbability(type, left[0], left[1], factor);
+    }
+
+    /**
+     * Change the probability of a certain blocktype around given x,y position to grow with
+     * decreasing gradient from center point
+     * @param type
+     * @param x
+     * @param y
+     * @param factor
+     * @param distance
+     */
+    public void gradientChangeProbabilityAround(int type, int x, int y, int factor, int distance){
 
     }
 
     /**
-     * Increase the probability of a certain blocktype around given x,y position to grow
-     * @param type
+     *
+     * @param direction
      * @param x
      * @param y
+     * @param distance
+     * @return int[x, y] Space to edit
      */
-    public void increaseProbabilityAround(int type, int x, int y, int factor){
-        int[] top = new int[2];
-    }
-
-    public void getSpace(int direction){
-
+    public int[] getSpace(int direction, int x, int y, int distance){
+        switch(direction){
+            case(TOP):
+                if(isNotOutOfBounds(x, y + distance))
+                    return new int[]{x, y + distance};
+                else
+                    return new int[]{x, y};
+            case(RIGHT):
+                if(isNotOutOfBounds(x + distance, y))
+                    return new int[]{x + distance, y};
+                else
+                    return new int[]{x, y};
+            case(BOTTOM):
+                if(isNotOutOfBounds(x, y - distance))
+                    return new int[]{x, y - distance};
+                else
+                    return new int[]{x, y};
+            case(LEFT):
+                if(isNotOutOfBounds(x - distance, y))
+                    return new int[]{x - distance, y};
+                else
+                    return new int[]{x, y};
+            default:
+                return new int[]{x, y};
+        }
     }
 
     public int getRows() {
