@@ -30,14 +30,14 @@ public class Grid {
             // Step 1 - dimensions
             if(step == 1){
                 String[] dimensions = lines[i].split(",");
-                cols = Integer.parseInt(dimensions[0]);
-                rows = Integer.parseInt(dimensions[1]);
+                cols = Integer.parseInt(dimensions[0]) + 1;
+                rows = Integer.parseInt(dimensions[1]) + 1;
                 g = new BlockSpace[cols][rows];
 
                 for (int k = 0; k < cols; k++) {
                     for (int j = 0; j < rows; j++) {
                         g[k][j] = new BlockSpace(k, j);
-                        g[k][j].add(BlockSpace.newBlock("Empty", k, j));
+                        g[k][j].add(BlockSpace.newBlock(Block.EMPTYBLOCK, k, j));
                     }
                 }
 
@@ -55,7 +55,7 @@ public class Grid {
                 String[] block = lines[i].split(",");
                 int x = Integer.parseInt(block[1]);
                 int y = Integer.parseInt(block[2]);
-                String type = block[0];
+                int type = Integer.parseInt(block[0]);
                 g[x][y].add(BlockSpace.newBlock(type, x, y));
             }
 
@@ -117,7 +117,7 @@ public class Grid {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 g[i][j] = new BlockSpace(i, j);
-                g[i][j].add(BlockSpace.newBlock("Empty", i, j));
+                g[i][j].add(BlockSpace.newBlock(Block.EMPTYBLOCK, i, j));
             }
         }
 
@@ -132,6 +132,20 @@ public class Grid {
     }
 
     public void refresh(){
+
+    }
+
+    /**
+     * Increase the probability of a certain blocktype around given x,y position to grow
+     * @param type
+     * @param x
+     * @param y
+     */
+    public void increaseProbabilityAround(int type, int x, int y, int factor){
+        int[] top = new int[2];
+    }
+
+    public void getSpace(int direction){
 
     }
 

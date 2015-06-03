@@ -21,13 +21,13 @@ public class EnvironmentRenderer {
     private Camera camera;
     private ShapeRenderer shapeRenderer;
     private Viewport viewport;
-    // private float WORLD_WIDTH, WORLD_HEIGHT;
+    private int worldHeight, worldWidth;
     private float blockWidth, blockHeight;
     private float aspectRatio;
     private Stage stage;
 
-    public EnvironmentRenderer(Environment e, Viewport viewport){
-
+    public EnvironmentRenderer(Environment e, Viewport _viewport){
+        viewport = _viewport;
         environment = e;
         // camera = new OrthographicCamera();
         //viewport = new ExtendViewport(800, 400, camera);
@@ -37,6 +37,10 @@ public class EnvironmentRenderer {
         // aspectRatio = (float)Gdx.graphics.getHeight() / (float)Gdx.graphics.getWidth();
         // blockHeight = Gdx.graphics.getHeight() /  environment.grid.getRows();
         // blockWidth = blockHeight;
+
+        Logger.CLTR("Rendering environment");
+        Logger.CLTR("Rows - " + Integer.toString(environment.grid.getRows()));
+        Logger.CLTR("Cols - " + Integer.toString(environment.grid.getCols()));
         camera = viewport.getCamera();
         shapeRenderer = new ShapeRenderer();
 
@@ -60,10 +64,32 @@ public class EnvironmentRenderer {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        // Get grid dimensions in place.
+        // Get grid dimensions in place
         aspectRatio = (float)Gdx.graphics.getHeight() / (float)Gdx.graphics.getWidth();
         blockHeight = Gdx.graphics.getHeight() /  environment.grid.getRows();
+        // blockWidth = Gdx.graphics.getWidth() / environment.grid.getCols();
+
+        // If everything's fitting, all good
+//        while(blockHeight * environment.grid.getRows() > Gdx.graphics.getHeight()
+//                && blockWidth * environment.grid.getCols() > Gdx.graphics.getWidth()){
+//            if(blockHeight > blockWidth)
+//                blockHeight--;
+//            else if(blockHeight < blockWidth)
+//                blockWidth--;
+//            else
+//                blockHeight--;
+//                blockWidth--;
+//        }
+//
+//        if(blockWidth < blockHeight)
+//            blockHeight = blockWidth;
+//        else
+//            blockWidth = blockHeight;
+
         blockWidth = blockHeight;
+//        Logger.CLTR(Float.toString(Gdx.graphics.getHeight()));
+//        Logger.CLTR(Float.toString(environment.grid.getRows()));
+//        Logger.CLTR(Float.toString(blockWidth));
 
         // Render basic grid map.
         shapeRenderer.setProjectionMatrix(camera.combined);
@@ -76,12 +102,13 @@ public class EnvironmentRenderer {
         shapeRenderer.end();
 
         stage.draw();
-        // Toolbelt stage will interact call a placeBlock on where the end is.
     }
 
     public void resize(int width, int height){
-
         // stage.getViewport().update( (int)(width * aspectRatio), height, false);
+        Logger.CLTR("resized: " + Integer.toString(height));
+        blockHeight = Gdx.graphics.getHeight() /  environment.grid.getRows();
+        viewport.update(width, height, true);
     }
 
     /**

@@ -18,6 +18,7 @@ import java.util.ArrayList;
 public class BlockSpace extends ArrayList<Block>{
     public int x;
     public int y;
+    public float[] potential;
 
     public double attractiveness;
 

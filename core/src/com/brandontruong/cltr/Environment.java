@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.Texture;
 public class Environment {
     public Grid grid;
     public Toolbelt toolbelt;
-    public Change[] changes;
     public Environment(){
 
     }
@@ -34,6 +33,7 @@ public class Environment {
                     switch(b.getType()){
                         case Block.BLAZEBLOCK:
                             // Increase Blaze probability around this block
+
                             break;
                         case Block.EMPTYBLOCK:
                             // Do nothing
@@ -63,6 +63,7 @@ public class Environment {
             }
         }
     }
+
 
     /**
      * Place a new block in a blockspace.

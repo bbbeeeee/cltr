@@ -1,6 +1,7 @@
 package com.brandontruong.cltr;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -20,7 +21,7 @@ public class CltrGame extends Game {
 	public void create () {
         Grid grid = new Grid("1.cltr");
         camera = new OrthographicCamera();
-        ExtendViewport viewport = new ExtendViewport(800, 480, camera);
+        ExtendViewport viewport = new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
         this.setScreen(new GameScreen(grid, viewport));
 	}
 
