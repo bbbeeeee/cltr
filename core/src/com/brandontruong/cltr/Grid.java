@@ -14,9 +14,14 @@ public class Grid {
     public static final int RIGHT = 2;
     public static final int BOTTOM = 3;
     public static final int LEFT  = 4;
+    public static final int MAXROWS = 12;
+    public static final int MAXCOLS = 20;
 
     private int rows;
     private int cols;
+    private int xOffset;
+    private int yOffset;
+
     public BlockSpace[][] g;
     public Toolbelt toolbelt;
 
@@ -31,18 +36,29 @@ public class Grid {
         String[] lines = text.split("\n");
         toolbelt = new Toolbelt(0, 0, 0, 0, 0, 0);
 
+
         for(int i = 0; i < lines.length; i++){
             // Step 1 - dimensions
             if(step == 1){
                 String[] dimensions = lines[i].split(",");
                 cols = Integer.parseInt(dimensions[0]) + 1;
                 rows = Integer.parseInt(dimensions[1]) + 1;
-                g = new BlockSpace[cols][rows];
+                g = new BlockSpace[20][12];
 
+                for(int x = 0; x < 20; x++){
+                    for(int y = 0; y < 12; y++){
+                        g[x][y] = new BlockSpace(x, y);
+                        g[x][y].add(BlockSpace.newBlock(Block.VOIDBLOCK, x, y));
+                    }
+                }
+                // get offset for cols and rows
+                xOffset = (int) ((20 - cols) / 2);
+                yOffset = (int) ((12 - rows) / 2);
+
+                // Add in empty blocks
                 for (int k = 0; k < cols; k++) {
                     for (int j = 0; j < rows; j++) {
-                        g[k][j] = new BlockSpace(k, j);
-                        g[k][j].add(BlockSpace.newBlock(Block.EMPTYBLOCK, k, j));
+                        g[k + xOffset][j + yOffset].replace(BlockSpace.newBlock(Block.EMPTYBLOCK, k, j));
                     }
                 }
 
@@ -61,7 +77,7 @@ public class Grid {
                 int x = Integer.parseInt(block[1]);
                 int y = Integer.parseInt(block[2]);
                 int type = Integer.parseInt(block[0]);
-                g[x][y].add(BlockSpace.newBlock(type, x, y));
+                g[x + xOffset][y + yOffset].add(BlockSpace.newBlock(type, x, y));
             }
 
             // Step 3 - toolbelt

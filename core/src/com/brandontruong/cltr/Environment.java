@@ -33,7 +33,8 @@ public class Environment {
                     switch(b.getType()){
                         case Block.BLAZEBLOCK:
                             // Increase Blaze probability around this block
-
+                            grid.changeProbabilityAround(Block.BLAZEBLOCK, x, y, 2, 1); // should increase i in gradient.
+                            // add change position to pull iblocks in this direction
                             break;
                         case Block.EMPTYBLOCK:
                             // Do nothing
@@ -43,17 +44,22 @@ public class Environment {
                             break;
                         case Block.IBLOCK:
                             // Increase probability around to become i
+                            grid.changeProbabilityAround(Block.IBLOCK, x, y, 1, 1);
                             break;
                         case Block.LIGHTBLOCK:
                             // Increase probability of i in the direction of this light when you
                             // analyze for an iBlock.
+                            
                             break;
                         case Block.VOIDBLOCK:
                             // Do nothing
                             break;
                         case Block.WATERBLOCK:
                             // Has small chance of growing, increases probability of i in direction,
-                            // less strong of a pull than water
+                            // less strong of a pull than light
+                            break;
+                        case Block.OBSTACLEBLOCK:
+                            // Do nothing
                             break;
                         default:
                             // Do nothing

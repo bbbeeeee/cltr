@@ -7,6 +7,7 @@ import java.util.Random;
  */
 public class Change {
 
+
     public static double chance(double probability){
         Random random = new Random();
         return random.nextDouble() * probability;
