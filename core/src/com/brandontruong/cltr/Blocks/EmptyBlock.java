@@ -8,14 +8,14 @@ import com.brandontruong.cltr.Block;
  */
 public class EmptyBlock extends Block{
     public final double attractiveness = 0.0;
-    //public static final Color color = new Color(.9f, .9f, .9f, 1);
+
     /**
-     * Standard BlazeBlock constructor. Default attractiveness.
+     * Standard EmptyBlock constructor. Default attractiveness.
      * @param x X position
      * @param y Y position
      */
     public EmptyBlock(int x, int y){
-        setColor(new Color(.9f, .9f, .9f, 1));
+        setColor(new Color(1, 1, 1, 1));
         setX(x);
         setY(y);
         setType(EMPTYBLOCK);

@@ -17,7 +17,7 @@ public class VoidBlock extends Block{
      * @param y
      */
     public VoidBlock(int x, int y){
-        setColor(new Color(0, 0, 0, 1));
+        setColor(new Color(.9f, .9f, .9f, 1));
         setX(x);
         setY(y);
         setType(VOIDBLOCK);

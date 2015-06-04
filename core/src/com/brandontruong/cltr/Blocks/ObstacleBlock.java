@@ -8,14 +8,14 @@ import com.brandontruong.cltr.Block;
  */
 public class ObstacleBlock extends Block {
     public final double attractiveness = 0.0;
-    //public static final Color color = new Color(.9f, .9f, .9f, 1);
+
     /**
      * Standard ObstacleBlock constructor. Default attractiveness.
      * @param x X position
      * @param y Y position
      */
     public ObstacleBlock(int x, int y){
-        setColor(new Color(1, 1, 1, 1));
+        setColor(new Color(.1f, .1f, .1f, 1));
         setX(x);
         setY(y);
         setType(EMPTYBLOCK);
