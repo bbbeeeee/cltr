@@ -92,67 +92,6 @@ public class Grid {
     }
 
     /**
-     * Basic grid constructor
-     * @param rows Number of rows in grid
-     * @param cols Number of columns in grid
-     */
-    public Grid(int rows, int cols){
-        setRows(rows);
-        setCols(cols);
-        g = new BlockSpace[cols][rows];
-
-        // Let each block space know what its coordinates are.
-        for(int _x = 0; _x < rows; _x++){
-            for(int _y = 0; _y < cols; _y++){
-                g[_x][_y].x = _x;
-                g[_x][_y].y = _y;
-
-            }
-        }
-    }
-
-    /**
-     * Grid constructor with starting layout
-     * @param rows Number of rows in grid
-     * @param cols Number of columns in grid
-     * @param start array of the layout of the starting grid.
-     */
-    public Grid(int rows, int cols, BlockSpace[][] start){
-        g = start; // need to validate that it has same rows and columns
-        setRows(rows);
-        setCols(cols);
-    }
-
-    /**
-     * Initialize the grid based on array of starting blockspaces.
-     * @param rows
-     * @param cols
-     * @param start
-     */
-    public Grid(int rows, int cols, BlockSpace[] start) {
-        setRows(rows);
-        setCols(cols);
-        g = new BlockSpace[rows][cols];
-
-        // Fill in the rest as empty
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                g[i][j] = new BlockSpace(i, j);
-                g[i][j].add(BlockSpace.newBlock(Block.EMPTYBLOCK, i, j));
-            }
-        }
-
-        // Add in the starting blocks
-        for (int i = 0; i < start.length; i++) {
-            BlockSpace space = start[i];
-
-            if (isNotOutOfBounds(space.x, space.y)) {
-                g[space.x][space.y] = space;
-            }
-        }
-    }
-
-    /**
      * Loop through and apply necessary changes
      */
     public void refresh(){
@@ -163,7 +102,7 @@ public class Grid {
         }
     }
 
-    public void changeProbability(int type, int x, int y, int factor){
+    public void changeProbability(int type, int x, int y, float factor){
         g[x][y].potential[type] += factor;
     }
 
@@ -175,7 +114,7 @@ public class Grid {
      * @param factor
      * @param distance
      */
-    public void changeProbabilityAround(int type, int x, int y, int factor, int distance){
+    public void changeProbabilityAround(int type, int x, int y, float factor, int distance){
         int[] top = getSpace(TOP, x, y, distance);
         int[] right = getSpace(RIGHT, x, y, distance);
         int[] bottom = getSpace(BOTTOM, x, y, distance);
