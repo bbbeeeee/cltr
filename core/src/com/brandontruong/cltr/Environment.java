@@ -108,15 +108,14 @@ public class Environment {
                             break;
                         case Block.EMPTYBLOCK:
 
-
                         case Block.GOALBLOCK:
                             // skip, stationary
                             break;
                         case Block.IBLOCK:
                             // Other iblocks pull a little more potential
-//                            for(Sentinel c : sentinels){
-//
-//                            }
+                            for(Sentinel s : sentinels){
+
+                            }
                             break;
                         case Block.LIGHTBLOCK:
                             // skip, stationary
@@ -126,13 +125,6 @@ public class Environment {
                             break;
                         case Block.WATERBLOCK:
                             // random movement, not attracted to anything, only to adjacents
-//                            c = Sentinel.chance(.5);
-//                            if(c > .4){
-//                                grid.g[x][y].replace(BlockSpace.newBlock(2, x, y));
-//                                continue;
-//                            }
-//                            else
-//                                continue;
                         case Block.OBSTACLEBLOCK:
                             // skip, stationary
                             break;
