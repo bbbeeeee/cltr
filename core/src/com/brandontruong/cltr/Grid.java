@@ -10,12 +10,12 @@ import java.util.HashMap;
  * Created by btru on 5/6/15.
  */
 public class Grid {
-    public static final int TOP = 1;
+    public static final int ABOVE = 1;
     public static final int RIGHT = 2;
-    public static final int BOTTOM = 3;
+    public static final int BELOW = 3;
     public static final int LEFT  = 4;
     public static final int MAXROWS = 12;
-    public static final int MAXCOLS = 20;
+    public static final int MAXCOLS = 18;
 
     private int rows;
     private int cols;
@@ -41,18 +41,18 @@ public class Grid {
             // Step 1 - dimensions
             if(step == 1){
                 String[] dimensions = lines[i].split(",");
-                cols = Integer.parseInt(dimensions[0]) + 1;
-                rows = Integer.parseInt(dimensions[1]) + 1;
-                g = new BlockSpace[20][12];
+                cols = Integer.parseInt(dimensions[0]);
+                rows = Integer.parseInt(dimensions[1]);
+                g = new BlockSpace[18][12];
 
-                for(int x = 0; x < 20; x++){
+                for(int x = 0; x < 18; x++){
                     for(int y = 0; y < 12; y++){
                         g[x][y] = new BlockSpace(x, y);
                         g[x][y].add(BlockSpace.newBlock(Block.VOIDBLOCK, x, y));
                     }
                 }
                 // get offset for cols and rows
-                xOffset = (int) ((20 - cols) / 2);
+                xOffset = (int) ((18 - cols) / 2);
                 yOffset = (int) ((12 - rows) / 2);
 
                 // Add in empty blocks
@@ -74,8 +74,8 @@ public class Grid {
                 }
 
                 String[] block = lines[i].split(",");
-                int x = Integer.parseInt(block[1]);
-                int y = Integer.parseInt(block[2]);
+                int x = Integer.parseInt(block[1]) - 1;
+                int y = Integer.parseInt(block[2]) - 1;
                 int type = Integer.parseInt(block[0]);
                 g[x + xOffset][y + yOffset].add(BlockSpace.newBlock(type, x, y));
             }
@@ -102,28 +102,53 @@ public class Grid {
         }
     }
 
-    public void changeProbability(int type, int x, int y, float factor){
-        g[x][y].potential[type] += factor;
+    public void changeProbability(int type, int x, int y, double factor){
+        if(isNotOutOfBounds(x, y) && y < 12 && x < 18)
+            g[x][y].potential[type] += factor;
+    }
+
+    public void changeProbabilityTo(int type, int x, int y, double factor){
+        g[x][y].potential[type] = factor;
     }
 
     /**
-     * Change the probability of a certain blocktype around given x,y position to grow
+     * Change the probability of a certain blocktype around given x,y position to grow by adding factor
      * @param type
      * @param x
      * @param y
      * @param factor
      * @param distance
      */
-    public void changeProbabilityAround(int type, int x, int y, float factor, int distance){
-        int[] top = getSpace(TOP, x, y, distance);
+    public void changeProbabilityAround(int type, int x, int y, double factor, int distance){
+        int[] top = getSpace(ABOVE, x, y, distance);
         int[] right = getSpace(RIGHT, x, y, distance);
-        int[] bottom = getSpace(BOTTOM, x, y, distance);
+        int[] bottom = getSpace(BELOW, x, y, distance);
         int[] left = getSpace(LEFT, x, y, distance);
 
         changeProbability(type, top[0], top[1], factor);
         changeProbability(type, right[0], right[1], factor);
         changeProbability(type, bottom[0], bottom[1], factor);
         changeProbability(type, left[0], left[1], factor);
+    }
+
+    /**
+     * Similar to changeProbabilityAround, but changes it to the given factor
+     * @param type
+     * @param x
+     * @param y
+     * @param factor
+     * @param distance
+     */
+    public void changeProbabilityAroundTo(int type, int x, int y, double factor, int distance){
+        int[] top = getSpace(ABOVE, x, y, distance);
+        int[] right = getSpace(RIGHT, x, y, distance);
+        int[] bottom = getSpace(BELOW, x, y, distance);
+        int[] left = getSpace(LEFT, x, y, distance);
+
+        changeProbabilityTo(type, top[0], top[1], factor);
+        changeProbabilityTo(type, right[0], right[1], factor);
+        changeProbabilityTo(type, bottom[0], bottom[1], factor);
+        changeProbabilityTo(type, left[0], left[1], factor);
     }
 
     /**
@@ -149,7 +174,7 @@ public class Grid {
      */
     public int[] getSpace(int direction, int x, int y, int distance){
         switch(direction){
-            case(TOP):
+            case(ABOVE):
                 if(isNotOutOfBounds(x, y + distance))
                     return new int[]{x, y + distance};
                 else
@@ -159,7 +184,7 @@ public class Grid {
                     return new int[]{x + distance, y};
                 else
                     return new int[]{x, y};
-            case(BOTTOM):
+            case(BELOW):
                 if(isNotOutOfBounds(x, y - distance))
                     return new int[]{x, y - distance};
                 else

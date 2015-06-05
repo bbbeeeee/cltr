@@ -12,6 +12,9 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 /**
  * Created by btru on 5/10/15.
  */
@@ -35,25 +38,25 @@ public class EnvironmentRenderer {
 
         // camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
         // aspectRatio = (float)Gdx.graphics.getHeight() / (float)Gdx.graphics.getWidth();
-        // blockHeight = Gdx.graphics.getHeight() /  environment.grid.getRows();
+        blockHeight = Gdx.graphics.getHeight() /  12;
         // blockWidth = blockHeight;
-
+        blockWidth = blockHeight;
         Logger.CLTR("Rendering environment");
         Logger.CLTR("Rows - " + Integer.toString(environment.grid.getRows()));
         Logger.CLTR("Cols - " + Integer.toString(environment.grid.getCols()));
+        Logger.CLTR("Block height - " + Float.toString(blockHeight));
         camera = viewport.getCamera();
         shapeRenderer = new ShapeRenderer();
 
         shapeRenderer.setProjectionMatrix(viewport.getCamera().combined);
 
-        stage = new ToolbeltStage(viewport, e.toolbelt);
-        stage.setViewport(viewport);
-        Gdx.input.setInputProcessor(stage);
-
-        BlockActor block = new BlockActor(Block.BLAZEBLOCK, blockWidth, blockHeight);
+//        stage = new ToolbeltStage(viewport, e.toolbelt);
+//        stage.setViewport(viewport);
+//        Gdx.input.setInputProcessor(stage);
+//
+//        BlockActor block = new BlockActor(Block.BLAZEBLOCK, blockWidth, blockHeight);
 
         // stage.addActor(block);
-
     }
 
     /**
@@ -64,48 +67,19 @@ public class EnvironmentRenderer {
         Gdx.gl.glClearColor(.9f, .9f, .9f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        // Get grid dimensions in place
         aspectRatio = (float)Gdx.graphics.getHeight() / (float)Gdx.graphics.getWidth();
         blockHeight = Gdx.graphics.getHeight() / 12;
-        // blockWidth = Gdx.graphics.getWidth() / environment.grid.getCols();
-
-        // If everything's fitting, all good
-//        while(blockHeight * environment.grid.getRows() > Gdx.graphics.getHeight()
-//                && blockWidth * environment.grid.getCols() > Gdx.graphics.getWidth()){
-//            if(blockHeight > blockWidth)
-//                blockHeight--;
-//            else if(blockHeight < blockWidth)
-//                blockWidth--;
-//            else
-//                blockHeight--;
-//                blockWidth--;
-//        }
-//
-//        if(blockWidth < blockHeight)
-//            blockHeight = blockWidth;
-//        else
-//            blockWidth = blockHeight;
-
-        blockWidth = blockHeight;
-//        Logger.CLTR(Float.toString(Gdx.graphics.getHeight()));
-//        Logger.CLTR(Float.toString(environment.grid.getRows()));
-//        Logger.CLTR(Float.toString(blockWidth));
-
-        // Render basic grid map.
         shapeRenderer.setProjectionMatrix(camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        for(int i = 0; i < 20 ; i++){
+        for(int i = 0; i < 18; i++){
             for(int j = 0; j < 12; j++){
                 renderBlockSpace(environment.grid.g[i][j], i, j, blockWidth, blockHeight);
             }
         }
         shapeRenderer.end();
-
-        stage.draw();
     }
 
     public void resize(int width, int height){
-        // stage.getViewport().update( (int)(width * aspectRatio), height, false);
         Logger.CLTR("resized: " + Integer.toString(height));
         blockHeight = Gdx.graphics.getHeight() /  12;
         viewport.update(width, height, true);
@@ -124,7 +98,8 @@ public class EnvironmentRenderer {
         // Render grid
         for(int i = 0; i < blockspace.size(); i++){
             shapeRenderer.setColor(blockspace.get(i).color);
-            shapeRenderer.rect((x-1) * blockWidth, (y-1) * blockHeight,  blockWidth, blockHeight);
+            // Come up with a way to show both.
+            shapeRenderer.rect((x) * blockWidth, (y) * blockHeight,  blockWidth, blockHeight);
         }
     }
 

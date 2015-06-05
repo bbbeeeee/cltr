@@ -19,13 +19,14 @@ import java.util.ArrayList;
 public class BlockSpace extends ArrayList<Block>{
     public int x;
     public int y;
-    public float[] potential;
+    public double[] potential;
 
     public double attractiveness;
 
     public BlockSpace(int x, int y){
         setX(x);
         setY(y);
+        potential = new double[8];
     }
 
     public void replace(Block b){

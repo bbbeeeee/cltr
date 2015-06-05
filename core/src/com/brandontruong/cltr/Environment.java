@@ -1,7 +1,8 @@
 package com.brandontruong.cltr;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by btru on 5/10/15.
@@ -9,13 +10,20 @@ import com.badlogic.gdx.graphics.Texture;
 public class Environment {
     public Grid grid;
     public Toolbelt toolbelt;
-    public Environment(){
-
-    }
+    public ArrayList<Sentinel> sentinels;
+    private Timer timer;
 
     public Environment(Grid _grid){
         grid = _grid;
         toolbelt = _grid.toolbelt;
+        sentinels = new ArrayList<Sentinel>();
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                refresh();
+            }
+        }, 1000, 1000);
     }
 
     /**
@@ -33,8 +41,10 @@ public class Environment {
                     switch(b.getType()){
                         case Block.BLAZEBLOCK:
                             // Increase Blaze probability around this block
-                            grid.changeProbabilityAround(Block.BLAZEBLOCK, x, y, 2, 1); // should increase i in gradient.
+                            grid.changeProbabilityAround(Block.BLAZEBLOCK, x, y, 3, 1);
+                            grid.changeProbabilityAround(Block.BLAZEBLOCK, x, y, 1, 2);
                             // add change position to pull iblocks in this direction
+                            sentinels.add(new Sentinel(Block.BLAZEBLOCK, x, y));
                             break;
                         case Block.EMPTYBLOCK:
                             // Do nothing
@@ -43,13 +53,14 @@ public class Environment {
                             // Do nothing
                             break;
                         case Block.IBLOCK:
-                            // Increase probability around to become i
-                            grid.changeProbabilityAround(Block.IBLOCK, x, y, 1, 1);
+                            // Increase probability around to become i, distance 1 is higher, distance two is lower
+                            grid.changeProbabilityAround(Block.IBLOCK, x, y, 3, 1);
+                            grid.changeProbabilityAround(Block.IBLOCK, x, y, 0.5, 2);
                             break;
                         case Block.LIGHTBLOCK:
                             // Increase probability of i in the direction of this light when you
                             // analyze for an iBlock.
-                            
+                            sentinels.add(new Sentinel(Block.BLAZEBLOCK, x, y));
                             break;
                         case Block.VOIDBLOCK:
                             // Do nothing
@@ -57,6 +68,9 @@ public class Environment {
                         case Block.WATERBLOCK:
                             // Has small chance of growing, increases probability of i in direction,
                             // less strong of a pull than light
+                            grid.changeProbabilityAround(Block.WATERBLOCK, x, y, 1, 1);
+
+                            sentinels.add(new Sentinel(Block.WATERBLOCK, x, y));
                             break;
                         case Block.OBSTACLEBLOCK:
                             // Do nothing
@@ -68,8 +82,125 @@ public class Environment {
                 }
             }
         }
+
+        double c;
+        // Loop through each block again, and with changes taken into account to see potentials.
+        for(int x = 0; x < grid.getCols(); x++) {
+            for (int y = 0; y < grid.getRows(); y++) {
+                // Loop through each block in each blockspace.
+                for (Block b : grid.g[x][y]) {
+                    // Depending on the block, loop through sentinel to increase potentials, then as
+                    // long. Sentinels interact with blocks in question
+                    // This is for the
+                    switch (b.getType()) {
+                        case Block.BLAZEBLOCK:
+                            // Other blazeblocks pull a little more potential, water is also attractive
+                            for(Sentinel s : sentinels){
+                                if(s.blocktype == Block.BLAZEBLOCK) {
+
+                                }
+                                if(s.blocktype == Block.WATERBLOCK){
+
+                                }
+                            }
+
+
+                            break;
+                        case Block.EMPTYBLOCK:
+
+
+                        case Block.GOALBLOCK:
+                            // skip, stationary
+                            break;
+                        case Block.IBLOCK:
+                            // Other iblocks pull a little more potential
+//                            for(Sentinel c : sentinels){
+//
+//                            }
+                            break;
+                        case Block.LIGHTBLOCK:
+                            // skip, stationary
+                            break;
+                        case Block.VOIDBLOCK:
+                            // skip, stationary
+                            break;
+                        case Block.WATERBLOCK:
+                            // random movement, not attracted to anything, only to adjacents
+//                            c = Sentinel.chance(.5);
+//                            if(c > .4){
+//                                grid.g[x][y].replace(BlockSpace.newBlock(2, x, y));
+//                                continue;
+//                            }
+//                            else
+//                                continue;
+                        case Block.OBSTACLEBLOCK:
+                            // skip, stationary
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+        }
     }
 
+    public void handleI(Sentinel c, int x, int y){
+
+    }
+
+    public Force pullForce(int x, int y, int _x, int _y, double magnitude){
+        int xDif = _x - x;
+        int yDif = _y - y;
+        Force f = new Force();
+        int sign;
+
+        String axis = (Math.max(Math.abs(xDif), Math.abs(yDif)) == xDif) ? "x" : "y";
+        f.setMagnitude(magnitude);
+
+        if(axis == "x"){
+            sign = (int) Math.signum(xDif);
+
+            if(sign == 1)
+                f.setDir(Force.direction.RIGHT);
+            else
+                f.setDir(Force.direction.LEFT);
+
+            return f;
+        } else { // y
+            sign = (int) Math.signum(yDif);
+
+            if(sign == 1)
+                f.setDir(Force.direction.ABOVE);
+            else
+                f.setDir(Force.direction.RIGHT);
+
+            return f;
+        }
+    }
+
+    /**
+     * Checks if given space is valid to be placed down on
+     * @param type
+     * @param x
+     * @param y
+     * @return
+     */
+    public boolean isValidSpace(int type, int x, int y) {
+        if (grid.isNotOutOfBounds(x, y)) {
+            // Later check for symbiosis, but for now keep it simple
+            // Check if it's one of these blocks:
+            if(        type == Block.VOIDBLOCK
+                    || type == Block.GOALBLOCK
+                    || type == Block.OBSTACLEBLOCK) {
+
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     /**
      * Place a new block in a blockspace.

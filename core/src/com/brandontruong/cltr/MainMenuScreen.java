@@ -40,9 +40,6 @@ public class MainMenuScreen implements Screen{
         game.batch.setProjectionMatrix(camera.combined);
 
 
-        Grid g = new Grid(3, 3);
-
-
 
         sr.begin(ShapeRenderer.ShapeType.Filled);
         sr.setColor(0, 0, 0, 0);
