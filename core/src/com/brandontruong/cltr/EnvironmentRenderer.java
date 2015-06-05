@@ -97,9 +97,14 @@ public class EnvironmentRenderer {
 
         // Render grid
         for(int i = 0; i < blockspace.size(); i++){
-            shapeRenderer.setColor(blockspace.get(i).color);
-            // Come up with a way to show both.
-            shapeRenderer.rect((x) * blockWidth, (y) * blockHeight,  blockWidth, blockHeight);
+            try {
+                shapeRenderer.setColor(blockspace.get(i).color);
+            } catch (NullPointerException e){
+                Logger.CLTR(e.toString());
+            } finally {
+                // Come up with a way to show both.
+                shapeRenderer.rect((x) * blockWidth, (y) * blockHeight,  blockWidth, blockHeight);
+            }
         }
     }
 

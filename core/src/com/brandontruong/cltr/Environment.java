@@ -80,6 +80,14 @@ public class Environment {
                             break;
                     }
                 }
+
+                // Look at potentials and forces, and decide what you must become.
+
+                double c = Sentinel.chance(.5);
+                if(c > .4)
+                    grid.g[x][y].replace(BlockSpace.newBlock(1, x, y));
+                else
+                    grid.g[x][y].replace(BlockSpace.newBlock(2, x, y));
             }
         }
 
