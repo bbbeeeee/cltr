@@ -28,6 +28,7 @@ public class EnvironmentRenderer {
     private float blockWidth, blockHeight;
     private float aspectRatio;
     private Stage stage;
+    private float leftOffset;
 
     public EnvironmentRenderer(Environment e, Viewport _viewport){
         viewport = _viewport;
@@ -50,6 +51,7 @@ public class EnvironmentRenderer {
 
         shapeRenderer.setProjectionMatrix(viewport.getCamera().combined);
 
+        leftOffset = Gdx.graphics.getWidth() - blockWidth * 18;
 //        stage = new ToolbeltStage(viewport, e.toolbelt);
 //        stage.setViewport(viewport);
 //        Gdx.input.setInputProcessor(stage);
@@ -103,7 +105,7 @@ public class EnvironmentRenderer {
                 Logger.CLTR(e.toString());
             } finally {
                 // Come up with a way to show both.
-                shapeRenderer.rect((x) * blockWidth, (y) * blockHeight,  blockWidth, blockHeight);
+                shapeRenderer.rect(leftOffset + (x) * blockWidth, (y) * blockHeight,  blockWidth, blockHeight);
             }
         }
     }

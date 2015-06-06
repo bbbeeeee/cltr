@@ -104,11 +104,11 @@ public class Grid {
 
     public void changeProbability(int type, int x, int y, double factor){
         if(isNotOutOfBounds(x, y) && y < 12 && x < 18)
-            g[x][y].potential[type] += factor;
+            g[x][y].potentials[type] += factor;
     }
 
     public void changeProbabilityTo(int type, int x, int y, double factor){
-        g[x][y].potential[type] = factor;
+        g[x][y].potentials[type] = factor;
     }
 
     /**

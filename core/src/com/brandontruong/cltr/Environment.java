@@ -88,6 +88,7 @@ public class Environment {
         double c;
         // Loop through each block again, and with changes taken into account to see potentials.
         for(int x = 0; x < grid.getCols(); x++) {
+            blockspace:
             for (int y = 0; y < grid.getRows(); y++) {
                 // Loop through each block in each blockspace.
                 for (Block b : grid.g[x][y]) {
@@ -107,12 +108,12 @@ public class Environment {
                             }
 
 
-                            break;
+                            continue blockspace;
                         case Block.EMPTYBLOCK:
 
                         case Block.GOALBLOCK:
                             // skip, stationary
-                            break;
+                            continue blockspace;
                         case Block.IBLOCK:
                             // Other iblocks pull a little more potential
                             for(Sentinel s : sentinels){
@@ -138,15 +139,35 @@ public class Environment {
                 // Check potentials and decide what this block should become.
                 // Chance to become two blocks will come later.
 
-                c = Sentinel.chance(100);
-                if(c > 50)
-                    grid.g[x][y].replace(BlockSpace.newBlock(1, x, y));
-                else
-                    grid.g[x][y].replace(BlockSpace.newBlock(2, x, y));
+
+
+
             }
         }
     }
 
+    /**
+     *
+     * @param potentials
+     * @return Index of highest potential
+     */
+    public int getHighestPotential(double[] potentials){
+        int max = 0;
+
+        for(int i = 0; i < potentials.length; i++){
+            if(potentials[i] > potentials[max])
+                max = i;
+        }
+
+        return max;
+    }
+
+    /**
+     * Handle interactions for i with other block
+     * @param c
+     * @param x
+     * @param y
+     */
     public void handleI(Sentinel c, int x, int y){
 
     }
