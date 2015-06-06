@@ -81,13 +81,7 @@ public class Environment {
                     }
                 }
 
-                // Look at potentials and forces, and decide what you must become.
 
-                double c = Sentinel.chance(.5);
-                if(c > .4)
-                    grid.g[x][y].replace(BlockSpace.newBlock(1, x, y));
-                else
-                    grid.g[x][y].replace(BlockSpace.newBlock(2, x, y));
             }
         }
 
@@ -140,6 +134,15 @@ public class Environment {
                             break;
                     }
                 }
+
+                // Check potentials and decide what this block should become.
+                // Chance to become two blocks will come later.
+
+                c = Sentinel.chance(100);
+                if(c > 50)
+                    grid.g[x][y].replace(BlockSpace.newBlock(1, x, y));
+                else
+                    grid.g[x][y].replace(BlockSpace.newBlock(2, x, y));
             }
         }
     }
