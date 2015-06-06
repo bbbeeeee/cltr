@@ -1,6 +1,13 @@
 # cltr
 CLTR Game
 
+## Developing
+### Requirements
+ - Android Studio
+ - Java (6, 7, 8 --- android needs 6, for now)
+ - Gradle
+
+
 ## Just for reference right now
 ### Concept
 You live in the third dimension. You know that. But there are beings who live in just two dimensions. 
