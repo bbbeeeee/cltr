@@ -44,9 +44,11 @@ public class BlockSpace extends ArrayList<Block>{
     }
 
     public void makeVoid(){
-        this.clear();
-        VoidBlock v = new VoidBlock(x, y);
-        this.add(new VoidBlock(x, y));
+        this.replace(new VoidBlock(x, y));
+    }
+
+    public void applyForce(double factor){
+        potentials[Block.IBLOCK] += factor;
     }
 
     public static Block newBlock(int type, int x, int y){

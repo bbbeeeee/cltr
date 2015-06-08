@@ -8,15 +8,38 @@ public class Force {
         ABOVE, BELOW, LEFT, RIGHT
     }
 
-    private direction dir;
+    //TODO: make interaction factors here
+    public static double BLAZE_I = 1.0;
+
+    private int dir;
 
     private double magnitude;
 
-    public Force(){
+    public Force(int x, int y, int _x, int _y){
+        int xDif = _x - x;
+        int yDif = _y - y;
+        int sign;
 
+        String axis = (Math.max(Math.abs(xDif), Math.abs(yDif)) == xDif) ? "x" : "y";
+
+        if(axis == "x"){
+            sign = (int) Math.signum(xDif);
+            setMagnitude(Math.abs(xDif));
+            if(sign == 1)
+                setDir(Grid.RIGHT);
+            else
+                this.setDir(Grid.LEFT);
+        } else { // y
+            sign = (int) Math.signum(yDif);
+            setMagnitude(Math.abs(xDif));
+            if(sign == 1)
+                setDir(Grid.ABOVE);
+            else
+                setDir(Grid.RIGHT);
+        }
     }
 
-    public Force(direction _dir, double _mag){
+    public Force(int _dir, double _mag){
         dir = _dir;
         magnitude = _mag;
     }
@@ -29,11 +52,11 @@ public class Force {
         this.magnitude = magnitude;
     }
 
-    public direction getDir() {
+    public int getDir() {
         return dir;
     }
 
-    public void setDir(direction dir) {
+    public void setDir(int dir) {
         this.dir = dir;
     }
 

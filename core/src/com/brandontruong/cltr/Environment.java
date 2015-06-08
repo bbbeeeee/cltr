@@ -41,9 +41,10 @@ public class Environment {
                     switch(b.getType()){
                         case Block.BLAZEBLOCK:
                             // Increase Blaze probability around this block
-                            grid.changeProbabilityAround(Block.BLAZEBLOCK, x, y, 3, 1);
-                            grid.changeProbabilityAround(Block.BLAZEBLOCK, x, y, 1, 2);
+                            //grid.changeProbabilityAround(Block.BLAZEBLOCK, x, y, .1, 1);
+                            //grid.changeProbabilityAround(Block.BLAZEBLOCK, x, y, .05, 2);
                             // add change position to pull iblocks in this direction
+                            grid.changeProbabilityTo(Block.BLAZEBLOCK, x, y, 10);
                             sentinels.add(new Sentinel(Block.BLAZEBLOCK, x, y));
                             break;
                         case Block.EMPTYBLOCK:
@@ -54,8 +55,8 @@ public class Environment {
                             break;
                         case Block.IBLOCK:
                             // Increase probability around to become i, distance 1 is higher, distance two is lower
-                            grid.changeProbabilityAround(Block.IBLOCK, x, y, 3, 1);
-                            grid.changeProbabilityAround(Block.IBLOCK, x, y, 0.5, 2);
+                            //grid.changeProbabilityAround(Block.IBLOCK, x, y, .5, 1);
+                            //grid.changeProbabilityAround(Block.IBLOCK, x, y, 0.1, 2);
                             break;
                         case Block.LIGHTBLOCK:
                             // Increase probability of i in the direction of this light when you
@@ -68,7 +69,7 @@ public class Environment {
                         case Block.WATERBLOCK:
                             // Has small chance of growing, increases probability of i in direction,
                             // less strong of a pull than light
-                            grid.changeProbabilityAround(Block.WATERBLOCK, x, y, 1, 1);
+                            //grid.changeProbabilityAround(Block.WATERBLOCK, x, y, .01, 1);
 
                             sentinels.add(new Sentinel(Block.WATERBLOCK, x, y));
                             break;
@@ -80,44 +81,39 @@ public class Environment {
                             break;
                     }
                 }
-
-
             }
         }
 
         double c;
         // Loop through each block again, and with changes taken into account to see potentials.
         for(int x = 0; x < grid.getCols(); x++) {
-            blockspace:
             for (int y = 0; y < grid.getRows(); y++) {
                 // Loop through each block in each blockspace.
                 for (Block b : grid.g[x][y]) {
                     // Depending on the block, loop through sentinel to increase potentials, then as
                     // long. Sentinels interact with blocks in question
                     // This is for the
+                    Logger.CLTR(b.getType());
                     switch (b.getType()) {
                         case Block.BLAZEBLOCK:
                             // Other blazeblocks pull a little more potential, water is also attractive
                             for(Sentinel s : sentinels){
-                                if(s.blocktype == Block.BLAZEBLOCK) {
 
-                                }
-                                if(s.blocktype == Block.WATERBLOCK){
-
-                                }
                             }
 
-
-                            continue blockspace;
+                            break;
+                            //continue blockspace;
                         case Block.EMPTYBLOCK:
-
+                            break;
                         case Block.GOALBLOCK:
                             // skip, stationary
-                            continue blockspace;
+                            break;
+                            //continue blockspace;
                         case Block.IBLOCK:
                             // Other iblocks pull a little more potential
-                            for(Sentinel s : sentinels){
 
+                            for(Sentinel s : sentinels){
+                                handleIForce(s, grid, x, y);
                             }
                             break;
                         case Block.LIGHTBLOCK:
@@ -139,11 +135,40 @@ public class Environment {
                 // Check potentials and decide what this block should become.
                 // Chance to become two blocks will come later.
 
-
+                // Whichever one is highest.
+                int highest = getHighestPotential(grid.g[x][y].potentials);
+                grid.g[x][y].replace(highest);
 
 
             }
         }
+    }
+
+
+    public void applyForceToPotentials(Force f, BlockSpace b){
+
+    }
+
+    /**
+     * Handle interactions for i with other block
+     * @param s Sentinel to be analyzed for the given blockspace
+     * @param x iBlock x
+     * @param y iBlock y
+     */
+    public void handleIForce(Sentinel s, Grid g, int x, int y){
+        switch(s.blocktype){
+            case(Block.BLAZEBLOCK):
+                Force f = new Force(x, y, s.getX(), s.getY());
+                int[] space = g.getSpace(f.getDir(), x, y, 1);
+                double factor = f.getMagnitude() * 2;
+                g.changeProbability(Block.IBLOCK, space[0], space[1], factor);
+                /*
+                check distance for 1 from the original when you change it. then add
+                a moved already and then reduce the probability of the other surrounding blocks.
+                Or ---
+                 */
+        }
+
     }
 
     /**
@@ -163,51 +188,10 @@ public class Environment {
     }
 
     /**
-     * Handle interactions for i with other block
-     * @param c
-     * @param x
-     * @param y
-     */
-    public void handleI(Sentinel c, int x, int y){
-
-    }
-
-    public Force pullForce(int x, int y, int _x, int _y, double magnitude){
-        int xDif = _x - x;
-        int yDif = _y - y;
-        Force f = new Force();
-        int sign;
-
-        String axis = (Math.max(Math.abs(xDif), Math.abs(yDif)) == xDif) ? "x" : "y";
-        f.setMagnitude(magnitude);
-
-        if(axis == "x"){
-            sign = (int) Math.signum(xDif);
-
-            if(sign == 1)
-                f.setDir(Force.direction.RIGHT);
-            else
-                f.setDir(Force.direction.LEFT);
-
-            return f;
-        } else { // y
-            sign = (int) Math.signum(yDif);
-
-            if(sign == 1)
-                f.setDir(Force.direction.ABOVE);
-            else
-                f.setDir(Force.direction.RIGHT);
-
-            return f;
-        }
-    }
-
-    /**
      * Checks if given space is valid to be placed down on
      * @param type
      * @param x
      * @param y
-     * @return
      */
     public boolean isValidSpace(int type, int x, int y) {
         if (grid.isNotOutOfBounds(x, y)) {

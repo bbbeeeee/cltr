@@ -103,8 +103,10 @@ public class Grid {
     }
 
     public void changeProbability(int type, int x, int y, double factor){
-        if(isNotOutOfBounds(x, y) && y < 12 && x < 18)
+        if(isNotOutOfBounds(x, y) && y < 12 && x < 18) {
+            double r = Sentinel.chance(factor);
             g[x][y].potentials[type] += factor;
+        }
     }
 
     public void changeProbabilityTo(int type, int x, int y, double factor){
@@ -129,6 +131,8 @@ public class Grid {
         changeProbability(type, right[0], right[1], factor);
         changeProbability(type, bottom[0], bottom[1], factor);
         changeProbability(type, left[0], left[1], factor);
+        changeProbability(type, x, y, 10);
+        //TODO:case for each type of block saying if it should stay or go;
     }
 
     /**
@@ -145,6 +149,8 @@ public class Grid {
         int[] bottom = getSpace(BELOW, x, y, distance);
         int[] left = getSpace(LEFT, x, y, distance);
 
+        //TODO: make only one actually change, and then the rest are super low.
+        // May have expansion method to support fact
         changeProbabilityTo(type, top[0], top[1], factor);
         changeProbabilityTo(type, right[0], right[1], factor);
         changeProbabilityTo(type, bottom[0], bottom[1], factor);
@@ -197,6 +203,10 @@ public class Grid {
             default:
                 return new int[]{x, y};
         }
+    }
+
+    public static double distance(int x, int y, int _x, int _y){
+        return Math.sqrt(Math.abs(x-_x)^2 + Math.abs(y-_y)^2);
     }
 
     public int getRows() {
