@@ -9,4 +9,12 @@ public class Logger {
     public static void CLTR(String input){
         Gdx.app.log("CLTR", input);
     }
+
+    public static void CLTR(int input){
+        Gdx.app.log("CLTR", Integer.toString(input));
+    }
+
+    public static void CLTR(Double input){
+        Gdx.app.log("CLTR", Double.toString(input));
+    }
 }
