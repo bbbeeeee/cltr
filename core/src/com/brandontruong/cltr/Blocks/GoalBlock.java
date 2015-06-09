@@ -10,7 +10,7 @@ public class GoalBlock extends Block {
     public final double attractiveness = 0.0;
     //public static final Color color = new Color(.9f, .9f, .9f, 1);
     /**
-     * Standard BlazeBlock constructor. Default attractiveness.
+     * Standard GoalBlock constructor. Default attractiveness.
      * @param x X position
      * @param y Y position
      */

@@ -22,4 +22,18 @@ public class iBlock extends Block {
         setSymbiosis(1);
     }
 
+    public int prevX, prevY;
+
+    public void setPreviousCoordinates(int x, int y){
+        prevX = x;
+        prevY = y;
+    }
+
+    public int getPrevX() {
+        return prevX;
+    }
+
+    public int getPrevY() {
+        return prevY;
+    }
 }

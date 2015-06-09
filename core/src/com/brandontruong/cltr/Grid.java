@@ -3,9 +3,6 @@ package com.brandontruong.cltr;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 /**
  * Created by btru on 5/6/15.
  */
@@ -91,6 +88,11 @@ public class Grid {
         }
     }
 
+
+    public void makeCertain(int type, int x, int y){
+
+    }
+
     /**
      * Loop through and apply necessary changes
      */
@@ -102,15 +104,16 @@ public class Grid {
         }
     }
 
-    public void changeProbability(int type, int x, int y, double factor){
+    public void addProbability(int type, int x, int y, double factor){
         if(isNotOutOfBounds(x, y) && y < 12 && x < 18) {
-            double r = Sentinel.chance(factor);
             g[x][y].potentials[type] += factor;
         }
     }
 
     public void changeProbabilityTo(int type, int x, int y, double factor){
-        g[x][y].potentials[type] = factor;
+        if(isNotOutOfBounds(x, y) && y < 12 && x < 18) {
+            g[x][y].potentials[type] = factor;
+        }
     }
 
     /**
@@ -127,11 +130,10 @@ public class Grid {
         int[] bottom = getSpace(BELOW, x, y, distance);
         int[] left = getSpace(LEFT, x, y, distance);
 
-        changeProbability(type, top[0], top[1], factor);
-        changeProbability(type, right[0], right[1], factor);
-        changeProbability(type, bottom[0], bottom[1], factor);
-        changeProbability(type, left[0], left[1], factor);
-        changeProbability(type, x, y, 10);
+        addProbability(type, top[0], top[1], factor);
+        addProbability(type, right[0], right[1], factor);
+        addProbability(type, bottom[0], bottom[1], factor);
+        addProbability(type, left[0], left[1], factor);
         //TODO:case for each type of block saying if it should stay or go;
     }
 
@@ -155,6 +157,37 @@ public class Grid {
         changeProbabilityTo(type, right[0], right[1], factor);
         changeProbabilityTo(type, bottom[0], bottom[1], factor);
         changeProbabilityTo(type, left[0], left[1], factor);
+    }
+
+
+    public void changeOneProbabilityAroundRandom(int type, int x, int y, double factor){
+        double c = Sentinel.chance(1);
+        Logger.CLTR(c);
+        if(c <= .25){
+            changeProbabilityTo(type, x, y + 1, factor);
+        } else if(c > .25 && c <= .5){
+            changeProbabilityTo(type, x, y - 1, factor);
+        } else if(c > .5 && c <= .75){
+            changeProbabilityTo(type, x + 1, y, factor);
+        } else if(c > .5 && c < 1.0){
+            changeProbabilityTo(type, x - 1, y, factor);
+        } else {
+            changeProbabilityTo(type, x, y, 1);
+        }
+    }
+
+    /**
+     * Changes probability of a given block randomly to stay the same or not
+     * @param type
+     * @param x
+     * @param y
+     */
+    public void changeProbabilityRandom(int type, int x, int y){
+        double c = Sentinel.chance(1);
+        Logger.CLTR(c);
+        if(c >= .5){
+            changeProbabilityTo(type, x, y, 10);
+        }
     }
 
     /**
@@ -205,8 +238,8 @@ public class Grid {
         }
     }
 
-    public static double distance(int x, int y, int _x, int _y){
-        return Math.sqrt(Math.abs(x-_x)^2 + Math.abs(y-_y)^2);
+    public static int distance(int x, int y, int _x, int _y){
+        return (int) Math.sqrt(Math.pow(Math.abs(x - _x), 2) + Math.pow(Math.abs(y - _y), 2));
     }
 
     public int getRows() {
@@ -232,7 +265,7 @@ public class Grid {
      * @return Boolean value of whether the position is out of bounds
      */
     public boolean isNotOutOfBounds(int x, int y){
-        return (x > this.rows || x < 0 || y > this.cols || y < 0) ? false : true;
+        return (y > this.rows || y < 0 || x > this.cols || x < 0) ? false : true;
     }
 
 

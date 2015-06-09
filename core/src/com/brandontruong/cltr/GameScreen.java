@@ -28,14 +28,6 @@ public class GameScreen implements Screen, InputProcessor{
     public GameScreen(Grid grid, Viewport viewport) {
         environment = new Environment(grid);
         environmentRenderer = new EnvironmentRenderer(environment, viewport);
-
-        Timer.schedule(new Timer.Task() {
-                @Override
-                public void run() {
-                    environment.refresh();
-                }
-            }, 1000, 1000
-        );
     }
 
     @Override

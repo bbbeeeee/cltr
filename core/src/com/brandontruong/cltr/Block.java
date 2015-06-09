@@ -19,7 +19,8 @@ public class Block {
         LIGHTBLOCK = 5,
         VOIDBLOCK = 6,
         WATERBLOCK = 7,
-        OBSTACLEBLOCK = 8;
+        OBSTACLEBLOCK = 8,
+        FOODBLOCK = 9;
 
     /**
      * Coordinates of block. Easier if everything in the game readily knows its coordinates.
