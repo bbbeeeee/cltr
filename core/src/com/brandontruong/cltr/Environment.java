@@ -122,7 +122,7 @@ public class Environment {
 //                                handleIForce(s, grid, x, y);
 //                            }
 
-                            handleIForces(sentinels, grid, x + grid.xOffset, y + grid.yOffset);
+                            handleIForces(sentinels, grid, x, y);
                             //Logger.CLTR(grid.g[x][y].potentials[Block.IBLOCK]);
                             break;
                         case Block.LIGHTBLOCK:
@@ -146,6 +146,10 @@ public class Environment {
 
                 // Whichever one is highest.
                 int highest = getHighestPotential(grid.g[x][y].potentials);
+                Logger.CLTR("REPLACING");
+                Logger.CLTR(x);
+                Logger.CLTR(y);
+                Logger.CLTR("ENDED");
                 grid.g[x][y].replace(highest);
 
                 // IMPORTANT: special case of i moving onto goal, fire,
