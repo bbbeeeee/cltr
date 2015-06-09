@@ -136,9 +136,6 @@ public class Grid {
     }
 
     public void changeProbabilityTo(int type, int x, int y, double factor){
-        Logger.CLTR("Changing at:");
-        Logger.CLTR(x);
-        Logger.CLTR(y);
         if(isNotOutOfBounds(x, y) && y < 12 && x < 18) {
             g[x][y].potentials[type] = factor;
         }

@@ -146,10 +146,6 @@ public class Environment {
 
                 // Whichever one is highest.
                 int highest = getHighestPotential(grid.g[x][y].potentials);
-                Logger.CLTR("REPLACING");
-                Logger.CLTR(x);
-                Logger.CLTR(y);
-                Logger.CLTR("ENDED");
                 grid.g[x][y].replace(highest);
 
                 // IMPORTANT: special case of i moving onto goal, fire,
@@ -230,13 +226,7 @@ public class Environment {
         }
 
         space = g.getSpace(f.getDir(), x, y, 1);
-        Logger.CLTR("START");
-        Logger.CLTR(x);
-        Logger.CLTR(y);
-        Logger.CLTR(space[0]);
-        Logger.CLTR(space[1]);
         g.changeProbabilityTo(Block.IBLOCK, space[0], space[1], 10);
-        Logger.CLTR("END");
     }
 
     /**
