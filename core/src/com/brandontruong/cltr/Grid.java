@@ -3,6 +3,8 @@ package com.brandontruong.cltr;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 
+import java.util.HashMap;
+
 /**
  * Created by btru on 5/6/15.
  */
@@ -11,13 +13,14 @@ public class Grid {
     public static final int RIGHT = 2;
     public static final int BELOW = 3;
     public static final int LEFT  = 4;
+    public static final int HERE = 0;
     public static final int MAXROWS = 12;
     public static final int MAXCOLS = 18;
 
     private int rows;
     private int cols;
-    private int xOffset;
-    private int yOffset;
+    public int xOffset;
+    public int yOffset;
 
     public BlockSpace[][] g;
     public Toolbelt toolbelt;
@@ -73,7 +76,8 @@ public class Grid {
                 String[] block = lines[i].split(",");
                 int x = Integer.parseInt(block[1]) - 1;
                 int y = Integer.parseInt(block[2]) - 1;
-                int type = Integer.parseInt(block[0]);
+                int type = getTypeNum(block[0]);
+
                 g[x + xOffset][y + yOffset].add(BlockSpace.newBlock(type, x, y));
             }
 
@@ -89,8 +93,29 @@ public class Grid {
     }
 
 
-    public void makeCertain(int type, int x, int y){
 
+    public int getTypeNum(String type){
+        if(type.contains("blaze")){
+            return Block.BLAZEBLOCK;
+        } else if(type.contains("empty")) {
+            return Block.EMPTYBLOCK;
+        } else if(type.contains("food")){
+            return Block.FOODBLOCK;
+        } else if(type.contains("goal")){
+            return Block.LIGHTBLOCK;
+        } else if(type.contains("iblock")){
+            return Block.IBLOCK;
+        } else if(type.contains("light")){
+            return Block.LIGHTBLOCK;
+        } else if(type.contains("obstacle")){
+            return Block.OBSTACLEBLOCK;
+        } else if(type.contains("void")){
+            return Block.VOIDBLOCK;
+        } else if(type.contains("water")){
+            return Block.WATERBLOCK;
+        } else{
+            return Block.EMPTYBLOCK;
+        }
     }
 
     /**
@@ -111,6 +136,9 @@ public class Grid {
     }
 
     public void changeProbabilityTo(int type, int x, int y, double factor){
+        Logger.CLTR("Changing at:");
+        Logger.CLTR(x);
+        Logger.CLTR(y);
         if(isNotOutOfBounds(x, y) && y < 12 && x < 18) {
             g[x][y].potentials[type] = factor;
         }
@@ -213,6 +241,8 @@ public class Grid {
      */
     public int[] getSpace(int direction, int x, int y, int distance){
         switch(direction){
+            case(HERE):
+                return new int[]{x, y};
             case(ABOVE):
                 if(isNotOutOfBounds(x, y + distance))
                     return new int[]{x, y + distance};

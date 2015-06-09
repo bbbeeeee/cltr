@@ -8,6 +8,8 @@ import com.brandontruong.cltr.Blocks.VoidBlock;
 import com.brandontruong.cltr.Blocks.WaterBlock;
 import com.brandontruong.cltr.Blocks.iBlock;
 
+import java.util.HashMap;
+
 /**
  * Block parent class. Need to update Toolbelt and BlockSpace when new Blocks are added.
  */

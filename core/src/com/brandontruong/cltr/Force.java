@@ -1,5 +1,7 @@
 package com.brandontruong.cltr;
 
+import java.util.ArrayList;
+
 /**
  * Created by btru on 6/4/15.
  */
@@ -21,21 +23,21 @@ public class Force {
         int sign;
 
         String axis = (Math.max(Math.abs(xDif), Math.abs(yDif)) == xDif) ? "x" : "y";
-
+        setMagnitude(Grid.distance(x, y, _x, _y));
         if(axis == "x"){
             sign = (int) Math.signum(xDif);
-            setMagnitude(Math.abs(xDif));
+
             if(sign == 1)
                 setDir(Grid.RIGHT);
             else
                 this.setDir(Grid.LEFT);
         } else { // y
             sign = (int) Math.signum(yDif);
-            setMagnitude(Math.abs(xDif));
+
             if(sign == 1)
                 setDir(Grid.ABOVE);
             else
-                setDir(Grid.RIGHT);
+                setDir(Grid.BELOW);
         }
     }
 
@@ -43,6 +45,12 @@ public class Force {
         dir = _dir;
         magnitude = _mag;
     }
+
+//    public Force addTogether(ArrayList<Force> forces){
+//        for(Force f : forces){
+//
+//        }
+//    }
 
     public double getMagnitude() {
         return magnitude;

@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.brandontruong.cltr.Blocks.BlazeBlock;
 import com.brandontruong.cltr.Blocks.EmptyBlock;
+import com.brandontruong.cltr.Blocks.FoodBlock;
 import com.brandontruong.cltr.Blocks.GoalBlock;
 import com.brandontruong.cltr.Blocks.LightBlock;
 import com.brandontruong.cltr.Blocks.ObstacleBlock;
@@ -69,6 +70,8 @@ public class BlockSpace extends ArrayList<Block>{
                 return new WaterBlock(x, y);
             case Block.OBSTACLEBLOCK:
                 return new ObstacleBlock(x, y);
+            case Block.FOODBLOCK:
+                return new FoodBlock(x, y);
             default:
                 return new EmptyBlock(x, y);
         }
