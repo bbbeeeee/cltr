@@ -16,12 +16,13 @@ public class CltrGame extends Game {
 	Texture teal, orange;
     private Viewport viewport;
     OrthographicCamera camera;
-	
+
 	@Override
 	public void create () {
         Grid grid = new Grid("1.cltr");
         camera = new OrthographicCamera();
         ExtendViewport viewport = new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
+        // this.setScreen(new MainMenuScreen(viewport));
         this.setScreen(new GameScreen(grid, viewport));
 	}
 

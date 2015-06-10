@@ -24,6 +24,7 @@ public class Block {
         OBSTACLEBLOCK = 8,
         FOODBLOCK = 9;
 
+    public static Color ICOLOR = new Color(0.4f, 0.8f, 0.4f, 1);
     /**
      * Coordinates of block. Easier if everything in the game readily knows its coordinates.
      */

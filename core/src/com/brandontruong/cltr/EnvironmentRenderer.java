@@ -2,18 +2,10 @@ package com.brandontruong.cltr;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Created by btru on 5/10/15.
@@ -42,10 +34,10 @@ public class EnvironmentRenderer {
         blockHeight = Gdx.graphics.getHeight() /  12;
         // blockWidth = blockHeight;
         blockWidth = blockHeight;
-        Logger.CLTR("Rendering environment");
-        Logger.CLTR("Rows - " + Integer.toString(environment.grid.getRows()));
-        Logger.CLTR("Cols - " + Integer.toString(environment.grid.getCols()));
-        Logger.CLTR("Block height - " + Float.toString(blockHeight));
+        L.CLTR("Rendering environment");
+        L.CLTR("Rows - " + Integer.toString(environment.grid.getRows()));
+        L.CLTR("Cols - " + Integer.toString(environment.grid.getCols()));
+        L.CLTR("Block height - " + Float.toString(blockHeight));
         camera = viewport.getCamera();
         shapeRenderer = new ShapeRenderer();
 
@@ -82,7 +74,7 @@ public class EnvironmentRenderer {
     }
 
     public void resize(int width, int height){
-        Logger.CLTR("resized: " + Integer.toString(height));
+        L.CLTR("resized: " + Integer.toString(height));
         blockHeight = Gdx.graphics.getHeight() /  12;
         viewport.update(width, height, true);
     }
@@ -102,7 +94,7 @@ public class EnvironmentRenderer {
             try {
                 shapeRenderer.setColor(blockspace.get(i).color);
             } catch (NullPointerException e){
-                Logger.CLTR(e.toString());
+                L.CLTR(e.toString());
             } finally {
                 // Come up with a way to show both.
                 shapeRenderer.rect(leftOffset + (x) * blockWidth, (y) * blockHeight,  blockWidth, blockHeight);

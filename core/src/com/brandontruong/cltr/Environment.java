@@ -23,7 +23,7 @@ public class Environment {
             public void run() {
                 refresh();
             }
-        }, 1000, 300);
+        }, 1000, 1000);
     }
 
     /**
@@ -33,10 +33,11 @@ public class Environment {
     public void refresh(){
         sentinels.clear();
         // Loop through grid spaces.
+
         for(int x = grid.xOffset; x < grid.getCols() + grid.xOffset; x++){
-            for(int y = grid.yOffset; y < grid.getRows() +grid.yOffset; y++){
+            for(int y = grid.yOffset; y < grid.getRows() + grid.yOffset; y++){
                 // Loop through each block in each space.
-                grid.g[x][y].potentials = new double[8];
+                grid.g[x][y].potentials = new double[9];
                 for(Block b : grid.g[x][y]){
                     // Analyze the necessary changes
                     // Make changes to blockspaces as needed
@@ -46,7 +47,7 @@ public class Environment {
                             //grid.changeProbabilityAround(Block.BLAZEBLOCK, x, y, .1, 1);
                             //grid.changeProbabilityAround(Block.BLAZEBLOCK, x, y, .05, 2);
                             // add change position to pull iblocks in this direction
-                            grid.changeProbabilityTo(Block.BLAZEBLOCK, x, y, Sentinel.chance(6660));
+                            grid.changeProbabilityTo(Block.BLAZEBLOCK, x, y, 10);
                             sentinels.add(new Sentinel(Block.BLAZEBLOCK, x, y));
                             break;
                         case Block.EMPTYBLOCK:
@@ -94,7 +95,7 @@ public class Environment {
         double c;
         // Loop through each block again, and with changes taken into account to see potentials.
         for(int x = grid.xOffset; x < grid.getCols() + grid.xOffset; x++){
-            for(int y = grid.yOffset; y < grid.getRows() +grid.yOffset; y++){
+            for(int y = grid.yOffset; y < grid.getRows() + grid.yOffset; y++){
                 // Loop through each block in each blockspace.
                 for (Block b : grid.g[x][y]) {
                     // Depending on the block, loop through sentinel to increase potentials, then as
@@ -103,9 +104,6 @@ public class Environment {
                     switch (b.getType()) {
                         case Block.BLAZEBLOCK:
                             // Other blazeblocks pull a little more potential, water is also attractive
-                            for(Sentinel s : sentinels){
-
-                            }
 
                             break;
                             //continue blockspace;
@@ -116,14 +114,8 @@ public class Environment {
                             break;
                             //continue blockspace;
                         case Block.IBLOCK:
-                            // Other iblocks pull a little more potential
-
-//                            for(Sentinel s : sentinels){
-//                                handleIForce(s, grid, x, y);
-//                            }
-
                             handleIForces(sentinels, grid, x, y);
-                            //Logger.CLTR(grid.g[x][y].potentials[Block.IBLOCK]);
+                            //L.CLTR(grid.g[x][y].potentials[Block.IBLOCK]);
                             break;
                         case Block.LIGHTBLOCK:
                             // skip, stationary
@@ -146,6 +138,12 @@ public class Environment {
 
                 // Whichever one is highest.
                 int highest = getHighestPotential(grid.g[x][y].potentials);
+                if(highest != 2){
+                    L.CLTR(highest);
+                    L.CLTR(x);
+                    L.CLTR(y);
+                    L.CLTR("==================");
+                }
                 grid.g[x][y].replace(highest);
 
                 // IMPORTANT: special case of i moving onto goal, fire,
@@ -169,8 +167,8 @@ public class Environment {
             switch(s.blocktype){
                 case(Block.LIGHTBLOCK):
                 case(Block.BLAZEBLOCK):
-                    // Logger.CLTR(y);
-                    // Logger.CLTR(y - s.getY());
+                    // L.CLTR(y);
+                    // L.CLTR(y - s.getY());
                     if((x - s.getX()) != 0)
                         xForce += (s.getX() - x);
                     if((y - s.getY()) != 0)
@@ -226,7 +224,12 @@ public class Environment {
         }
 
         space = g.getSpace(f.getDir(), x, y, 1);
-        g.changeProbabilityTo(Block.IBLOCK, space[0], space[1], 10);
+        if(g.isNotOutOfBounds(space[0] - g.xOffset, space[1] - g.yOffset))
+            g.changeProbabilityTo(Block.IBLOCK, space[0], space[1], 10);
+        else {
+            L.CLTR("k");
+            g.changeProbabilityTo(Block.IBLOCK, x, y, 10);
+        }
     }
 
     /**

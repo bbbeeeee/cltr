@@ -3,8 +3,6 @@ package com.brandontruong.cltr;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 
-import java.util.HashMap;
-
 /**
  * Created by btru on 5/6/15.
  */
@@ -132,12 +130,18 @@ public class Grid {
     public void addProbability(int type, int x, int y, double factor){
         if(isNotOutOfBounds(x, y) && y < 12 && x < 18) {
             g[x][y].potentials[type] += factor;
+        } else {
+            L.CLTR("failed add probability");
         }
     }
 
     public void changeProbabilityTo(int type, int x, int y, double factor){
-        if(isNotOutOfBounds(x, y) && y < 12 && x < 18) {
+        if(isNotOutOfBounds(x, y)) {
             g[x][y].potentials[type] = factor;
+        } else {
+            L.CLTR("failed change probability");
+            L.CLTR(getCols());
+            L.CLTR(getRows());
         }
     }
 
@@ -187,7 +191,7 @@ public class Grid {
 
     public void changeOneProbabilityAroundRandom(int type, int x, int y, double factor){
         double c = Sentinel.chance(1);
-        Logger.CLTR(c);
+        L.CLTR(c);
         if(c <= .25){
             changeProbabilityTo(type, x, y + 1, factor);
         } else if(c > .25 && c <= .5){
@@ -209,7 +213,7 @@ public class Grid {
      */
     public void changeProbabilityRandom(int type, int x, int y){
         double c = Sentinel.chance(1);
-        Logger.CLTR(c);
+        L.CLTR(c);
         if(c >= .5){
             changeProbabilityTo(type, x, y, 10);
         }
