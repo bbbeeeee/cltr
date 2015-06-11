@@ -18,6 +18,10 @@ public class L {
         Gdx.app.log("CLTR", Double.toString(input));
     }
 
+    public static void CLTR(Float input){
+        Gdx.app.log("CLTR", Float.toString(input));
+    }
+
     public static void CLTR(boolean input){
         Gdx.app.log("CLTR", Boolean.toString(input));
     }
