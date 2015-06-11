@@ -15,6 +15,9 @@ import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import java.util.Iterator;
+import java.util.Map;
+
 /**
  * Created by btroo on 5/18/15.
  */
@@ -38,7 +41,36 @@ public class GameScreen implements Screen, InputProcessor{
 
     @Override
     public void show() {
+        int amount;
 
+        // make the table be oriented from top to bottom
+        table.top().left();
+        table.setX(0);
+        table.setY(0);
+
+        table.setWidth(environmentRenderer.leftOffset);
+        table.setHeight(Gdx.graphics.getHeight());
+
+        // offsets for the blocks
+        float x = (environmentRenderer.leftOffset - environmentRenderer.blockWidth * 2) / 2;
+        float y = Gdx.graphics.getHeight();
+
+        for(int i = 0; i < toolbelt.blocks.length; i++){
+            amount = toolbelt.blocks[i];
+            BlockActor b = new BlockActor(i,
+                    x,
+                    y,
+                    environmentRenderer.blockWidth,
+                    environmentRenderer.blockHeight);
+
+            if(amount != 0)
+                table.add(b).padTop(20);
+            y -= environmentRenderer.blockHeight;
+        }
+
+        toolbeltStage.addActor(table);
+
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override

@@ -56,6 +56,7 @@ public class Environment {
                             // Do nothing
                             break;
                         case Block.GOALBLOCK:
+                            grid.changeProbabilityTo(Block.GOALBLOCK, x, y, 10);
                             // Do nothing
                             break;
                         case Block.IBLOCK:
@@ -74,6 +75,7 @@ public class Environment {
 
                             break;
                         case Block.VOIDBLOCK:
+                            grid.changeProbabilityTo(Block.BLAZEBLOCK, x, y, 15);
                             // Do nothing
                             break;
                         case Block.WATERBLOCK:
@@ -145,8 +147,6 @@ public class Environment {
                 }
 
                 if(grid.isNotOutOfBounds(x, y)){
-
-
                     if(highest == Block.IBLOCK){
                         toChangeType = grid.g[x][y].get(0).getType();
                         L.CLTR(toChangeType);
@@ -172,13 +172,6 @@ public class Environment {
                     } else {
                         grid.g[x][y].replace(highest);
                     }
-//                    if(grid.g[x][y].get(0).getType() == Block.IBLOCK){
-//                        if(highest == Block.GOALBLOCK){
-//                        } else if(highest == Block.FOODBLOCK){
-//                        } else if(highest == Block.OBSTACLEBLOCK){
-//                        } else if(highest == Block.BLAZEBLOCK){
-//                        }
-//                    }
                 }
 
 

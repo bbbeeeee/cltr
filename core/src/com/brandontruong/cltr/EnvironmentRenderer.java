@@ -17,10 +17,11 @@ public class EnvironmentRenderer {
     private ShapeRenderer shapeRenderer;
     private Viewport viewport;
     private int worldHeight, worldWidth;
-    private float blockWidth, blockHeight;
     private float aspectRatio;
-    private Stage stage;
-    private float leftOffset;
+    public ToolbeltStage toolbeltStage;
+
+    public float leftOffset;
+    public float blockWidth, blockHeight;
 
     public EnvironmentRenderer(Environment e, Viewport _viewport){
         viewport = _viewport;
@@ -44,9 +45,7 @@ public class EnvironmentRenderer {
         shapeRenderer.setProjectionMatrix(viewport.getCamera().combined);
 
         leftOffset = Gdx.graphics.getWidth() - blockWidth * 18;
-        stage = new ToolbeltStage(viewport, e.toolbelt);
-        stage.setViewport(viewport);
-        Gdx.input.setInputProcessor(stage);
+
 //
 //        BlockActor block = new BlockActor(Block.BLAZEBLOCK, blockWidth, blockHeight);
         // generate actors based on what's in the toolbelt.
@@ -60,7 +59,7 @@ public class EnvironmentRenderer {
      */
     public void render() {
         camera.update();
-        Gdx.gl.glClearColor(.9f, .9f, .9f, 1);
+        Gdx.gl.glClearColor(1f, 1f, 1f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         aspectRatio = (float)Gdx.graphics.getHeight() / (float)Gdx.graphics.getWidth();

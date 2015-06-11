@@ -83,9 +83,9 @@ public class Grid {
             else if(step == 3){
                 String[] piece = lines[i].split(",");
 
-                int type = Integer.parseInt(piece[0]);
+                int type = getTypeNum(piece[0]);
                 int count = Integer.parseInt(piece[1]);
-                toolbelt.add(type, count);
+                toolbelt.add(type);
             }
         }
     }
@@ -100,7 +100,7 @@ public class Grid {
         } else if(type.contains("food")){
             return Block.FOODBLOCK;
         } else if(type.contains("goal")){
-            return Block.LIGHTBLOCK;
+            return Block.GOALBLOCK;
         } else if(type.contains("iblock")){
             return Block.IBLOCK;
         } else if(type.contains("light")){
