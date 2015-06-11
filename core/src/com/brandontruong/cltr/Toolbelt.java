@@ -10,21 +10,29 @@ import com.brandontruong.cltr.Blocks.WaterBlock;
 import com.brandontruong.cltr.Blocks.iBlock;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by btru on 5/10/15.
  */
-public class Toolbelt extends ArrayList<Integer> {
+public class Toolbelt {
+
+    int[] blocks;
 
     public Toolbelt(){
-        // this.add
+        blocks = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
     }
 
     public void use(int type){
-        this.set(type, this.get(type) - 1);
+        blocks[type] -= 1;
     }
 
     public void add(int type){
-        this.add(type, this.get(type) + 1);
+        blocks[type] += 1;
+    }
+
+    public int get(int type){
+        return blocks[type];
     }
 }
