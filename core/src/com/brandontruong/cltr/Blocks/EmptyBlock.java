@@ -15,7 +15,7 @@ public class EmptyBlock extends Block{
      * @param y Y position
      */
     public EmptyBlock(int x, int y){
-        setColor(new Color(1, 1, 1, 1));
+        setColor(new Color(.9f, .9f, .9f, 1));
         setX(x);
         setY(y);
         setType(EMPTYBLOCK);
