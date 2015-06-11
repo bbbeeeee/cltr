@@ -12,31 +12,49 @@ import com.brandontruong.cltr.Blocks.BlazeBlock;
 public class BlockActor extends Actor {
     Texture texture;
 
-    public BlockActor(int type, float height, float width){
+    public BlockActor(int type, float x, float y, float width, float height){
         switch(type){
             case Block.BLAZEBLOCK:
                 texture = new Texture(Gdx.files.internal("blaze.png"));
                 break;
             case Block.EMPTYBLOCK:
+                texture = new Texture(Gdx.files.internal("empty.png"));
                 break;
             case Block.GOALBLOCK:
+                texture = new Texture(Gdx.files.internal("goal.png"));
                 break;
             case Block.IBLOCK:
+                texture = new Texture(Gdx.files.internal("i.png"));
                 break;
             case Block.LIGHTBLOCK:
+                texture = new Texture(Gdx.files.internal("light.png"));
                 break;
             case Block.VOIDBLOCK:
+                texture = new Texture(Gdx.files.internal("void.png"));
                 break;
             case Block.WATERBLOCK:
+                texture = new Texture(Gdx.files.internal("water.png"));
                 break;
+            case Block.OBSTACLEBLOCK:
+                texture = new Texture(Gdx.files.internal("obstacle.png"));
+                break;
+            case Block.FOODBLOCK:
+                texture = new Texture(Gdx.files.internal("food.png"));
+                break;
+            default:
+                texture = new Texture(Gdx.files.internal("blaze.png"));
         }
 
-        setBounds(getX(), getY(), width, height);
+        setX(x);
+        setY(y);
+        setHeight(height);
+        setWidth(width);
+        setBounds(x, y, width, height);
     }
 
     @Override
     public void draw(Batch batch, float alpha){
-        batch.draw(texture, this.getX(), this.getY());
+        batch.draw(texture, this.getX(), this.getY(), getWidth(), getHeight());
     }
 
 }
