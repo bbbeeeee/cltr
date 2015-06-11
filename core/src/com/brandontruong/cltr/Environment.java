@@ -23,7 +23,7 @@ public class Environment {
             public void run() {
                 refresh();
             }
-        }, 1000, 1000);
+        }, 1000, 500);
     }
 
     /**
@@ -33,6 +33,8 @@ public class Environment {
     public void refresh(){
         sentinels.clear();
         // Loop through grid spaces.
+        int highest;
+        int toChangeType;
 
         for(int x = grid.xOffset; x < grid.getCols() + grid.xOffset; x++){
             for(int y = grid.yOffset; y < grid.getRows() + grid.yOffset; y++){
@@ -137,14 +139,50 @@ public class Environment {
                 // Chance to become two blocks will come later.
 
                 // Whichever one is highest.
-                int highest = getHighestPotential(grid.g[x][y].potentials);
+                highest = getHighestPotential(grid.g[x][y].potentials);
                 if(highest != 2){
-                    L.CLTR(highest);
-                    L.CLTR(x);
-                    L.CLTR(y);
-                    L.CLTR("==================");
+
                 }
-                grid.g[x][y].replace(highest);
+
+                if(grid.isNotOutOfBounds(x, y)){
+
+
+                    if(highest == Block.IBLOCK){
+                        toChangeType = grid.g[x][y].get(0).getType();
+                        L.CLTR(toChangeType);
+                        switch(toChangeType){
+                            case(Block.GOALBLOCK):
+                                // Win game.
+                                L.CLTR("Winner!");
+                                break;
+                            case(Block.FOODBLOCK):
+                                // Acquire food.
+                                L.CLTR("Food Acquired!");
+                                break;
+                            case(Block.OBSTACLEBLOCK):
+                                // do nothing, make the current block certain
+                                L.CLTR("Hit obstacle");
+                                break;
+                            case(Block.BLAZEBLOCK):
+                                // either
+                                L.CLTR("Hit fire, you lose!");
+                                break;
+                        }
+                        grid.g[x][y].replace(highest);
+                    } else {
+                        grid.g[x][y].replace(highest);
+                    }
+//                    if(grid.g[x][y].get(0).getType() == Block.IBLOCK){
+//                        if(highest == Block.GOALBLOCK){
+//                        } else if(highest == Block.FOODBLOCK){
+//                        } else if(highest == Block.OBSTACLEBLOCK){
+//                        } else if(highest == Block.BLAZEBLOCK){
+//                        }
+//                    }
+                }
+
+
+
 
                 // IMPORTANT: special case of i moving onto goal, fire,
                 // or food should go here
@@ -159,19 +197,19 @@ public class Environment {
      * @param x iBlock x
      * @param y iBlock y
      */
-    public void handleIForces(ArrayList<Sentinel> sentinels, Grid g, int x, int y){
+    public void handleIForces(ArrayList<Sentinel> sentinels, Grid g, int x, int y) {
         Force f;
 
         double xForce = 0, yForce = 0;
-        for(Sentinel s : sentinels){
-            switch(s.blocktype){
-                case(Block.LIGHTBLOCK):
-                case(Block.BLAZEBLOCK):
+        for (Sentinel s : sentinels) {
+            switch (s.blocktype) {
+                case (Block.LIGHTBLOCK):
+                case (Block.BLAZEBLOCK):
                     // L.CLTR(y);
                     // L.CLTR(y - s.getY());
-                    if((x - s.getX()) != 0)
+                    if ((x - s.getX()) != 0)
                         xForce += (s.getX() - x);
-                    if((y - s.getY()) != 0)
+                    if ((y - s.getY()) != 0)
                         yForce += (s.getY() - y);
                     // forces.add(new Force(x, y, s.getX(), s.getY()));
 
@@ -180,9 +218,9 @@ public class Environment {
                     //g.changeProbabilityTo(Block.IBLOCK, space[0], space[1], 6);
 
                     break;
-                case(Block.FOODBLOCK):
+                case (Block.FOODBLOCK):
                     break;
-                case(Block.WATERBLOCK):
+                case (Block.WATERBLOCK):
                     break;
             }
         }
@@ -190,32 +228,30 @@ public class Environment {
         int sign;
         int[] space;
 
-        checkNextPlace:
-        if(xForce == yForce && xForce != 0) {
+        if (xForce == yForce && xForce != 0 && yForce != 0) {
             double c = Sentinel.chance(1);
-
-            if(c < .5){
-                if(Math.signum(xForce) == 1){
+            if (c < .5) {
+                if (Math.signum(xForce) == 1) {
                     f = new Force(Grid.RIGHT, Math.abs(xForce));
                 } else {
                     f = new Force(Grid.LEFT, Math.abs(xForce));
                 }
             } else {
-                if(Math.signum(yForce) == 1){
+                if (Math.signum(yForce) == 1) {
                     f = new Force(Grid.ABOVE, Math.abs(xForce));
                 } else {
                     f = new Force(Grid.BELOW, Math.abs(xForce));
                 }
             }
-        } else if(xForce > yForce){
+        } else if (Math.abs(xForce) > Math.abs(yForce)) {
             sign = (int) Math.signum(xForce);
-            if(sign == 1)
+            if (sign == 1)
                 f = new Force(Grid.RIGHT, Math.abs(xForce));
             else
                 f = new Force(Grid.LEFT, Math.abs(xForce));
-        } else if(xForce < yForce) { // y
+        } else if (Math.abs(xForce) < Math.abs(yForce)) { // y
             sign = (int) Math.signum(yForce);
-            if(sign == 1)
+            if (sign == 1)
                 f = new Force(Grid.ABOVE, Math.abs(xForce));
             else
                 f = new Force(Grid.BELOW, Math.abs(xForce));
@@ -224,11 +260,10 @@ public class Environment {
         }
 
         space = g.getSpace(f.getDir(), x, y, 1);
-        if(g.isNotOutOfBounds(space[0] - g.xOffset, space[1] - g.yOffset))
-            g.changeProbabilityTo(Block.IBLOCK, space[0], space[1], 10);
-        else {
-            L.CLTR("k");
-            g.changeProbabilityTo(Block.IBLOCK, x, y, 10);
+        if (g.isNotOutOfBounds(space[0], space[1])) {
+            g.changeProbabilityTo(Block.IBLOCK, space[0], space[1], 11);
+        } else {
+            g.changeProbabilityTo(Block.IBLOCK, x, y, 11);
         }
     }
 
