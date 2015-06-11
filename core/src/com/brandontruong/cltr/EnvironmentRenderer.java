@@ -44,12 +44,14 @@ public class EnvironmentRenderer {
         shapeRenderer.setProjectionMatrix(viewport.getCamera().combined);
 
         leftOffset = Gdx.graphics.getWidth() - blockWidth * 18;
-//        stage = new ToolbeltStage(viewport, e.toolbelt);
-//        stage.setViewport(viewport);
-//        Gdx.input.setInputProcessor(stage);
+        stage = new ToolbeltStage(viewport, e.toolbelt);
+        stage.setViewport(viewport);
+        Gdx.input.setInputProcessor(stage);
 //
 //        BlockActor block = new BlockActor(Block.BLAZEBLOCK, blockWidth, blockHeight);
-
+        // generate actors based on what's in the toolbelt.
+        // display numbers next to them
+        // when active, put a white or black border around them.
         // stage.addActor(block);
     }
 

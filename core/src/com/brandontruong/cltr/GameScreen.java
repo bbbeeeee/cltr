@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -24,10 +25,15 @@ public class GameScreen implements Screen, InputProcessor{
     private BitmapFont font;
     private ShapeRenderer sr = new ShapeRenderer();
     private Stage stage;
+    private Toolbelt toolbelt;
+    private ToolbeltStage toolbeltStage;
+    private Table table = new Table();
 
     public GameScreen(Grid grid, Viewport viewport) {
         environment = new Environment(grid);
         environmentRenderer = new EnvironmentRenderer(environment, viewport);
+        toolbelt = grid.toolbelt;
+        toolbeltStage = new ToolbeltStage(viewport, toolbelt);
     }
 
     @Override
@@ -39,6 +45,8 @@ public class GameScreen implements Screen, InputProcessor{
     public void render(float delta) {
         environment.update(delta);
         environmentRenderer.render();
+        toolbeltStage.act();
+        toolbeltStage.draw();
     }
 
     @Override
