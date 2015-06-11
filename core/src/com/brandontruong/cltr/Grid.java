@@ -32,7 +32,7 @@ public class Grid {
         FileHandle f = Gdx.files.internal("maps/" + file);
         String text = f.readString();
         String[] lines = text.split("\n");
-        toolbelt = new Toolbelt(0, 0, 0, 0, 0, 0);
+        toolbelt = new Toolbelt();
 
 
         for(int i = 0; i < lines.length; i++){
@@ -83,7 +83,7 @@ public class Grid {
             else if(step == 3){
                 String[] piece = lines[i].split(",");
 
-                String type = piece[0];
+                int type = Integer.parseInt(piece[0]);
                 int count = Integer.parseInt(piece[1]);
                 toolbelt.add(type, count);
             }
@@ -140,8 +140,7 @@ public class Grid {
             g[x][y].potentials[type] = factor;
         } else {
             L.CLTR("failed change probability");
-            L.CLTR(getCols());
-            L.CLTR(getRows());
+
         }
     }
 
