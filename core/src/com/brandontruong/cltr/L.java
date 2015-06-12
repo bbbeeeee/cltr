@@ -25,4 +25,8 @@ public class L {
     public static void CLTR(boolean input){
         Gdx.app.log("CLTR", Boolean.toString(input));
     }
+
+    public static void line(){
+        Gdx.app.log("----", "----");
+    }
 }
