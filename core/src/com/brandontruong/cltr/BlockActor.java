@@ -41,8 +41,11 @@ public class BlockActor extends Actor {
             case Block.FOODBLOCK:
                 texture = new Texture(Gdx.files.internal("food.png"));
                 break;
+            case Block.SELECTEDBLOCK:
+                texture = new Texture(Gdx.files.internal("food.png"));
+                break;
             default:
-                texture = new Texture(Gdx.files.internal("blaze.png"));
+                texture = new Texture(Gdx.files.internal("empty.png"));
         }
 
         setX(x);
