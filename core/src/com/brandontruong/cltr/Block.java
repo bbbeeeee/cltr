@@ -14,15 +14,16 @@ import java.util.HashMap;
  * Block parent class. Need to update Toolbelt and BlockSpace when new Blocks are added.
  */
 public class Block {
-    public static final int BLAZEBLOCK = 1,
-        EMPTYBLOCK = 2,
-        GOALBLOCK = 3,
-        IBLOCK = 4,
-        LIGHTBLOCK = 5,
-        VOIDBLOCK = 6,
-        WATERBLOCK = 7,
-        OBSTACLEBLOCK = 8,
-        FOODBLOCK = 9;
+    public static final int SELECTEDBLOCK = -1;
+    public static final int BLAZEBLOCK = 1;
+    public static final int EMPTYBLOCK = 2;
+    public static final int GOALBLOCK = 3;
+    public static final int IBLOCK = 4;
+    public static final int LIGHTBLOCK = 5;
+    public static final int VOIDBLOCK = 6;
+    public static final int WATERBLOCK = 7;
+    public static final int OBSTACLEBLOCK = 8;
+    public static final int FOODBLOCK = 9;
 
     public static Color ICOLOR = new Color(0.4f, 0.8f, 0.4f, 1);
     /**
