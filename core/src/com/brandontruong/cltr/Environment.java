@@ -39,64 +39,38 @@ public class Environment {
         for(int x = grid.xOffset; x < grid.getCols() + grid.xOffset; x++){
             for(int y = grid.yOffset; y < grid.getRows() + grid.yOffset; y++){
                 // Loop through each block in each space.
-                grid.g[x][y].potentials = new double[9];
+                grid.g[x][y].potentials = new int[9];
                 for(Block b : grid.g[x][y]){
                     // Analyze the necessary changes
                     // Make changes to blockspaces as needed
                     switch(b.getType()){
+                        case Block.OBSTACLEBLOCK:
+
+                            break;
                         case Block.BLAZEBLOCK:
-                            // Increase Blaze probability around this block
-                            //grid.changeProbabilityAround(Block.BLAZEBLOCK, x, y, .1, 1);
-                            //grid.changeProbabilityAround(Block.BLAZEBLOCK, x, y, .05, 2);
-                            // add change position to pull iblocks in this direction
                             grid.changeProbabilityTo(Block.BLAZEBLOCK, x, y, 10);
                             sentinels.add(new Sentinel(Block.BLAZEBLOCK, x, y));
                             break;
-                        case Block.EMPTYBLOCK:
-                            // Do nothing
-                            break;
                         case Block.GOALBLOCK:
                             grid.changeProbabilityTo(Block.GOALBLOCK, x, y, 10);
-                            // Do nothing
                             break;
                         case Block.IBLOCK:
-                            // Increase probability around to become i, distance 1 is higher, distance two is lower
-                            //grid.changeProbabilityAround(Block.IBLOCK, x, y, .5, 1);
-                            //grid.changeProbabilityAround(Block.IBLOCK, x, y, 0.1, 2);
-                            // grid.changeProbabilityAround(Block.IBLOCK, x, y, .1, 1);
                             grid.changeProbabilityTo(Block.IBLOCK, x, y, 0);
-                            // grid.changeOneProbabilityAroundRandom(Block.IBLOCK, x, y, Sentinel.chance(10000));
-
                             break;
                         case Block.LIGHTBLOCK:
-                            // Increase probability of i in the direction of this light when you
-                            // analyze for an iBlock.
                             sentinels.add(new Sentinel(Block.BLAZEBLOCK, x, y));
-
+                            break;
+                        case Block.WATERBLOCK:
+                            sentinels.add(new Sentinel(Block.WATERBLOCK, x, y));
                             break;
                         case Block.VOIDBLOCK:
                             grid.changeProbabilityTo(Block.BLAZEBLOCK, x, y, 15);
-                            // Do nothing
-                            break;
-                        case Block.WATERBLOCK:
-                            // Has small chance of growing, increases probability of i in direction,
-                            // less strong of a pull than light
-                            //grid.changeProbabilityAround(Block.WATERBLOCK, x, y, .01, 1);
-
-                            sentinels.add(new Sentinel(Block.WATERBLOCK, x, y));
-                            break;
-                        case Block.OBSTACLEBLOCK:
-                            // Do nothing
-                            break;
-                        default:
-                            // Do nothing
                             break;
                     }
                 }
             }
         }
 
-        double c;
         // Loop through each block again, and with changes taken into account to see potentials.
         for(int x = grid.xOffset; x < grid.getCols() + grid.xOffset; x++){
             for(int y = grid.yOffset; y < grid.getRows() + grid.yOffset; y++){
@@ -104,21 +78,15 @@ public class Environment {
                 for (Block b : grid.g[x][y]) {
                     // Depending on the block, loop through sentinel to increase potentials, then as
                     // long. Sentinels interact with blocks in question
-                    // This is for the
                     switch (b.getType()) {
                         case Block.BLAZEBLOCK:
-                            // Other blazeblocks pull a little more potential, water is also attractive
-
-                            break;
-                            //continue blockspace;
-                        case Block.EMPTYBLOCK:
                             break;
                         case Block.GOALBLOCK:
                             // skip, stationary
                             break;
                             //continue blockspace;
                         case Block.IBLOCK:
-                            handleIForces(sentinels, grid, x, y);
+                            handleIForces(sentinels, x, y);
                             //L.CLTR(grid.g[x][y].potentials[Block.IBLOCK]);
                             break;
                         case Block.LIGHTBLOCK:
@@ -132,8 +100,6 @@ public class Environment {
                         case Block.OBSTACLEBLOCK:
                             // skip, stationary
                             break;
-                        default:
-                            break;
                     }
                 }
 
@@ -141,45 +107,40 @@ public class Environment {
                 // Chance to become two blocks will come later.
 
                 // Whichever one is highest.
+            }
+        }
+
+        for(int x = grid.xOffset; x < grid.getCols() + grid.xOffset; x++){
+            for(int y = grid.yOffset; y < grid.getRows() + grid.yOffset; y++) {
                 highest = getHighestPotential(grid.g[x][y].potentials);
-                if(highest != 2){
 
-                }
+                if (highest == Block.IBLOCK) {
 
-                if(grid.isNotOutOfBounds(x, y)){
-                    if(highest == Block.IBLOCK){
-                        toChangeType = grid.g[x][y].get(0).getType();
-                        L.CLTR(toChangeType);
-                        switch(toChangeType){
-                            case(Block.GOALBLOCK):
-                                // Win game.
-                                L.CLTR("Winner!");
-                                break;
-                            case(Block.FOODBLOCK):
-                                // Acquire food.
-                                L.CLTR("Food Acquired!");
-                                break;
-                            case(Block.OBSTACLEBLOCK):
-                                // do nothing, make the current block certain
-                                L.CLTR("Hit obstacle");
-                                break;
-                            case(Block.BLAZEBLOCK):
-                                // either
-                                L.CLTR("Hit fire, you lose!");
-                                break;
-                        }
-                        grid.g[x][y].replace(highest);
-                    } else {
-                        grid.g[x][y].replace(highest);
+                    toChangeType = grid.g[x][y].get(0).getType();
+                    switch (toChangeType) {
+                        case (Block.GOALBLOCK):
+                            // Win game.
+                            L.CLTR("Winner!");
+                            break;
+                        case (Block.FOODBLOCK):
+                            // Acquire food.
+                            L.CLTR("Food Acquired!");
+                            break;
+                        case (Block.OBSTACLEBLOCK):
+                            // do nothing, make the current block certain
+                            L.CLTR("Hit obstacle");
+                            break;
+                        case (Block.BLAZEBLOCK):
+                            // either
+                            L.CLTR("Hit fire, you lose!");
+                            break;
                     }
+
+                    grid.g[x][y].replace(highest);
+                } else {
+                    grid.g[x][y].replace(highest);
                 }
-
-
-
-
-                // IMPORTANT: special case of i moving onto goal, fire,
-                // or food should go here
-
+                // grid.g[x][y].replace(Block.LIGHTBLOCK);
             }
         }
     }
@@ -190,9 +151,8 @@ public class Environment {
      * @param x iBlock x
      * @param y iBlock y
      */
-    public void handleIForces(ArrayList<Sentinel> sentinels, Grid g, int x, int y) {
+    public void handleIForces(ArrayList<Sentinel> sentinels, int x, int y) {
         Force f;
-
         double xForce = 0, yForce = 0;
         for (Sentinel s : sentinels) {
             switch (s.blocktype) {
@@ -218,10 +178,12 @@ public class Environment {
             }
         }
 
+
         int sign;
         int[] space;
 
-        if (xForce == yForce && xForce != 0 && yForce != 0) {
+        if (xForce == yForce && xForce != 0) {
+            L.CLTR("The same");
             double c = Sentinel.chance(1);
             if (c < .5) {
                 if (Math.signum(xForce) == 1) {
@@ -240,23 +202,34 @@ public class Environment {
             sign = (int) Math.signum(xForce);
             if (sign == 1)
                 f = new Force(Grid.RIGHT, Math.abs(xForce));
-            else
+            else if(sign == -1){
                 f = new Force(Grid.LEFT, Math.abs(xForce));
+            }
+
+            else
+                f = new Force(Grid.HERE, 1);
         } else if (Math.abs(xForce) < Math.abs(yForce)) { // y
             sign = (int) Math.signum(yForce);
             if (sign == 1)
                 f = new Force(Grid.ABOVE, Math.abs(xForce));
-            else
+            else if(sign == -1)
                 f = new Force(Grid.BELOW, Math.abs(xForce));
+            else
+                f = new Force(Grid.HERE, 1);
         } else {
             f = new Force(Grid.HERE, 1);
         }
 
-        space = g.getSpace(f.getDir(), x, y, 1);
-        if (g.isNotOutOfBounds(space[0], space[1])) {
-            g.changeProbabilityTo(Block.IBLOCK, space[0], space[1], 11);
+        space = grid.getSpace(f.getDir(), x, y, 1);
+
+        if (grid.isNotOutOfBounds(space[0], space[1])) {
+//            L.CLTR(space[0] - grid.xOffset);
+            grid.changeProbabilityTo(Block.IBLOCK, space[0], space[1], 13);
+//            L.CLTR(grid.g[space[0]][space[1]].potentials[Block.IBLOCK]);
+            // grid.g[space[0] + grid.xOffset][space[1] + grid.yOffset].replace(Block.IBLOCK);
         } else {
-            g.changeProbabilityTo(Block.IBLOCK, x, y, 11);
+            L.CLTR("Out of bounds");
+            grid.changeProbabilityTo(Block.IBLOCK, x, y, 11);
         }
     }
 
@@ -265,9 +238,9 @@ public class Environment {
      * @param potentials
      * @return Index of highest potential
      */
-    public int getHighestPotential(double[] potentials){
+    public int getHighestPotential(int[] potentials){
         int max = 0;
-        double maxPotential = 0;
+        int maxPotential = 0;
 
         for(int i = 0; i < potentials.length; i++){
             if(potentials[i] > potentials[max]) {
@@ -276,7 +249,7 @@ public class Environment {
             }
         }
 
-        if(maxPotential >= 5) {
+        if(maxPotential > 0) {
             return max;
         } else {
             return Block.EMPTYBLOCK;

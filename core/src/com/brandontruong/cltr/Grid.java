@@ -128,19 +128,18 @@ public class Grid {
     }
 
     public void addProbability(int type, int x, int y, double factor){
-        if(isNotOutOfBounds(x, y) && y < 12 && x < 18) {
+        if(isNotOutOfBounds(x - xOffset, y - yOffset) && y < 12 && x < 18) {
             g[x][y].potentials[type] += factor;
         } else {
             L.CLTR("failed add probability");
         }
     }
 
-    public void changeProbabilityTo(int type, int x, int y, double factor){
-        if(isNotOutOfBounds(x, y)) {
+    public void changeProbabilityTo(int type, int x, int y, int factor){
+        if(isNotOutOfBounds(x - xOffset, y - yOffset)) {
             g[x][y].potentials[type] = factor;
         } else {
-            L.CLTR("failed change probability");
-
+            L.CLTR("Failed change probability");
         }
     }
 
@@ -162,7 +161,6 @@ public class Grid {
         addProbability(type, right[0], right[1], factor);
         addProbability(type, bottom[0], bottom[1], factor);
         addProbability(type, left[0], left[1], factor);
-        //TODO:case for each type of block saying if it should stay or go;
     }
 
     /**
@@ -173,13 +171,12 @@ public class Grid {
      * @param factor
      * @param distance
      */
-    public void changeProbabilityAroundTo(int type, int x, int y, double factor, int distance){
+    public void changeProbabilityAroundTo(int type, int x, int y, int factor, int distance){
         int[] top = getSpace(ABOVE, x, y, distance);
         int[] right = getSpace(RIGHT, x, y, distance);
         int[] bottom = getSpace(BELOW, x, y, distance);
         int[] left = getSpace(LEFT, x, y, distance);
 
-        //TODO: make only one actually change, and then the rest are super low.
         // May have expansion method to support fact
         changeProbabilityTo(type, top[0], top[1], factor);
         changeProbabilityTo(type, right[0], right[1], factor);
@@ -188,9 +185,9 @@ public class Grid {
     }
 
 
-    public void changeOneProbabilityAroundRandom(int type, int x, int y, double factor){
+    public void changeOneProbabilityAroundRandom(int type, int x, int y, int factor){
         double c = Sentinel.chance(1);
-        L.CLTR(c);
+
         if(c <= .25){
             changeProbabilityTo(type, x, y + 1, factor);
         } else if(c > .25 && c <= .5){
@@ -212,7 +209,7 @@ public class Grid {
      */
     public void changeProbabilityRandom(int type, int x, int y){
         double c = Sentinel.chance(1);
-        L.CLTR(c);
+
         if(c >= .5){
             changeProbabilityTo(type, x, y, 10);
         }
@@ -259,8 +256,9 @@ public class Grid {
                 else
                     return new int[]{x, y};
             case(LEFT):
-                if(isNotOutOfBounds(x - distance, y))
+                if(isNotOutOfBounds(x - distance, y)){
                     return new int[]{x - distance, y};
+                }
                 else
                     return new int[]{x, y};
             default:
@@ -295,7 +293,11 @@ public class Grid {
      * @return Boolean value of whether the position is out of bounds
      */
     public boolean isNotOutOfBounds(int x, int y){
-        return (y > this.rows || y < 0 || x > this.cols || x < 0) ? false : true;
+        return ((y - yOffset) > this.rows || y < 0 || (x - xOffset) > this.cols || x < 0) ? false : true;
+    }
+
+    public boolean isNotOutOfGridBounds(int x, int y){
+        return (y > 12 || y < 0 || x > 18 || x < 0) ? false : true;
     }
 
 

@@ -66,8 +66,8 @@ public class EnvironmentRenderer {
         blockHeight = Gdx.graphics.getHeight() / 12;
         shapeRenderer.setProjectionMatrix(camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        for(int i = 0; i < 18; i++){
-            for(int j = 0; j < 12; j++){
+        for(int i = environment.grid.xOffset; i < environment.grid.getCols() + environment.grid.xOffset; i++){
+            for(int j = environment.grid.yOffset; j < environment.grid.getRows() + environment.grid.yOffset; j++){
                 renderBlockSpace(environment.grid.g[i][j], i, j, blockWidth, blockHeight);
             }
         }
@@ -95,6 +95,7 @@ public class EnvironmentRenderer {
             try {
                 shapeRenderer.setColor(blockspace.get(i).color);
             } catch (NullPointerException e){
+                L.CLTR("Something went wrong");
                 L.CLTR(e.toString());
             } finally {
                 // Come up with a way to show both.

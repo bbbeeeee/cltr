@@ -63,8 +63,10 @@ public class GameScreen implements Screen, InputProcessor{
                     environmentRenderer.blockWidth,
                     environmentRenderer.blockHeight);
 
-            if(amount != 0)
-                table.add(b).padTop(20);
+            if(amount != 0) {
+                table.add(b).padTop(20).padLeft(x);
+                table.row();
+            }
             y -= environmentRenderer.blockHeight;
         }
 
