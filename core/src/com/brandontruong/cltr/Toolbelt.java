@@ -19,6 +19,7 @@ import java.util.Map;
 public class Toolbelt {
 
     int[] blocks;
+    int selected = 0;
 
     public Toolbelt(){
         blocks = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
