@@ -22,7 +22,7 @@ public class Toolbelt {
     int selected = 0;
 
     public Toolbelt(){
-        blocks = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
+        blocks = new int[Block.totalBlocks];
     }
 
     public void use(int type){

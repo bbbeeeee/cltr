@@ -35,17 +35,18 @@ public class Environment {
         // Loop through grid spaces.
         int highest;
         int toChangeType;
+        int[] currentIPosition = new int[2];
 
         for(int x = grid.xOffset; x < grid.getCols() + grid.xOffset; x++){
             for(int y = grid.yOffset; y < grid.getRows() + grid.yOffset; y++){
                 // Loop through each block in each space.
-                grid.g[x][y].potentials = new int[9];
+                grid.g[x][y].potentials = new int[Block.totalBlocks];
                 for(Block b : grid.g[x][y]){
                     // Analyze the necessary changes
                     // Make changes to blockspaces as needed
                     switch(b.getType()){
                         case Block.OBSTACLEBLOCK:
-
+                            grid.changeProbabilityTo(Block.OBSTACLEBLOCK, x, y, 10);
                             break;
                         case Block.BLAZEBLOCK:
                             grid.changeProbabilityTo(Block.BLAZEBLOCK, x, y, 10);
@@ -58,13 +59,14 @@ public class Environment {
                             grid.changeProbabilityTo(Block.IBLOCK, x, y, 0);
                             break;
                         case Block.LIGHTBLOCK:
-                            sentinels.add(new Sentinel(Block.BLAZEBLOCK, x, y));
+                            grid.changeProbabilityTo(Block.LIGHTBLOCK, x, y, 10);
+                            sentinels.add(new Sentinel(Block.LIGHTBLOCK, x, y));
                             break;
                         case Block.WATERBLOCK:
                             sentinels.add(new Sentinel(Block.WATERBLOCK, x, y));
                             break;
                         case Block.VOIDBLOCK:
-                            grid.changeProbabilityTo(Block.BLAZEBLOCK, x, y, 15);
+                            grid.changeProbabilityTo(Block.VOIDBLOCK, x, y, 15);
                             break;
                     }
                 }
@@ -86,6 +88,7 @@ public class Environment {
                             break;
                             //continue blockspace;
                         case Block.IBLOCK:
+                            currentIPosition = new int[]{x, y};
                             handleIForces(sentinels, x, y);
                             //L.CLTR(grid.g[x][y].potentials[Block.IBLOCK]);
                             break;
@@ -120,7 +123,8 @@ public class Environment {
                     switch (toChangeType) {
                         case (Block.OBSTACLEBLOCK):
                             // do nothing, make the current block certain
-
+                            if(currentIPosition[0] != 0)
+                                grid.g[currentIPosition[0]][currentIPosition[1]].replace(Block.IBLOCK);
                             L.CLTR("Hit obstacle");
                             break;
                         case (Block.GOALBLOCK):
@@ -135,13 +139,13 @@ public class Environment {
                             // either
                             L.CLTR("Hit fire, you lose!");
                             break;
+                        default:
+                            grid.g[x][y].replace(highest);
+                            break;
                     }
-
-                    grid.g[x][y].replace(highest);
                 } else {
                     grid.g[x][y].replace(highest);
                 }
-                // grid.g[x][y].replace(Block.LIGHTBLOCK);
             }
         }
     }
@@ -226,8 +230,11 @@ public class Environment {
         if (grid.isNotOutOfBounds(space[0], space[1])) {
 //            L.CLTR(space[0] - grid.xOffset);
             grid.changeProbabilityTo(Block.IBLOCK, space[0], space[1], 13);
+
 //            L.CLTR(grid.g[space[0]][space[1]].potentials[Block.IBLOCK]);
             // grid.g[space[0] + grid.xOffset][space[1] + grid.yOffset].replace(Block.IBLOCK);
+
+
         } else {
             L.CLTR("Out of bounds");
             grid.changeProbabilityTo(Block.IBLOCK, x, y, 11);

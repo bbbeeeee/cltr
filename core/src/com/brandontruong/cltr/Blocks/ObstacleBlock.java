@@ -18,7 +18,7 @@ public class ObstacleBlock extends Block {
         setColor(new Color(.1f, .1f, .1f, 1));
         setX(x);
         setY(y);
-        setType(EMPTYBLOCK);
+        setType(OBSTACLEBLOCK);
         setSymbiosis(0);
     }
 }
