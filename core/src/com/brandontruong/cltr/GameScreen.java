@@ -74,8 +74,16 @@ public class GameScreen implements Screen, InputProcessor{
                                 / environmentRenderer.blockWidth);
 
 
-                if(environment.grid.isNotOutOfBounds(absoluteX, absoluteY)){
-                    environment.grid.g[absoluteX - 1][absoluteY - 1].replace(toolbelt.selected);
+                if(environment.grid.isNotOutOfBounds(absoluteX, absoluteY) ){
+                    if(toolbelt.blocks[toolbelt.selected] < 0){
+                        toolbelt.selected = 0;
+                    } else {
+                        environment.grid.g[absoluteX - 1][absoluteY - 1].replace(toolbelt.selected);
+                        toolbelt.blocks[toolbelt.selected] -= 1;
+                        L.CLTR(toolbelt.blocks[toolbelt.selected]);
+                        L.CLTR(toolbelt.selected);
+                        changeSelect(toolbelt.selected);
+                    }
                 }
 
                 return true;
@@ -114,7 +122,7 @@ public class GameScreen implements Screen, InputProcessor{
             // b.setTouchable();
             b.addListener(c);
 
-            if(amount != 0) {
+            if(amount > 0) {
 
                 // Top piece should be selected
                 if(newIndex == i){

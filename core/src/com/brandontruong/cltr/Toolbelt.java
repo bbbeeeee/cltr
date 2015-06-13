@@ -33,6 +33,10 @@ public class Toolbelt {
         blocks[type] += 1;
     }
 
+    public void add(int type, int count){
+        blocks[type] += count;
+    }
+
     public int get(int type){
         return blocks[type];
     }

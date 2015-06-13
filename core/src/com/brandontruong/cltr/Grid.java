@@ -85,7 +85,8 @@ public class Grid {
 
                 int type = getTypeNum(piece[0]);
                 int count = Integer.parseInt(piece[1]);
-                toolbelt.add(type);
+
+                toolbelt.add(type, count);
             }
         }
     }
