@@ -12,6 +12,7 @@ public class Environment {
     public Toolbelt toolbelt;
     public ArrayList<Sentinel> sentinels;
     private Timer timer;
+    private int food;
 
     public Environment(Grid _grid){
         grid = _grid;
@@ -133,6 +134,7 @@ public class Environment {
                             break;
                         case (Block.FOODBLOCK):
                             // Acquire food.
+                            food++;
                             L.CLTR("Food Acquired!");
                             break;
                         case (Block.BLAZEBLOCK):
