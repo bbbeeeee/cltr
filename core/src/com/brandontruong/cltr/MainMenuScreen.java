@@ -3,6 +3,7 @@ package com.brandontruong.cltr;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -48,8 +49,10 @@ public class MainMenuScreen implements Screen{
     }
 
     private void createSkin(){
-        BitmapFont font = new BitmapFont();
+        BitmapFont font = new BitmapFont(Gdx.files.internal("fonts/hn.fnt"),
+                Gdx.files.internal("fonts/hn.png"), false);
         goSkin = new Skin();
+
         goSkin.add("default", font);
 
         Pixmap pixmap = new Pixmap((int) Gdx.graphics.getWidth()/4,

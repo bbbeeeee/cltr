@@ -22,8 +22,8 @@ public class CltrGame extends Game {
         Grid grid = new Grid("3.cltr");
         camera = new OrthographicCamera();
         ExtendViewport viewport = new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
-        // this.setScreen(new MainMenuScreen(viewport));
-        this.setScreen(new GameScreen(grid, viewport));
+        this.setScreen(new MainMenuScreen(viewport));
+        // this.setScreen(new GameScreen(grid, viewport));
 	}
 
 	@Override
