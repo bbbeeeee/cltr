@@ -30,31 +30,19 @@ public class GameScreen implements Screen, InputProcessor{
     private int _i;
     private BlockActor selected;
     private float x, y;
-    public int p;
+    private float leftOffset;
 
     public GameScreen(Grid grid, Viewport viewport) {
         environment = new Environment(grid);
         environmentRenderer = new EnvironmentRenderer(environment, viewport);
         toolbelt = grid.toolbelt;
         toolbeltStage = new ToolbeltStage(viewport, toolbelt);
+        leftOffset = environmentRenderer.leftOffset;
     }
 
     @Override
     public void show() {
         int amount;
-
-        // make 5 stacks.
-
-        Stack b1, b2, b3, b4, b5;
-
-        b1 = new Stack();
-        b2 = new Stack();
-        b3 = new Stack();
-        b4 = new Stack();
-        b5 = new Stack();
-
-
-
 
         // make the table be oriented from top to bottom
         table.top().left();
@@ -68,62 +56,23 @@ public class GameScreen implements Screen, InputProcessor{
         x = (environmentRenderer.leftOffset - environmentRenderer.blockWidth * 2) / 2;
         y = Gdx.graphics.getHeight();
 
-        for(int i = 0, j = 0; i < toolbelt.blocks.length; i++){
-            amount = toolbelt.blocks[i];
-
-            BlockActor b = new BlockActor(i,
-                    x,
-                    y,
-                    environmentRenderer.blockWidth,
-                    environmentRenderer.blockHeight);
-
-            // Use as variable to denote current index for ClickListener
-            // _i = i;
-
-            final int _i = i;
-            ClickListener c = new ClickListener() {
-                @Override
-                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                    changeSelect(_i);
-                    L.CLTR(toolbelt.selected);
-                    return true;
-                }
-            };
-
-            // b.setTouchable();
-            b.addListener(c);
-
-            if(amount != 0) {
-                // Top piece should be selected
-                if(j == 0){
-
-                    selected = new BlockActor(Block.SELECTEDBLOCK,
-                            x,
-                            y,
-                            environmentRenderer.blockWidth,
-                            environmentRenderer.blockHeight);
-
-                    Stack stack = new Stack();
-                    stack.add(b);
-                    stack.add(selected);
-                    table.add(stack).padTop(20).padLeft(x);
-
-                } else{
-                    table.add(b).padTop(20).padLeft(x);
-                }
-
-                table.row();
-
-                j++;
-            }
-
-
-            y -= environmentRenderer.blockHeight;
-        }
+        changeSelect(0);
 
         toolbeltStage.addActor(table);
 
         Gdx.input.setInputProcessor(toolbeltStage);
+
+        ClickListener tStageTouch = new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                changeSelect(_i);
+                L.CLTR("X : " + Float.toString(x));
+                L.CLTR("Y : " + Float.toString(y));
+                return true;
+            }
+        };
+
+        toolbeltStage.addListener(tStageTouch);
     }
 
     public void changeSelect(int newIndex){
