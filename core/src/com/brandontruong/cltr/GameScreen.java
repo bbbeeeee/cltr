@@ -65,9 +65,25 @@ public class GameScreen implements Screen, InputProcessor{
         ClickListener tStageTouch = new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                changeSelect(_i);
-                L.CLTR("X : " + Float.toString(x));
-                L.CLTR("Y : " + Float.toString(y));
+                float X = (float)
+                        Math.ceil((x
+                                 - leftOffset
+                                 - environment.grid.xOffset * environmentRenderer.blockWidth)
+                                 / environmentRenderer.blockWidth);
+
+                float Y = (float)
+                        Math.ceil((y
+                                 - environment.grid.yOffset * environmentRenderer.blockWidth)
+                                 / environmentRenderer.blockWidth);
+
+                int absoluteX = (int) X + environment.grid.xOffset;
+                int  absoluteY = (int) Y + environment.grid.yOffset;
+
+                L.CLTR(toolbelt.selected);
+                if(environment.grid.isNotOutOfBounds(absoluteX, absoluteY)){
+                    environment.grid.g[absoluteX - 1][absoluteY - 1].replace(toolbelt.selected);
+                }
+
                 return true;
             }
         };
@@ -95,7 +111,8 @@ public class GameScreen implements Screen, InputProcessor{
                 @Override
                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                     changeSelect(_i);
-                    L.CLTR(_i);
+                    toolbelt.selected = _i;
+                    L.CLTR(toolbelt.selected);
                     return true;
                 }
             };
