@@ -1,0 +1,16 @@
+9,5
+iblock,5,1
+obstacle,1,3
+obstacle,2,3
+obstacle,3,3
+obstacle,4,3
+obstacle,5,3
+obstacle,6,3
+obstacle,7,3
+obstacle,8,3
+obstacle,9,3
+obstacle,10,3
+goal,5,4
+Toolbelt
+light,1
+empty,1
