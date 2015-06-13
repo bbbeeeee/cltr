@@ -118,6 +118,11 @@ public class Environment {
 
                     toChangeType = grid.g[x][y].get(0).getType();
                     switch (toChangeType) {
+                        case (Block.OBSTACLEBLOCK):
+                            // do nothing, make the current block certain
+
+                            L.CLTR("Hit obstacle");
+                            break;
                         case (Block.GOALBLOCK):
                             // Win game.
                             L.CLTR("Winner!");
@@ -125,10 +130,6 @@ public class Environment {
                         case (Block.FOODBLOCK):
                             // Acquire food.
                             L.CLTR("Food Acquired!");
-                            break;
-                        case (Block.OBSTACLEBLOCK):
-                            // do nothing, make the current block certain
-                            L.CLTR("Hit obstacle");
                             break;
                         case (Block.BLAZEBLOCK):
                             // either

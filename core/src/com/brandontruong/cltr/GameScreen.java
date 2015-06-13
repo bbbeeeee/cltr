@@ -3,20 +3,16 @@ package com.brandontruong.cltr;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.input.GestureDetector;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.Timer;
-import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.Viewport;
-
-import java.util.Iterator;
-import java.util.Map;
 
 /**
  * Created by btroo on 5/18/15.
@@ -31,6 +27,10 @@ public class GameScreen implements Screen, InputProcessor{
     private Toolbelt toolbelt;
     private ToolbeltStage toolbeltStage;
     private Table table = new Table();
+    private int _i;
+    private BlockActor selected;
+    private float x, y;
+    public int p;
 
     public GameScreen(Grid grid, Viewport viewport) {
         environment = new Environment(grid);
@@ -43,6 +43,19 @@ public class GameScreen implements Screen, InputProcessor{
     public void show() {
         int amount;
 
+        // make 5 stacks.
+
+        Stack b1, b2, b3, b4, b5;
+
+        b1 = new Stack();
+        b2 = new Stack();
+        b3 = new Stack();
+        b4 = new Stack();
+        b5 = new Stack();
+
+
+
+
         // make the table be oriented from top to bottom
         table.top().left();
         table.setX(0);
@@ -52,27 +65,122 @@ public class GameScreen implements Screen, InputProcessor{
         table.setHeight(Gdx.graphics.getHeight());
 
         // offsets for the blocks
-        float x = (environmentRenderer.leftOffset - environmentRenderer.blockWidth * 2) / 2;
-        float y = Gdx.graphics.getHeight();
+        x = (environmentRenderer.leftOffset - environmentRenderer.blockWidth * 2) / 2;
+        y = Gdx.graphics.getHeight();
 
-        for(int i = 0; i < toolbelt.blocks.length; i++){
+        for(int i = 0, j = 0; i < toolbelt.blocks.length; i++){
             amount = toolbelt.blocks[i];
+
             BlockActor b = new BlockActor(i,
                     x,
                     y,
                     environmentRenderer.blockWidth,
                     environmentRenderer.blockHeight);
 
+            // Use as variable to denote current index for ClickListener
+            // _i = i;
+
+            final int _i = i;
+            ClickListener c = new ClickListener() {
+                @Override
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                    changeSelect(_i);
+                    L.CLTR(toolbelt.selected);
+                    return true;
+                }
+            };
+
+            // b.setTouchable();
+            b.addListener(c);
+
             if(amount != 0) {
-                table.add(b).padTop(20).padLeft(x);
+                // Top piece should be selected
+                if(j == 0){
+
+                    selected = new BlockActor(Block.SELECTEDBLOCK,
+                            x,
+                            y,
+                            environmentRenderer.blockWidth,
+                            environmentRenderer.blockHeight);
+
+                    Stack stack = new Stack();
+                    stack.add(b);
+                    stack.add(selected);
+                    table.add(stack).padTop(20).padLeft(x);
+
+                } else{
+                    table.add(b).padTop(20).padLeft(x);
+                }
+
                 table.row();
+
+                j++;
             }
+
+
             y -= environmentRenderer.blockHeight;
         }
 
         toolbeltStage.addActor(table);
 
-        Gdx.input.setInputProcessor(stage);
+        Gdx.input.setInputProcessor(toolbeltStage);
+    }
+
+    public void changeSelect(int newIndex){
+        int amount;
+
+        table.clear();
+
+        for(int i = 0, j = 0; i < toolbelt.blocks.length; i++){
+            amount = toolbelt.blocks[i];
+
+            BlockActor b = new BlockActor(i,
+                    x,
+                    y,
+                    environmentRenderer.blockWidth,
+                    environmentRenderer.blockHeight);
+
+            // Use as variable to denote current index for ClickListener
+            final int _i = i;
+            ClickListener c = new ClickListener() {
+                @Override
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                    changeSelect(_i);
+                    L.CLTR(_i);
+                    return true;
+                }
+            };
+
+            // b.setTouchable();
+            b.addListener(c);
+
+            if(amount != 0) {
+
+                // Top piece should be selected
+                if(newIndex == i){
+                    selected = new BlockActor(Block.SELECTEDBLOCK,
+                            x,
+                            y,
+                            environmentRenderer.blockWidth,
+                            environmentRenderer.blockHeight);
+
+                    Stack stack = new Stack();
+                    stack.add(b);
+                    stack.add(selected);
+                    table.add(stack).padTop(20).padLeft(x);
+
+                } else{
+                    table.add(b).padTop(20).padLeft(x);
+                }
+
+                table.row();
+
+                j++;
+            }
+
+            y -= environmentRenderer.blockHeight;
+        }
+
     }
 
     @Override

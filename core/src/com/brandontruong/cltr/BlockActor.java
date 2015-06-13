@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.brandontruong.cltr.Blocks.BlazeBlock;
 
 /**
@@ -42,16 +43,15 @@ public class BlockActor extends Actor {
                 texture = new Texture(Gdx.files.internal("food.png"));
                 break;
             case Block.SELECTEDBLOCK:
-                texture = new Texture(Gdx.files.internal("food.png"));
+                texture = new Texture(Gdx.files.internal("selected.png"));
                 break;
             default:
                 texture = new Texture(Gdx.files.internal("empty.png"));
         }
 
-        setX(x);
-        setY(y);
-        setHeight(height);
-        setWidth(width);
+
+//        setHeight(height);
+//        setWidth(width);
         setBounds(x, y, width, height);
     }
 
