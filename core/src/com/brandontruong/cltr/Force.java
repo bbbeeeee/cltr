@@ -17,6 +17,13 @@ public class Force {
 
     private double magnitude;
 
+    /**
+     * Force constructor for determining direction and magnitude based on two points.
+     * @param x
+     * @param y
+     * @param _x
+     * @param _y
+     */
     public Force(int x, int y, int _x, int _y){
         int xDif = _x - x;
         int yDif = _y - y;
@@ -41,6 +48,11 @@ public class Force {
         }
     }
 
+    /**
+     * Force constructor for given direction and magnitude.
+     * @param _dir
+     * @param _mag
+     */
     public Force(int _dir, double _mag){
         dir = _dir;
         magnitude = _mag;

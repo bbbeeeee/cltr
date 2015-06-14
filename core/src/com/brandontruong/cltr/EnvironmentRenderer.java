@@ -92,9 +92,6 @@ public class EnvironmentRenderer {
      * @param y
      */
     public void renderBlockSpace(BlockSpace blockspace, int x, int y, float blockWidth, float blockHeight){
-        // Render toolbelt/menu
-
-
         // Render grid
         for(int i = 0; i < blockspace.size(); i++){
             try {

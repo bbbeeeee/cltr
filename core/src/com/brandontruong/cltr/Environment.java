@@ -255,7 +255,7 @@ public class Environment {
     }
 
     /**
-     *
+     * Gets highest potential for given block's potentials.
      * @param potentials
      * @return Index of highest potential
      */
