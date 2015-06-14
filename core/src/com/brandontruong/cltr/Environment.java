@@ -1,5 +1,10 @@
 package com.brandontruong.cltr;
 
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.utils.viewport.Viewport;
+
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -13,8 +18,12 @@ public class Environment {
     public ArrayList<Sentinel> sentinels;
     private Timer timer;
     private int food;
+    private Viewport viewport;
+    private Screen gamescreen;
+    public boolean won = false;
 
-    public Environment(Grid _grid){
+    public Environment(Grid _grid, Viewport v, Screen gs){
+        gamescreen = gs;
         grid = _grid;
         toolbelt = _grid.toolbelt;
         sentinels = new ArrayList<Sentinel>();
@@ -25,6 +34,7 @@ public class Environment {
                 refresh();
             }
         }, 1000, 500);
+        viewport = v;
     }
 
     /**
@@ -129,7 +139,7 @@ public class Environment {
                             L.CLTR("Hit obstacle");
                             break;
                         case (Block.GOALBLOCK):
-                            // Win game.
+                            won = true;
                             L.CLTR("Winner!");
                             break;
                         case (Block.FOODBLOCK):

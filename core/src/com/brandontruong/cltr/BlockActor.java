@@ -13,6 +13,10 @@ import com.brandontruong.cltr.Blocks.BlazeBlock;
 public class BlockActor extends Actor {
     Texture texture;
 
+    public BlockActor(int type){
+
+    }
+
     public BlockActor(int type, float x, float y, float width, float height){
         switch(type){
             case Block.BLAZEBLOCK:

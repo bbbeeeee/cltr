@@ -51,8 +51,8 @@ public class MainMenuScreen implements Screen{
     private void createSkin(){
         BitmapFont font = new BitmapFont(Gdx.files.internal("fonts/hn.fnt"),
                 Gdx.files.internal("fonts/hn.png"), false);
-        goSkin = new Skin();
 
+        goSkin = new Skin();
         goSkin.add("default", font);
 
         Pixmap pixmap = new Pixmap((int) Gdx.graphics.getWidth()/4,
@@ -74,15 +74,17 @@ public class MainMenuScreen implements Screen{
 
     @Override
     public void show() {
-        goButton.addListener(new ClickListener(){
+        goButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 //super.clicked(event, x, y);
-                ((Game)Gdx.app.getApplicationListener()).setScreen(
+                ((Game) Gdx.app.getApplicationListener()).setScreen(
                         new GameScreen(new Grid("1.cltr"), viewport));
             }
         });
         table.add(title).padBottom(40).row();
+
+
         table.add(goButton).size(150, 60).padBottom(20).row();
         table.setFillParent(true);
         stage.addActor(table);

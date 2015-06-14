@@ -1,5 +1,6 @@
 package com.brandontruong.cltr;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
@@ -58,6 +59,10 @@ public class EnvironmentRenderer {
      * Render blockdata from environment
      */
     public void render() {
+        if(environment.won){
+            ((Game) Gdx.app.getApplicationListener()).setScreen(
+                        new LevelsScreen(viewport));
+        }
         camera.update();
         Gdx.gl.glClearColor(1f, 1f, 1f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);

@@ -1,5 +1,6 @@
 package com.brandontruong.cltr;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
@@ -31,9 +32,11 @@ public class GameScreen implements Screen, InputProcessor{
     private BlockActor selected;
     private float x, y;
     private float leftOffset;
+    private Viewport viewport;
 
-    public GameScreen(Grid grid, Viewport viewport) {
-        environment = new Environment(grid);
+    public GameScreen(Grid grid, Viewport v) {
+        viewport = v;
+        environment = new Environment(grid, viewport, this);
         environmentRenderer = new EnvironmentRenderer(environment, viewport);
         toolbelt = grid.toolbelt;
         toolbeltStage = new ToolbeltStage(viewport, toolbelt);
@@ -92,6 +95,13 @@ public class GameScreen implements Screen, InputProcessor{
 
         toolbeltStage.addListener(tStageTouch);
     }
+
+    public void gotoLevels(){
+        ((Game) Gdx.app.getApplicationListener()).setScreen(
+                new LevelsScreen(viewport));
+    }
+
+
 
     public void changeSelect(int newIndex){
         int amount;
