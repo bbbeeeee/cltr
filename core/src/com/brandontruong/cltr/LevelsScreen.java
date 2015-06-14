@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -30,7 +31,7 @@ public class LevelsScreen implements Screen{
     private BitmapFont font;
     private Stage stage;
     private Skin buttonSkin;
-
+    private ScrollPane scrollPane;
     public LevelsScreen() {
         super();
     }
@@ -71,8 +72,8 @@ public class LevelsScreen implements Screen{
 
     @Override
     public void show() {
-
-        for(int i = 1; i < 4; i++){
+        Table subContainer = new Table();
+        for(int i = 1; i < 20; i++){
             table.row();
             Button b = new Button(buttonSkin);
             Table t = new Table();
@@ -91,13 +92,19 @@ public class LevelsScreen implements Screen{
                     new Label.LabelStyle(font, Color.WHITE)));
 
             t.add(b);
-            t.setFillParent(true);
+            // t.setFillParent(true);
 
-            table.add(t);
-            table.row();
+            subContainer.add(t).padBottom(20);
+            subContainer.row();
         }
 
+
+        //table.setFillParent(true);
+        scrollPane = new ScrollPane(subContainer);
+        table.add(scrollPane);
         table.setFillParent(true);
+
+        scrollPane.setWidth(Gdx.graphics.getWidth());
         stage.addActor(table);
 
         Gdx.input.setInputProcessor(stage);

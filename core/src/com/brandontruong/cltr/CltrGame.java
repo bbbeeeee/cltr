@@ -19,7 +19,7 @@ public class CltrGame extends Game {
 
 	@Override
 	public void create () {
-        Grid grid = new Grid("3.cltr");
+        Grid grid = new Grid("4.cltr");
         camera = new OrthographicCamera();
         ExtendViewport viewport = new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
         this.setScreen(new LevelsScreen(viewport));
