@@ -53,9 +53,6 @@ public class BlockActor extends Actor {
                 texture = new Texture(Gdx.files.internal("empty.png"));
         }
 
-
-//        setHeight(height);
-//        setWidth(width);
         setBounds(x, y, width, height);
     }
 

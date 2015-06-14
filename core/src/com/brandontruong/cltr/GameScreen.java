@@ -34,6 +34,11 @@ public class GameScreen implements Screen, InputProcessor{
     private float leftOffset;
     private Viewport viewport;
 
+    /**
+     * GameScreen constructor. Has environment, renderer, toolbelt, and toolbelt stage.
+     * @param grid
+     * @param v
+     */
     public GameScreen(Grid grid, Viewport v) {
         viewport = v;
         environment = new Environment(grid, viewport, this);
@@ -42,6 +47,7 @@ public class GameScreen implements Screen, InputProcessor{
         toolbeltStage = new ToolbeltStage(viewport, toolbelt);
         leftOffset = environmentRenderer.leftOffset;
     }
+
 
     @Override
     public void show() {
@@ -96,13 +102,10 @@ public class GameScreen implements Screen, InputProcessor{
         toolbeltStage.addListener(tStageTouch);
     }
 
-    public void gotoLevels(){
-        ((Game) Gdx.app.getApplicationListener()).setScreen(
-                new LevelsScreen(viewport));
-    }
-
-
-
+    /**
+     * Changes the selected block.
+     * @param newIndex
+     */
     public void changeSelect(int newIndex){
         int amount;
 

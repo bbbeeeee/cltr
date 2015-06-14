@@ -92,7 +92,11 @@ public class Grid {
     }
 
 
-
+    /**
+     * Get the number type for given string (for use with parsing grid text file)
+     * @param type
+     * @return
+     */
     public int getTypeNum(String type){
         if(type.contains("blaze")){
             return Block.BLAZEBLOCK;
@@ -128,6 +132,13 @@ public class Grid {
         }
     }
 
+    /**
+     * Add probability to certain value.
+     * @param type
+     * @param x
+     * @param y
+     * @param factor
+     */
     public void addProbability(int type, int x, int y, double factor){
         if(isNotOutOfBounds(x - xOffset, y - yOffset) && y < 12 && x < 18) {
             g[x][y].potentials[type] += factor;
@@ -136,6 +147,13 @@ public class Grid {
         }
     }
 
+    /**
+     * Change probability to certain value.
+     * @param type
+     * @param x
+     * @param y
+     * @param factor
+     */
     public void changeProbabilityTo(int type, int x, int y, int factor){
         if(isNotOutOfBounds(x - xOffset, y - yOffset)) {
             g[x][y].potentials[type] = factor;
@@ -185,7 +203,13 @@ public class Grid {
         changeProbabilityTo(type, left[0], left[1], factor);
     }
 
-
+    /**
+     * Changes probability of one block around given block randomly.
+     * @param type
+     * @param x
+     * @param y
+     * @param factor
+     */
     public void changeOneProbabilityAroundRandom(int type, int x, int y, int factor){
         double c = Sentinel.chance(1);
 
@@ -267,6 +291,14 @@ public class Grid {
         }
     }
 
+    /**
+     * Distance function
+     * @param x
+     * @param y
+     * @param _x
+     * @param _y
+     * @return
+     */
     public static int distance(int x, int y, int _x, int _y){
         return (int) Math.sqrt(Math.pow(Math.abs(x - _x), 2) + Math.pow(Math.abs(y - _y), 2));
     }
@@ -297,6 +329,12 @@ public class Grid {
         return ((y - yOffset) > this.rows || y < 0 || (x - xOffset) > this.cols || x < 0) ? false : true;
     }
 
+    /**
+     * Checks whether a position is out of the bounds of the metagrid (18 by 12)
+     * @param x
+     * @param y
+     * @return
+     */
     public boolean isNotOutOfGridBounds(int x, int y){
         return (y > 12 || y < 0 || x > 18 || x < 0) ? false : true;
     }

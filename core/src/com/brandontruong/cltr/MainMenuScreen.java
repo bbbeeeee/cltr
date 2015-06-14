@@ -37,7 +37,6 @@ public class MainMenuScreen implements Screen{
 
     TextButton goButton;
     public MainMenuScreen(Viewport v) {
-        // this.game = gam;
         viewport = v;
 
         camera = new OrthographicCamera();
@@ -48,6 +47,9 @@ public class MainMenuScreen implements Screen{
         goButton = new TextButton("Levels", goSkin);
     }
 
+    /**
+     * Creates the menu button skins.
+     */
     private void createSkin(){
         BitmapFont font = new BitmapFont(Gdx.files.internal("fonts/hn.fnt"),
                 Gdx.files.internal("fonts/hn.png"), false);
