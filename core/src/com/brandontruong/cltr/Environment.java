@@ -133,6 +133,7 @@ public class Environment {
                     toChangeType = grid.g[x][y].get(0).getType();
                     switch (toChangeType) {
                         case (Block.OBSTACLEBLOCK):
+                        case (Block.LIGHTBLOCK):
                             // do nothing, make the current block certain
                             if(currentIPosition[0] != 0)
                                 grid.g[currentIPosition[0]][currentIPosition[1]].replace(Block.IBLOCK);
