@@ -14,6 +14,7 @@ import java.util.HashMap;
  * Block parent class. Need to update Toolbelt and BlockSpace when new Blocks are added.
  */
 public class Block {
+    public static final int XBLOCK = -2;
     public static final int SELECTEDBLOCK = -1;
     public static final int BLAZEBLOCK = 1;
     public static final int EMPTYBLOCK = 2;
