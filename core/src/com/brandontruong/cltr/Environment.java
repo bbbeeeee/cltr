@@ -33,7 +33,7 @@ public class Environment {
             public void run() {
                 refresh();
             }
-        }, 1000, 500);
+        }, 0, 500);
         viewport = v;
     }
 
