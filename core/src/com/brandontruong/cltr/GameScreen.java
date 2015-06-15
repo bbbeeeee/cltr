@@ -4,16 +4,25 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.Viewport;
+
+import java.awt.Font;
 
 /**
  * Created by btroo on 5/18/15.
@@ -22,7 +31,6 @@ public class GameScreen implements Screen, InputProcessor{
     private Environment environment;
     private EnvironmentRenderer environmentRenderer;
     OrthographicCamera camera;
-    private BitmapFont font;
     private ShapeRenderer sr = new ShapeRenderer();
     private Stage stage;
     private Toolbelt toolbelt;
@@ -33,6 +41,8 @@ public class GameScreen implements Screen, InputProcessor{
     private float x, y;
     private float leftOffset;
     private Viewport viewport;
+    private Skin buttonSkin;
+    private BitmapFont font;
 
     /**
      * GameScreen constructor. Has environment, renderer, toolbelt, and toolbelt stage.
@@ -46,6 +56,7 @@ public class GameScreen implements Screen, InputProcessor{
         toolbelt = grid.toolbelt;
         toolbeltStage = new ToolbeltStage(viewport, toolbelt);
         leftOffset = environmentRenderer.leftOffset;
+
     }
 
 
@@ -65,7 +76,9 @@ public class GameScreen implements Screen, InputProcessor{
         x = (environmentRenderer.leftOffset - environmentRenderer.blockWidth * 2) / 2;
         y = Gdx.graphics.getHeight();
 
+        createSkin();
         changeSelect(0);
+
 
         toolbeltStage.addActor(table);
 
@@ -84,14 +97,16 @@ public class GameScreen implements Screen, InputProcessor{
 
 
                 if(environment.grid.isNotOutOfBounds(absoluteX, absoluteY) ){
-                    if(toolbelt.blocks[toolbelt.selected] < 0){
+                    if(toolbelt.blocks[toolbelt.selected] == 0){
                         toolbelt.selected = 0;
                     } else {
-                        environment.grid.g[absoluteX - 1][absoluteY - 1].replace(toolbelt.selected);
-                        toolbelt.blocks[toolbelt.selected] -= 1;
-                        L.CLTR(toolbelt.blocks[toolbelt.selected]);
-                        L.CLTR(toolbelt.selected);
-                        changeSelect(toolbelt.selected);
+                        if((absoluteX - 1) > -1 && (absoluteY - 1) > -1) {
+                            environment.grid.g[absoluteX - 1][absoluteY - 1].replace(toolbelt.selected);
+                            toolbelt.blocks[toolbelt.selected] -= 1;
+                            L.CLTR(toolbelt.blocks[toolbelt.selected]);
+                            L.CLTR(toolbelt.selected);
+                            changeSelect(toolbelt.selected);
+                        }
                     }
                 }
 
@@ -103,7 +118,33 @@ public class GameScreen implements Screen, InputProcessor{
     }
 
     /**
-     * Changes the selected block.
+     * Creates skin for buttons on toolbelt stage
+     */
+    public void createSkin(){
+        font = new BitmapFont(Gdx.files.internal("fonts/hn.fnt"),
+                Gdx.files.internal("fonts/hn.png"), false);
+
+        buttonSkin = new Skin();
+        buttonSkin.add("default", font);
+
+        Pixmap pixmap = new Pixmap((int) Gdx.graphics.getWidth()/4,
+                (int) Gdx.graphics.getHeight()/10,
+                Pixmap.Format.RGB888);
+
+        buttonSkin.add("background", new Texture(pixmap));
+
+        Button.ButtonStyle goButtonStyle = new Button.ButtonStyle();
+        goButtonStyle.up = buttonSkin.newDrawable("background", Color.GREEN);
+        goButtonStyle.down = buttonSkin.newDrawable("background", Color.GREEN);
+        goButtonStyle.checked = buttonSkin.newDrawable("background", Color.GREEN);
+        goButtonStyle.over = buttonSkin.newDrawable("background", Color.GREEN);
+
+        // title = new Label("CLTR", buttonSkin);
+        buttonSkin.add("default", goButtonStyle);
+    }
+
+    /**
+     * Changes the selected block and essentially makes the table for toolbelt stage
      * @param newIndex
      */
     public void changeSelect(int newIndex){
@@ -162,6 +203,27 @@ public class GameScreen implements Screen, InputProcessor{
             y -= environmentRenderer.blockHeight;
         }
 
+        BlockActor xButton = new BlockActor(Block.XBLOCK,
+                x,
+                y,
+                environmentRenderer.blockWidth,
+                environmentRenderer.blockHeight);
+
+//        table.add(new Label("mmm",
+//                new Label.LabelStyle(font, Color.WHITE))).expand();
+        // Add settings and back to levels button.
+
+
+        xButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                //super.clicked(event, x, y);
+                ((Game) Gdx.app.getApplicationListener()).setScreen(
+                        new LevelsScreen(viewport));
+            }
+        });
+
+        table.add(xButton).bottom().left().padLeft(x).padTop(20);
     }
 
     @Override

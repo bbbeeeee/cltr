@@ -51,6 +51,7 @@ public class BlockActor extends Actor {
                 break;
             case Block.XBLOCK:
                 texture = new Texture(Gdx.files.internal("x.png"));
+                break;
             default:
                 texture = new Texture(Gdx.files.internal("empty.png"));
         }

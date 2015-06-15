@@ -170,7 +170,7 @@ public class Environment {
      * @param y iBlock y
      */
     public void handleIForces(ArrayList<Sentinel> sentinels, int x, int y) {
-        Force f;
+        Force xF, yF;
         double xForce = 0, yForce = 0;
         for (Sentinel s : sentinels) {
             switch (s.blocktype) {
@@ -200,54 +200,58 @@ public class Environment {
         int sign;
         int[] space;
 
+        xF = new Force(Grid.HERE, 1);
+        yF = new Force(Grid.HERE, 1);
         if (xForce == yForce && xForce != 0) {
             L.CLTR("The same");
             double c = Sentinel.chance(1);
             if (c < .5) {
                 if (Math.signum(xForce) == 1) {
-                    f = new Force(Grid.RIGHT, Math.abs(xForce));
+                    xF = new Force(Grid.RIGHT, Math.abs(xForce));
                 } else {
-                    f = new Force(Grid.LEFT, Math.abs(xForce));
+                    xF = new Force(Grid.LEFT, Math.abs(xForce));
                 }
             } else {
                 if (Math.signum(yForce) == 1) {
-                    f = new Force(Grid.ABOVE, Math.abs(xForce));
+                    yF = new Force(Grid.ABOVE, Math.abs(xForce));
                 } else {
-                    f = new Force(Grid.BELOW, Math.abs(xForce));
+                    yF = new Force(Grid.BELOW, Math.abs(xForce));
                 }
             }
-        } else if (Math.abs(xForce) > Math.abs(yForce)) {
+        } else if (xForce != 0 || yForce != 0) {
             sign = (int) Math.signum(xForce);
-            if (sign == 1)
-                f = new Force(Grid.RIGHT, Math.abs(xForce));
-            else if(sign == -1){
-                f = new Force(Grid.LEFT, Math.abs(xForce));
+            if(Math.abs(xForce) > 1){
+                if (sign == 1){
+                    xF = new Force(Grid.RIGHT, Math.abs(xForce));
+                }
+                else if(sign == -1){
+                    xF = new Force(Grid.LEFT, Math.abs(xForce));
+                }
+
+            } else {
+                xF = new Force(Grid.HERE, 1);
             }
 
-            else
-                f = new Force(Grid.HERE, 1);
-        } else if (Math.abs(xForce) < Math.abs(yForce)) { // y
             sign = (int) Math.signum(yForce);
-            if (sign == 1)
-                f = new Force(Grid.ABOVE, Math.abs(xForce));
-            else if(sign == -1)
-                f = new Force(Grid.BELOW, Math.abs(xForce));
-            else
-                f = new Force(Grid.HERE, 1);
+            if (sign == 1){
+                yF = new Force(Grid.ABOVE, Math.abs(xForce));
+            }
+            else if(sign == -1){
+                yF = new Force(Grid.BELOW, Math.abs(xForce));
+            }
+            else {
+                yF = new Force(Grid.HERE, 1);
+            }
         } else {
-            f = new Force(Grid.HERE, 1);
+            xF = new Force(Grid.HERE, 1);
+            yF = new Force(Grid.HERE, 1);
         }
 
-        space = grid.getSpace(f.getDir(), x, y, 1);
+        space = grid.getSpace(xF.getDir(), x, y, 1);
+        space = grid.getSpace(yF.getDir(), space[0], space[1], 1);
 
         if (grid.isNotOutOfBounds(space[0], space[1])) {
-//            L.CLTR(space[0] - grid.xOffset);
             grid.changeProbabilityTo(Block.IBLOCK, space[0], space[1], 13);
-
-//            L.CLTR(grid.g[space[0]][space[1]].potentials[Block.IBLOCK]);
-            // grid.g[space[0] + grid.xOffset][space[1] + grid.yOffset].replace(Block.IBLOCK);
-
-
         } else {
             L.CLTR("Out of bounds");
             grid.changeProbabilityTo(Block.IBLOCK, x, y, 11);
@@ -255,7 +259,7 @@ public class Environment {
     }
 
     /**
-     * Gets highest potential for given block's potentials.
+     *
      * @param potentials
      * @return Index of highest potential
      */
