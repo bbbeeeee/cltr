@@ -19,6 +19,6 @@ public class ObstacleBlock extends Block {
         setX(x);
         setY(y);
         setType(OBSTACLEBLOCK);
-        setSymbiosis(0);
+        setSymbiosis(1);
     }
 }

@@ -21,6 +21,6 @@ public class VoidBlock extends Block{
         setX(x);
         setY(y);
         setType(VOIDBLOCK);
-        setSymbiosis(0);
+        setSymbiosis(1);
     }
 }
