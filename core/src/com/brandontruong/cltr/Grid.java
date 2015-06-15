@@ -292,6 +292,67 @@ public class Grid {
     }
 
     /**
+     * Get space that iBlock can move onto.
+     * @param direction
+     * @param x
+     * @param y
+     * @param distance
+     * @return
+     */
+    public int[] getValidISpace(int direction, int x, int y, int distance){
+        switch(direction){
+            case(HERE):
+                return new int[]{x, y};
+            case(ABOVE):
+                if(g[x][y + distance].get(0).getSymbiosis() == 0){
+                    if(isNotOutOfBounds(x, y + distance)){
+                        return new int[]{x, y + distance};
+                    }
+                    else{
+                        return new int[]{x, y};
+                    }
+                } else{
+                    return new int[]{x, y};
+                }
+            case(RIGHT):
+                if(g[x + distance][y].get(0).getSymbiosis() == 0){
+                    if(isNotOutOfBounds(x + distance, y)){
+                        return new int[]{x + distance, y};
+                    }
+                    else{
+                        return new int[]{x, y};
+                    }
+                } else{
+                    return new int[]{x, y};
+                }
+            case(BELOW):
+                if(g[x][y - distance].get(0).getSymbiosis() == 0){
+                    if(isNotOutOfBounds(x, y - distance)){
+                        return new int[]{x, y - distance};
+                    }
+                    else{
+                        return new int[]{x, y};
+                    }
+                } else{
+                    return new int[]{x, y};
+                }
+            case(LEFT):
+                if(g[x][y - distance].get(0).getSymbiosis() == 0){
+                    if(isNotOutOfBounds(x - distance, y)){
+                        return new int[]{x - distance, y};
+                    }
+                    else{
+                        return new int[]{x, y};
+                    }
+                } else{
+                    return new int[]{x, y};
+                }
+            default:
+                return new int[]{x, y};
+        }
+    }
+
+    /**
      * Distance function
      * @param x
      * @param y
