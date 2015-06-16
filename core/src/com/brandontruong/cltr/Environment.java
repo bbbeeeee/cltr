@@ -33,7 +33,7 @@ public class Environment {
             public void run() {
                 refresh();
             }
-        }, 0, 500);
+        }, 1000, 500);
         viewport = v;
     }
 
@@ -269,8 +269,8 @@ public class Environment {
             yF = new Force(Grid.HERE, 1);
         }
 
-        space = grid.getSpace(xF.getDir(), x, y, 1);
-        space = grid.getSpace(yF.getDir(), space[0], space[1], 1);
+        space = grid.getValidISpace(xF.getDir(), x, y, 1);
+        space = grid.getValidISpace(yF.getDir(), space[0], space[1], 1);
 
         if (grid.isNotOutOfBounds(space[0], space[1])) {
             grid.changeProbabilityTo(Block.IBLOCK, space[0], space[1], 13);

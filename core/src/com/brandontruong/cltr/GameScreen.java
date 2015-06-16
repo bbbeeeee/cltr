@@ -56,7 +56,6 @@ public class GameScreen implements Screen, InputProcessor{
         toolbelt = grid.toolbelt;
         toolbeltStage = new ToolbeltStage(viewport, toolbelt);
         leftOffset = environmentRenderer.leftOffset;
-
     }
 
 

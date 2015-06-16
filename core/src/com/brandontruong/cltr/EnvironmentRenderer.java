@@ -21,6 +21,7 @@ public class EnvironmentRenderer {
     private float aspectRatio;
     public ToolbeltStage toolbeltStage;
 
+    private boolean rendered;
     public float leftOffset;
     public float blockWidth, blockHeight;
 
@@ -95,19 +96,30 @@ public class EnvironmentRenderer {
     public void renderBlockSpace(BlockSpace blockspace, int x, int y, float blockWidth, float blockHeight){
         // Render grid
 
-        try {
-            shapeRenderer.setColor(blockspace.get(0).color);
-        } catch (NullPointerException e){
-            L.CLTR("Something went wrong");
-            L.CLTR(e.toString());
-        } catch (IndexOutOfBoundsException e){
-            L.CLTR("Something went wrong");
-            L.CLTR(e.toString());
-        } finally {
-            // Come up with a way to show both.
-            shapeRenderer.rect(leftOffset + (x) * blockWidth, (y) * blockHeight,  blockWidth, blockHeight);
+        for(int i = 0; i < blockspace.size(); i++){
+            try {
+                shapeRenderer.setColor(blockspace.get(i).color);
+            } catch (NullPointerException e){
+                L.CLTR("Something went wrong");
+                L.CLTR(e.toString());
+            } finally {
+                // Come up with a way to show both.
+                shapeRenderer.rect(leftOffset + (x) * blockWidth, (y) * blockHeight,  blockWidth, blockHeight);
+            }
         }
 
+//        try {
+//            shapeRenderer.setColor(blockspace.get(0).color);
+//        } catch (NullPointerException e) {
+//            L.CLTR("Something went wrong");
+//            L.CLTR(e.toString());
+//        } catch (IndexOutOfBoundsException e) {
+//            L.CLTR("Something went wrong");
+//            L.CLTR(e.toString());
+//        } finally {
+//            // Come up with a way to show both.
+//            shapeRenderer.rect(leftOffset + (x) * blockWidth, (y) * blockHeight, blockWidth, blockHeight);
+//        }
 
 //        for(int i = 0; i < blockspace.size(); i++){
 //            if(environment.grid.g[x][y].get(i).color != blockspace.get(i).color){
