@@ -1,0 +1,11 @@
+18,12
+blaze,5,8
+iblock,1,8
+obstacle,1,7
+obstacle,2,8
+obstacle,2,7
+obstacle,3,6
+goal,3,1
+Toolbelt
+obstacle,3
+empty,1
