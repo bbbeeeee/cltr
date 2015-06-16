@@ -218,6 +218,7 @@ public class GameScreen implements Screen, InputProcessor{
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 //super.clicked(event, x, y);
+                environment.timer.cancel();
                 ((Game) Gdx.app.getApplicationListener()).setScreen(
                         new LevelsScreen(viewport));
             }

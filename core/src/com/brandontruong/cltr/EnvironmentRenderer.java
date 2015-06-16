@@ -60,8 +60,9 @@ public class EnvironmentRenderer {
      */
     public void render() {
         if(environment.won){
+            environment.timer.cancel();
             ((Game) Gdx.app.getApplicationListener()).setScreen(
-                        new LevelsScreen(viewport));
+                    new LevelsScreen(viewport));
         }
         camera.update();
         Gdx.gl.glClearColor(1f, 1f, 1f, 1);
@@ -97,6 +98,9 @@ public class EnvironmentRenderer {
         try {
             shapeRenderer.setColor(blockspace.get(0).color);
         } catch (NullPointerException e){
+            L.CLTR("Something went wrong");
+            L.CLTR(e.toString());
+        } catch (IndexOutOfBoundsException e){
             L.CLTR("Something went wrong");
             L.CLTR(e.toString());
         } finally {

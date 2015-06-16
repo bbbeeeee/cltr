@@ -16,7 +16,7 @@ public class Environment {
     public Grid grid;
     public Toolbelt toolbelt;
     public ArrayList<Sentinel> sentinels;
-    private Timer timer;
+    public Timer timer;
     private int food;
     private Viewport viewport;
     private Screen gamescreen;
@@ -131,6 +131,7 @@ public class Environment {
                 if (highest == Block.IBLOCK) {
 
                     toChangeType = grid.g[x][y].get(0).getType();
+
                     switch (toChangeType) {
                         case (Block.OBSTACLEBLOCK):
                         case (Block.LIGHTBLOCK):
@@ -141,6 +142,7 @@ public class Environment {
                             break;
                         case (Block.GOALBLOCK):
                             won = true;
+                            timer.cancel();
                             L.CLTR("Winner!");
                             break;
                         case (Block.FOODBLOCK):
@@ -150,6 +152,8 @@ public class Environment {
                             break;
                         case (Block.BLAZEBLOCK):
                             // either
+                            won = true;
+                            timer.cancel();
                             L.CLTR("Hit fire, you lose!");
                             break;
                         default:
@@ -200,47 +204,65 @@ public class Environment {
         int sign;
         int[] space;
 
-        xF = new Force(Grid.HERE, 1);
-        yF = new Force(Grid.HERE, 1);
         if (xForce == yForce && xForce != 0) {
             L.CLTR("The same");
-            double c = Sentinel.chance(1);
-            if (c < .5) {
-                if (Math.signum(xForce) == 1) {
-                    xF = new Force(Grid.RIGHT, Math.abs(xForce));
-                } else {
-                    xF = new Force(Grid.LEFT, Math.abs(xForce));
-                }
+
+            if (Math.signum(xForce) == 1) {
+                xF = new Force(Grid.RIGHT, Math.abs(xForce));
             } else {
-                if (Math.signum(yForce) == 1) {
-                    yF = new Force(Grid.ABOVE, Math.abs(xForce));
-                } else {
-                    yF = new Force(Grid.BELOW, Math.abs(xForce));
-                }
+                xF = new Force(Grid.LEFT, Math.abs(xForce));
             }
+
+            if (Math.signum(yForce) == 1) {
+                yF = new Force(Grid.ABOVE, Math.abs(xForce));
+            } else {
+                yF = new Force(Grid.BELOW, Math.abs(xForce));
+            }
+
         } else if (xForce != 0 || yForce != 0) {
             sign = (int) Math.signum(xForce);
-            if(Math.abs(xForce) > 1){
-                if (sign == 1){
-                    xF = new Force(Grid.RIGHT, Math.abs(xForce));
-                }
-                else if(sign == -1){
-                    xF = new Force(Grid.LEFT, Math.abs(xForce));
-                }
+            double c = Sentinel.chance(1);
 
+            if (sign == 1){
+                xF = new Force(Grid.RIGHT, Math.abs(xForce));
+            } else if(sign == -1){
+                xF = new Force(Grid.LEFT, Math.abs(xForce));
             } else {
                 xF = new Force(Grid.HERE, 1);
             }
 
             sign = (int) Math.signum(yForce);
+
             if (sign == 1){
                 yF = new Force(Grid.ABOVE, Math.abs(xForce));
-            }
-            else if(sign == -1){
+            } else if(sign == -1){
                 yF = new Force(Grid.BELOW, Math.abs(xForce));
-            }
-            else {
+            } else {
                 yF = new Force(Grid.HERE, 1);
+            }
+
+            if(Math.abs(xForce) == 1){
+                if(c > .5){
+                    if (sign == 1){
+                        xF = new Force(Grid.RIGHT, Math.abs(xForce));
+                    } else if(sign == -1){
+                        xF = new Force(Grid.LEFT, Math.abs(xForce));
+                    }
+                } else {
+                    xF = new Force(Grid.HERE, 1);
+                }
+            }
+
+            if(Math.abs(yForce) == 1){
+                if(c < .5){
+                    if (sign == 1){
+                        yF = new Force(Grid.ABOVE, Math.abs(xForce));
+                    } else if(sign == -1){
+                        yF = new Force(Grid.BELOW, Math.abs(xForce));
+                    } else {
+                        yF = new Force(Grid.HERE, 1);
+                    }
+                }
             }
         } else {
             xF = new Force(Grid.HERE, 1);
