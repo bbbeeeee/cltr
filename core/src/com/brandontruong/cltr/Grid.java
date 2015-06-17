@@ -308,10 +308,11 @@ public class Grid {
                     if(isNotOutOfBounds(x, y + distance)){
                         return new int[]{x, y + distance};
                     }
-                    else{
+                    else {
                         return new int[]{x, y};
                     }
-                } else{
+                } else {
+                    L.CLTR("Hit Obstacle");
                     return new int[]{x, y};
                 }
             case(RIGHT):
@@ -319,10 +320,11 @@ public class Grid {
                     if(isNotOutOfBounds(x + distance, y)){
                         return new int[]{x + distance, y};
                     }
-                    else{
+                    else {
                         return new int[]{x, y};
                     }
-                } else{
+                } else {
+                    L.CLTR("Hit Obstacle");
                     return new int[]{x, y};
                 }
             case(BELOW):
@@ -330,10 +332,11 @@ public class Grid {
                     if(isNotOutOfBounds(x, y - distance)){
                         return new int[]{x, y - distance};
                     }
-                    else{
+                    else {
                         return new int[]{x, y};
                     }
-                } else{
+                } else {
+                    L.CLTR("Hit Obstacle");
                     return new int[]{x, y};
                 }
             case(LEFT):
@@ -341,10 +344,11 @@ public class Grid {
                     if(isNotOutOfBounds(x - distance, y)){
                         return new int[]{x - distance, y};
                     }
-                    else{
+                    else {
                         return new int[]{x, y};
                     }
-                } else{
+                } else {
+                    L.CLTR("Hit Obstacle");
                     return new int[]{x, y};
                 }
             default:
