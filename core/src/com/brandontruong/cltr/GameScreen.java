@@ -162,6 +162,7 @@ public class GameScreen implements Screen, InputProcessor{
 
             // Use as variable to denote current index for ClickListener
             final int _i = i;
+
             ClickListener c = new ClickListener() {
                 @Override
                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -172,7 +173,6 @@ public class GameScreen implements Screen, InputProcessor{
                 }
             };
 
-            // b.setTouchable();
             b.addListener(c);
 
             if(amount > 0) {
@@ -202,10 +202,6 @@ public class GameScreen implements Screen, InputProcessor{
 
                     table.add(b).padTop(20);
                     table.add(l).padTop(20);
-//                    table.add(new Label(Integer.toString(toolbelt.blocks[i]), new Label.LabelStyle(font, Color.BLACK))).expandX()
-//                            .left()
-//                            .padTop(20)
-//                            .padLeft(-(b.getWidth() - environmentRenderer.blockWidth));
                 }
 
                 table.row();
@@ -222,15 +218,9 @@ public class GameScreen implements Screen, InputProcessor{
                 environmentRenderer.blockWidth,
                 environmentRenderer.blockHeight);
 
-//        table.add(new Label("mmm",
-//                new Label.LabelStyle(font, Color.WHITE))).expand();
-        // Add settings and back to levels button.
-
-
         xButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                //super.clicked(event, x, y);
                 environment.timer.cancel();
                 ((Game) Gdx.app.getApplicationListener()).setScreen(
                         new LevelsScreen(viewport));

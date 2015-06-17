@@ -300,8 +300,6 @@ public class Grid {
      * @return
      */
     public int[] getValidISpace(int direction, int x, int y, int distance){
-//        L.CLTR(x - xOffset);
-//        L.CLTR(y - yOffset);
         switch(direction){
             case(HERE):
                 return new int[]{x, y};
