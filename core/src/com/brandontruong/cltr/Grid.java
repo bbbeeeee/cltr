@@ -315,8 +315,6 @@ public class Grid {
                     return new int[]{x, y};
                 }
             case(RIGHT):
-                L.CLTR(g[x + distance][y].get(0).getSymbiosis());
-                L.CLTR(g[x + distance][y].get(0).getType());
                 if(g[x + distance][y].get(0).getSymbiosis() == 0){
                     if(isNotOutOfBounds(x + distance, y)){
                         return new int[]{x + distance, y};
@@ -339,7 +337,7 @@ public class Grid {
                     return new int[]{x, y};
                 }
             case(LEFT):
-                if(g[x][y - distance].get(0).getSymbiosis() == 0){
+                if(g[x - distance][y].get(0).getSymbiosis() == 0){
                     if(isNotOutOfBounds(x - distance, y)){
                         return new int[]{x - distance, y};
                     }
