@@ -83,6 +83,10 @@ public class GameScreen implements Screen, InputProcessor{
 
         Gdx.input.setInputProcessor(toolbeltStage);
 
+        /**
+         * Place down a block when tapped on stage in designated spot.
+         * Have to use offsets to calculate actual spot.
+         */
         ClickListener tStageTouch = new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -94,17 +98,20 @@ public class GameScreen implements Screen, InputProcessor{
                         Math.ceil(y
                                 / environmentRenderer.blockWidth);
 
-
                 if(environment.grid.isNotOutOfBounds(absoluteX, absoluteY) ){
                     if(toolbelt.blocks[toolbelt.selected] == 0){
+                        // Go back to nothing selected
                         toolbelt.selected = 0;
                     } else {
-                        if((absoluteX - 1) > -1 && (absoluteY - 1) > -1) {
-                            environment.grid.g[absoluteX - 1][absoluteY - 1].replace(toolbelt.selected);
-                            toolbelt.blocks[toolbelt.selected] -= 1;
-                            L.CLTR(toolbelt.blocks[toolbelt.selected]);
-                            L.CLTR(toolbelt.selected);
-                            changeSelect(toolbelt.selected);
+                        //
+                        if((absoluteX) > environment.grid.xOffset &&
+                                (absoluteY) > environment.grid.yOffset) {
+                            if(environment.grid.g[absoluteX - 1][absoluteY - 1].get(0).getType() != Block.IBLOCK &&
+                                    environment.grid.g[absoluteX - 1][absoluteY - 1].get(0).getType() != toolbelt.selected) {
+                                environment.grid.g[absoluteX - 1][absoluteY - 1].replace(toolbelt.selected);
+                                toolbelt.blocks[toolbelt.selected] -= 1;
+                                changeSelect(toolbelt.selected);
+                            }
                         }
                     }
                 }

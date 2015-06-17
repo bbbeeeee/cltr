@@ -131,8 +131,15 @@ public class Environment {
                         case (Block.OBSTACLEBLOCK):
                         case (Block.LIGHTBLOCK):
                             // do nothing, make the current block certain
-                            if(currentIPosition[0] != 0)
-                                grid.g[currentIPosition[0]][currentIPosition[1]].replace(Block.IBLOCK);
+//                            if(currentIPosition[0] != 0 && currentIPosition[1] != 0)
+//                                grid.g[currentIPosition[0]][currentIPosition[1]].replace(Block.IBLOCK);
+                            L.CLTR(toChangeType);
+                            L.CLTR(currentIPosition[0]);
+                            L.CLTR(currentIPosition[1]);
+                            L.CLTR(x);
+                            L.CLTR(y);
+                            grid.g[currentIPosition[0]][currentIPosition[1]].replace(Block.BLAZEBLOCK);
+//                            grid.g[x][y].replace(Block.IBLOCK);
                             L.CLTR("Hit obstacle");
                             break;
                         case (Block.GOALBLOCK):
