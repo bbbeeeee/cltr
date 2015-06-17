@@ -117,11 +117,6 @@ public class Environment {
                             break;
                     }
                 }
-
-                // Check potentials and decide what this block should become.
-                // Chance to become two blocks will come later.
-
-                // Whichever one is highest.
             }
         }
 
@@ -129,15 +124,9 @@ public class Environment {
             for(int y = grid.yOffset; y < grid.getRows() + grid.yOffset; y++) {
                 highest = getHighestPotential(grid.g[x][y].potentials);
 
-//                if(!first){
-//                    first = true;
-//                    L.CLTR("true");
-//                } else
                 if (highest == Block.IBLOCK) {
-
                     toChangeType = grid.g[x][y].get(0).getType();
-//                    L.CLTR("I changing block type: " + Integer.toString(toChangeType) + " at " +
-//                            Integer.toString(x) + ", " + Integer.toString(y));
+
                     switch (toChangeType) {
                         case (Block.OBSTACLEBLOCK):
                         case (Block.LIGHTBLOCK):
@@ -186,18 +175,10 @@ public class Environment {
             switch (s.blocktype) {
                 case (Block.LIGHTBLOCK):
                 case (Block.BLAZEBLOCK):
-                    // L.CLTR(y);
-                    // L.CLTR(y - s.getY());
                     if ((x - s.getX()) != 0)
                         xForce += (s.getX() - x);
                     if ((y - s.getY()) != 0)
                         yForce += (s.getY() - y);
-                    // forces.add(new Force(x, y, s.getX(), s.getY()));
-
-                    //int[] space = g.getSpace(f.getDir(), x, y, 1);
-                    //double factor =
-                    //g.changeProbabilityTo(Block.IBLOCK, space[0], space[1], 6);
-
                     break;
                 case (Block.FOODBLOCK):
                     break;
@@ -205,7 +186,6 @@ public class Environment {
                     break;
             }
         }
-
 
         int sign;
         int[] space;
