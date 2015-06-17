@@ -201,14 +201,14 @@ public class GameScreen implements Screen, InputProcessor{
                     Label l = new Label(Integer.toString(toolbelt.blocks[i]),
                             new Label.LabelStyle(font, Color.BLACK));
                     table.add(stack).padTop(20);
-                    table.add(l).padTop(20);
+                    table.add(l).padTop(20).padLeft(10);
 
                 } else {
                     Label l = new Label(Integer.toString(toolbelt.blocks[i]),
                             new Label.LabelStyle(font, Color.BLACK));
 
                     table.add(b).padTop(20);
-                    table.add(l).padTop(20);
+                    table.add(l).padTop(20).padLeft(10);
                 }
 
                 table.row();
@@ -234,7 +234,7 @@ public class GameScreen implements Screen, InputProcessor{
             }
         });
 
-        table.add(xButton).bottom().left().padLeft(x).padTop(20);
+        table.add(xButton).padTop(20);
     }
 
     @Override
