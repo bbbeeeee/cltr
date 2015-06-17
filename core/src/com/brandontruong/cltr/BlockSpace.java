@@ -8,6 +8,7 @@ import com.brandontruong.cltr.Blocks.FoodBlock;
 import com.brandontruong.cltr.Blocks.GoalBlock;
 import com.brandontruong.cltr.Blocks.LightBlock;
 import com.brandontruong.cltr.Blocks.ObstacleBlock;
+import com.brandontruong.cltr.Blocks.PoisonBlock;
 import com.brandontruong.cltr.Blocks.VoidBlock;
 import com.brandontruong.cltr.Blocks.WaterBlock;
 import com.brandontruong.cltr.Blocks.iBlock;
@@ -72,6 +73,8 @@ public class BlockSpace extends ArrayList<Block>{
                 return new ObstacleBlock(x, y);
             case Block.FOODBLOCK:
                 return new FoodBlock(x, y);
+            case Block.POISONBLOCK:
+                return new PoisonBlock(x, y);
             default:
                 return new EmptyBlock(x, y);
         }
