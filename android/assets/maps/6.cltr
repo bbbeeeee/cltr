@@ -3,7 +3,6 @@ blaze,5,1
 iblock,1,8
 obstacle,1,7
 obstacle,2,8
-obstacle,2,7
 goal,3,1
 Toolbelt
 obstacle,2
