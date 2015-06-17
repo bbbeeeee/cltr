@@ -155,8 +155,8 @@ public class GameScreen implements Screen, InputProcessor{
             amount = toolbelt.blocks[i];
 
             BlockActor b = new BlockActor(i,
-                    x,
-                    y,
+                    0,
+                    0,
                     environmentRenderer.blockWidth,
                     environmentRenderer.blockHeight);
 
@@ -179,19 +179,33 @@ public class GameScreen implements Screen, InputProcessor{
 
                 // Top piece should be selected
                 if(newIndex == i){
+
+                    table.columnDefaults(0).width(environmentRenderer.blockWidth);
+
                     selected = new BlockActor(Block.SELECTEDBLOCK,
-                            x,
-                            y,
+                            0,
+                            0,
                             environmentRenderer.blockWidth,
                             environmentRenderer.blockHeight);
 
                     Stack stack = new Stack();
                     stack.add(b);
                     stack.add(selected);
-                    table.add(stack).padTop(20).padLeft(x);
+                    Label l = new Label(Integer.toString(toolbelt.blocks[i]),
+                            new Label.LabelStyle(font, Color.BLACK));
+                    table.add(stack).padTop(20);
+                    table.add(l).padTop(20);
 
-                } else{
-                    table.add(b).padTop(20).padLeft(x);
+                } else {
+                    Label l = new Label(Integer.toString(toolbelt.blocks[i]),
+                            new Label.LabelStyle(font, Color.BLACK));
+
+                    table.add(b).padTop(20);
+                    table.add(l).padTop(20);
+//                    table.add(new Label(Integer.toString(toolbelt.blocks[i]), new Label.LabelStyle(font, Color.BLACK))).expandX()
+//                            .left()
+//                            .padTop(20)
+//                            .padLeft(-(b.getWidth() - environmentRenderer.blockWidth));
                 }
 
                 table.row();
@@ -203,8 +217,8 @@ public class GameScreen implements Screen, InputProcessor{
         }
 
         BlockActor xButton = new BlockActor(Block.XBLOCK,
-                x,
-                y,
+                0,
+                0,
                 environmentRenderer.blockWidth,
                 environmentRenderer.blockHeight);
 

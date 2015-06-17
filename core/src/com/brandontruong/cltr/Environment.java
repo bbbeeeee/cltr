@@ -21,6 +21,7 @@ public class Environment {
     private Viewport viewport;
     private Screen gamescreen;
     public boolean won = false;
+    private boolean first = false;
 
     public Environment(Grid _grid, Viewport v, Screen gs){
         gamescreen = gs;
@@ -128,10 +129,15 @@ public class Environment {
             for(int y = grid.yOffset; y < grid.getRows() + grid.yOffset; y++) {
                 highest = getHighestPotential(grid.g[x][y].potentials);
 
+//                if(!first){
+//                    first = true;
+//                    L.CLTR("true");
+//                } else
                 if (highest == Block.IBLOCK) {
 
                     toChangeType = grid.g[x][y].get(0).getType();
-
+//                    L.CLTR("I changing block type: " + Integer.toString(toChangeType) + " at " +
+//                            Integer.toString(x) + ", " + Integer.toString(y));
                     switch (toChangeType) {
                         case (Block.OBSTACLEBLOCK):
                         case (Block.LIGHTBLOCK):
@@ -269,8 +275,14 @@ public class Environment {
             yF = new Force(Grid.HERE, 1);
         }
 
-        space = grid.getValidISpace(xF.getDir(), x, y, 1);
-        space = grid.getValidISpace(yF.getDir(), space[0], space[1], 1);
+        if(first){
+            space = grid.getValidISpace(xF.getDir(), x, y, 1);
+            space = grid.getValidISpace(yF.getDir(), space[0], space[1], 1);
+
+        } else {
+            space = grid.getSpace(Grid.HERE, x, y, 1);
+            first = true;
+        }
 
         if (grid.isNotOutOfBounds(space[0], space[1])) {
             grid.changeProbabilityTo(Block.IBLOCK, space[0], space[1], 13);

@@ -300,8 +300,8 @@ public class Grid {
      * @return
      */
     public int[] getValidISpace(int direction, int x, int y, int distance){
-        L.CLTR(x - xOffset);
-        L.CLTR(y - yOffset);
+//        L.CLTR(x - xOffset);
+//        L.CLTR(y - yOffset);
         switch(direction){
             case(HERE):
                 return new int[]{x, y};
@@ -317,6 +317,8 @@ public class Grid {
                     return new int[]{x, y};
                 }
             case(RIGHT):
+                L.CLTR(g[x + distance][y].get(0).getSymbiosis());
+                L.CLTR(g[x + distance][y].get(0).getType());
                 if(g[x + distance][y].get(0).getSymbiosis() == 0){
                     if(isNotOutOfBounds(x + distance, y)){
                         return new int[]{x + distance, y};
