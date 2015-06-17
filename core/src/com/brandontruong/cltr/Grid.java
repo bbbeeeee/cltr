@@ -208,22 +208,42 @@ public class Grid {
      * @param type
      * @param x
      * @param y
-     * @param factor
+     * @param factor Somewhere from 5 through 10 or higher to give certainty of changing a block.
      */
-    public void changeOneProbabilityAroundRandom(int type, int x, int y, int factor){
+    public void changeOneProbabilityAroundRandom(int type, int x, int y, float factor){
         double c = Sentinel.chance(1);
+        int fc = (int) Sentinel.chance(factor);
 
         if(c <= .25){
-            changeProbabilityTo(type, x, y + 1, factor);
+            changeProbabilityTo(type, x, y + 1, fc);
         } else if(c > .25 && c <= .5){
-            changeProbabilityTo(type, x, y - 1, factor);
+            changeProbabilityTo(type, x, y - 1, fc);
         } else if(c > .5 && c <= .75){
-            changeProbabilityTo(type, x + 1, y, factor);
+            changeProbabilityTo(type, x + 1, y, fc);
         } else if(c > .5 && c < 1.0){
-            changeProbabilityTo(type, x - 1, y, factor);
+            changeProbabilityTo(type, x - 1, y, fc);
         } else {
             changeProbabilityTo(type, x, y, 1);
         }
+    }
+
+    /**
+     * Gives each place around the block a chance to morph.
+     * @param type
+     * @param x
+     * @param y
+     * @param factor
+     */
+    public void changeProbabilityAroundRandom(int type, int x, int y, float factor){
+        int[] above = getValidGrowSpace(ABOVE, x, y, 1);
+        int[] below = getValidGrowSpace(BELOW, x, y, 1);
+        int[] left = getValidGrowSpace(LEFT, x, y, 1);
+        int[] right = getValidGrowSpace(RIGHT, x, y, 1);
+
+        changeProbabilityRandom(type, above[0], above[1], factor);
+        changeProbabilityRandom(type, below[0], below[1], factor);
+        changeProbabilityRandom(type, left[0], left[1], factor);
+        changeProbabilityRandom(type, right[0], right[1], factor);
     }
 
     /**
@@ -232,10 +252,11 @@ public class Grid {
      * @param x
      * @param y
      */
-    public void changeProbabilityRandom(int type, int x, int y){
-        double c = Sentinel.chance(1);
+    public void changeProbabilityRandom(int type, int x, int y, float factor){
+        double c = Sentinel.chance(factor);
 
-        if(c >= .5){
+        if(c >= 5){
+            L.CLTR(c);
             changeProbabilityTo(type, x, y, 10);
         }
     }
@@ -286,6 +307,66 @@ public class Grid {
                 }
                 else
                     return new int[]{x, y};
+            default:
+                return new int[]{x, y};
+        }
+    }
+
+    public int[] getValidGrowSpace(int direction, int x, int y, int distance){
+        switch(direction){
+            case(HERE):
+                return new int[]{x, y};
+            case(ABOVE):
+                L.CLTR("ABOVE");
+                if(g[x][y + distance].get(0).getSymbiosis() == 0){
+                    if(isNotOutOfBounds(x, y + distance)){
+                        L.CLTR("good");
+                        L.CLTR(x);
+                        L.CLTR(y);
+                        L.CLTR(x);
+                        L.CLTR(y + distance);
+                        return new int[]{x, y + distance};
+                    } else {
+                        L.CLTR("fuck");
+                        return new int[]{x, y};
+                    }
+                } else {
+                    L.CLTR("fuuckk");
+                    return new int[]{x, y};
+                }
+            case(RIGHT):
+                if(g[x + distance][y].get(0).getSymbiosis() == 0){
+                    if(isNotOutOfBounds(x + distance, y)){
+                        return new int[]{x + distance, y};
+                    }
+                    else {
+                        return new int[]{x, y};
+                    }
+                } else {
+                    return new int[]{x, y};
+                }
+            case(BELOW):
+                if(g[x][y - distance].get(0).getSymbiosis() == 0){
+                    if(isNotOutOfBounds(x, y - distance)){
+                        return new int[]{x, y - distance};
+                    }
+                    else {
+                        return new int[]{x, y};
+                    }
+                } else {
+                    return new int[]{x, y};
+                }
+            case(LEFT):
+                if(g[x - distance][y].get(0).getSymbiosis() == 0){
+                    if(isNotOutOfBounds(x - distance, y)){
+                        return new int[]{x - distance, y};
+                    }
+                    else {
+                        return new int[]{x, y};
+                    }
+                } else {
+                    return new int[]{x, y};
+                }
             default:
                 return new int[]{x, y};
         }

@@ -62,6 +62,7 @@ public class Environment {
                             break;
                         case Block.BLAZEBLOCK:
                             grid.changeProbabilityTo(Block.BLAZEBLOCK, x, y, 10);
+
                             sentinels.add(new Sentinel(Block.BLAZEBLOCK, x, y));
                             break;
                         case Block.GOALBLOCK:
@@ -94,6 +95,7 @@ public class Environment {
                     // long. Sentinels interact with blocks in question
                     switch (b.getType()) {
                         case Block.BLAZEBLOCK:
+                            grid.changeProbabilityAroundRandom(Block.BLAZEBLOCK, x, y, 5.1f);
                             break;
                         case Block.GOALBLOCK:
                             // skip, stationary
@@ -112,6 +114,7 @@ public class Environment {
                             break;
                         case Block.WATERBLOCK:
                             // random movement, not attracted to anything, only to adjacents
+                            grid.changeProbabilityAroundRandom(Block.WATERBLOCK, x, y, 5.3f);
                         case Block.OBSTACLEBLOCK:
                             // skip, stationary
                             break;
