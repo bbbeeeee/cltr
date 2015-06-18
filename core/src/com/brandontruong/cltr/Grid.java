@@ -320,18 +320,15 @@ public class Grid {
                 L.CLTR("ABOVE");
                 if(g[x][y + distance].get(0).getSymbiosis() == 0){
                     if(isNotOutOfBounds(x, y + distance)){
-                        L.CLTR("good");
                         L.CLTR(x);
                         L.CLTR(y);
                         L.CLTR(x);
                         L.CLTR(y + distance);
                         return new int[]{x, y + distance};
                     } else {
-                        L.CLTR("fuck");
                         return new int[]{x, y};
                     }
                 } else {
-                    L.CLTR("fuuckk");
                     return new int[]{x, y};
                 }
             case(RIGHT):
