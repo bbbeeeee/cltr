@@ -71,9 +71,9 @@ public class Environment {
                         case Block.IBLOCK:
                             grid.changeProbabilityTo(Block.IBLOCK, x, y, 0);
                             break;
-                        case Block.LIGHTBLOCK:
-                            grid.changeProbabilityTo(Block.LIGHTBLOCK, x, y, 10);
-                            sentinels.add(new Sentinel(Block.LIGHTBLOCK, x, y));
+                        case Block.ELECTRICITYBLOCK:
+                            grid.changeProbabilityTo(Block.ELECTRICITYBLOCK, x, y, 10);
+                            sentinels.add(new Sentinel(Block.ELECTRICITYBLOCK, x, y));
                             break;
                         case Block.WATERBLOCK:
                             sentinels.add(new Sentinel(Block.WATERBLOCK, x, y));
@@ -104,9 +104,8 @@ public class Environment {
                         case Block.IBLOCK:
                             currentIPosition = new int[]{x, y};
                             handleIForces(sentinels, x, y);
-                            //L.CLTR(grid.g[x][y].potentials[Block.IBLOCK]);
                             break;
-                        case Block.LIGHTBLOCK:
+                        case Block.ELECTRICITYBLOCK:
                             // skip, stationary
                             break;
                         case Block.VOIDBLOCK:
@@ -130,7 +129,7 @@ public class Environment {
                 if (highest == Block.IBLOCK) {
                     switch (toChangeType) {
                         case (Block.OBSTACLEBLOCK):
-                        case (Block.LIGHTBLOCK):
+                        case (Block.ELECTRICITYBLOCK):
                             if(currentIPosition[0] != 0 && currentIPosition[1] != 0)
                                 grid.g[currentIPosition[0]][currentIPosition[1]].replace(Block.IBLOCK);
 
@@ -156,10 +155,15 @@ public class Environment {
                             grid.g[x][y].replace(highest);
                             break;
                     }
+                } else if(highest == Block.WATERBLOCK){
+                    switch(toChangeType){
+                        case (Block.ELECTRICITYBLOCK):
+
+                    }
                 } else {
                     switch(toChangeType){
                         case (Block.OBSTACLEBLOCK):
-                        case (Block.LIGHTBLOCK):
+                        case (Block.ELECTRICITYBLOCK):
                             break;
                         default:
                             grid.g[x][y].replace(highest);
@@ -181,7 +185,7 @@ public class Environment {
         double xForce = 0, yForce = 0;
         for (Sentinel s : sentinels) {
             switch (s.blocktype) {
-                case (Block.LIGHTBLOCK):
+                case (Block.ELECTRICITYBLOCK):
                 case (Block.BLAZEBLOCK):
                     if ((x - s.getX()) != 0)
                         xForce += (s.getX() - x);

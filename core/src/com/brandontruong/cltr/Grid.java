@@ -109,7 +109,7 @@ public class Grid {
         } else if(type.contains("iblock")){
             return Block.IBLOCK;
         } else if(type.contains("light")){
-            return Block.LIGHTBLOCK;
+            return Block.ELECTRICITYBLOCK;
         } else if(type.contains("obstacle")){
             return Block.OBSTACLEBLOCK;
         } else if(type.contains("void")){

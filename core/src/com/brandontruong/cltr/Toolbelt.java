@@ -1,18 +1,5 @@
 package com.brandontruong.cltr;
 
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.Array;
-import com.brandontruong.cltr.Blocks.BlazeBlock;
-import com.brandontruong.cltr.Blocks.EmptyBlock;
-import com.brandontruong.cltr.Blocks.LightBlock;
-import com.brandontruong.cltr.Blocks.VoidBlock;
-import com.brandontruong.cltr.Blocks.WaterBlock;
-import com.brandontruong.cltr.Blocks.iBlock;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Created by btru on 5/10/15.
  */

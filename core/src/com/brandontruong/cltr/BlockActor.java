@@ -31,8 +31,8 @@ public class BlockActor extends Actor {
             case Block.IBLOCK:
                 texture = new Texture(Gdx.files.internal("i.png"));
                 break;
-            case Block.LIGHTBLOCK:
-                texture = new Texture(Gdx.files.internal("light.png"));
+            case Block.ELECTRICITYBLOCK:
+                texture = new Texture(Gdx.files.internal("electricity.png"));
                 break;
             case Block.VOIDBLOCK:
                 texture = new Texture(Gdx.files.internal("void.png"));

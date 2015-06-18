@@ -1,14 +1,6 @@
 package com.brandontruong.cltr;
 
 import com.badlogic.gdx.graphics.Color;
-import com.brandontruong.cltr.Blocks.BlazeBlock;
-import com.brandontruong.cltr.Blocks.EmptyBlock;
-import com.brandontruong.cltr.Blocks.LightBlock;
-import com.brandontruong.cltr.Blocks.VoidBlock;
-import com.brandontruong.cltr.Blocks.WaterBlock;
-import com.brandontruong.cltr.Blocks.iBlock;
-
-import java.util.HashMap;
 
 /**
  * Block parent class. Need to update Toolbelt and BlockSpace when new Blocks are added.
@@ -20,7 +12,7 @@ public class Block {
     public static final int EMPTYBLOCK = 2;
     public static final int GOALBLOCK = 3;
     public static final int IBLOCK = 4;
-    public static final int LIGHTBLOCK = 5;
+    public static final int ELECTRICITYBLOCK = 5;
     public static final int VOIDBLOCK = 6;
     public static final int WATERBLOCK = 7;
     public static final int OBSTACLEBLOCK = 8;

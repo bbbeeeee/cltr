@@ -1,12 +1,10 @@
 package com.brandontruong.cltr;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.brandontruong.cltr.Blocks.BlazeBlock;
+import com.brandontruong.cltr.Blocks.ElectricityBlock;
 import com.brandontruong.cltr.Blocks.EmptyBlock;
 import com.brandontruong.cltr.Blocks.FoodBlock;
 import com.brandontruong.cltr.Blocks.GoalBlock;
-import com.brandontruong.cltr.Blocks.LightBlock;
 import com.brandontruong.cltr.Blocks.ObstacleBlock;
 import com.brandontruong.cltr.Blocks.PoisonBlock;
 import com.brandontruong.cltr.Blocks.VoidBlock;
@@ -63,8 +61,8 @@ public class BlockSpace extends ArrayList<Block>{
                 return new GoalBlock(x, y);
             case Block.IBLOCK:
                 return new iBlock(x, y);
-            case Block.LIGHTBLOCK:
-                return new LightBlock(x, y);
+            case Block.ELECTRICITYBLOCK:
+                return new ElectricityBlock(x, y);
             case Block.VOIDBLOCK:
                 return new VoidBlock(x, y);
             case Block.WATERBLOCK:
