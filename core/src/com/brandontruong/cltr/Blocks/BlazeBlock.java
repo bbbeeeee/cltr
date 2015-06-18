@@ -20,8 +20,7 @@ public class BlazeBlock extends Block {
         setX(x);
         setY(y);
         setType(BLAZEBLOCK);
-        setSymbiosis(0);
-        setGrowthFactor(5.1f);
+        setGrowthFactor(5.5f);
     }
 
 }

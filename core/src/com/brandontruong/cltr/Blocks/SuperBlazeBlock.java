@@ -18,8 +18,7 @@ public class SuperBlazeBlock extends Block {
         setColor(new Color(255/255f, 102/255f, 154/255f, 1));
         setX(x);
         setY(y);
-        setType(BLAZEBLOCK);
-        setSymbiosis(0);
-        setGrowthFactor(5.1f);
+        setType(SUPERBLAZEBLOCK);
+        setGrowthFactor(6f);
     }
 }

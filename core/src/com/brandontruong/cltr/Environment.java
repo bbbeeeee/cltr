@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.brandontruong.cltr.Blocks.BlazeBlock;
+import com.brandontruong.cltr.Blocks.SuperBlazeBlock;
 import com.brandontruong.cltr.Blocks.WaterBlock;
 
 import java.util.ArrayList;
@@ -60,27 +61,38 @@ public class Environment {
                     // Make changes to blockspaces as needed
                     switch(b.getType()){
                         case Block.OBSTACLEBLOCK:
+                            // Should stay unless super block grows or other block is placed on it
                             grid.changeProbabilityTo(Block.OBSTACLEBLOCK, x, y, 10);
                             break;
                         case Block.BLAZEBLOCK:
+                            // Should stay, and also emits a force sentinel
                             grid.changeProbabilityTo(Block.BLAZEBLOCK, x, y, 10);
                             sentinels.add(new Sentinel(Block.BLAZEBLOCK, x, y));
                             break;
+                        case Block.SUPERBLAZEBLOCK:
+                            // Should stay, and also emits a force sentinel
+                            grid.changeProbabilityTo(Block.SUPERBLAZEBLOCK, x, y, 10);
+                            sentinels.add(new Sentinel(Block.BLAZEBLOCK, x, y));
                         case Block.GOALBLOCK:
+                            // Should stay and is not growable by any other than super, which ends game if destroyed
                             grid.changeProbabilityTo(Block.GOALBLOCK, x, y, 10);
                             break;
                         case Block.IBLOCK:
+                            // Should not stay, only one iblock on the field (for now, that is)
                             grid.changeProbabilityTo(Block.IBLOCK, x, y, 0);
                             break;
                         case Block.ELECTRICITYBLOCK:
+                            // Should stay, and emits force
                             grid.changeProbabilityTo(Block.ELECTRICITYBLOCK, x, y, 10);
                             sentinels.add(new Sentinel(Block.ELECTRICITYBLOCK, x, y));
                             break;
                         case Block.WATERBLOCK:
+                            // Should stay, and may emit force
                             grid.changeProbabilityTo(Block.WATERBLOCK, x, y, 10);
                             sentinels.add(new Sentinel(Block.WATERBLOCK, x, y));
                             break;
                         case Block.VOIDBLOCK:
+                            // Shitty block idk why this is here, but filler space, never change
                             grid.changeProbabilityTo(Block.VOIDBLOCK, x, y, 15);
                             break;
                     }
@@ -97,12 +109,16 @@ public class Environment {
                     // long. Sentinels interact with blocks in question
                     switch (b.getType()) {
                         case Block.BLAZEBLOCK:
-                            grid.changeProbabilityAroundRandom(Block.BLAZEBLOCK, x, y, BlazeBlock.getGrowthFactor());
+                            // Weak growth probability
+                            grid.changeProbabilityAroundRandom(Block.BLAZEBLOCK, Block.BLAZEBLOCKSYMBIOSIS, x,  y, BlazeBlock.getGrowthFactor());
+                            break;
+                        case Block.SUPERBLAZEBLOCK:
+                            // Strong growth probability, and can grow on almost anything
+                            grid.changeProbabilityAroundRandom(Block.BLAZEBLOCK, Block.SUPERBLAZEBLOCKSYMBIOSIS, x, y, SuperBlazeBlock.getGrowthFactor());
                             break;
                         case Block.GOALBLOCK:
                             // skip, stationary
                             break;
-                            //continue blockspace;
                         case Block.IBLOCK:
                             currentIPosition = new int[]{x, y};
                             handleIForces(sentinels, x, y);
@@ -115,7 +131,7 @@ public class Environment {
                             break;
                         case Block.WATERBLOCK:
                             // random movement, not attracted to anything, only to adjacents
-                            grid.changeProbabilityAroundRandom(Block.WATERBLOCK, x, y, WaterBlock.getGrowthFactor());
+                            grid.changeProbabilityAroundRandom(Block.WATERBLOCK, Block.WATERBLOCKSYMBIOSIS, x, y, WaterBlock.getGrowthFactor());
                         case Block.OBSTACLEBLOCK:
                             // skip, stationary
                             break;
@@ -129,6 +145,13 @@ public class Environment {
                 highest = getHighestPotential(grid.g[x][y].potentials);
                 toChangeType = grid.g[x][y].get(0).getType();
                 if (highest == Block.IBLOCK) {
+                    /**
+                     * iBlock has a lot of different interactions
+                     * Goal
+                     * Food
+                     * Blaze
+                     * Electricity
+                     */
                     switch (toChangeType) {
                         case (Block.OBSTACLEBLOCK):
                         case (Block.ELECTRICITYBLOCK):
@@ -153,29 +176,65 @@ public class Environment {
                             timer.cancel();
                             L.CLTR("Hit fire, you lose!");
                             break;
+                        case (Block.EMPTYBLOCK):
+                            L.CLTR("jjj");
+                            grid.g[x][y].replace(highest);
+                            break;
                         default:
+                            L.CLTR("lol");
                             grid.g[x][y].replace(highest);
                             break;
                     }
                 } else if(highest == Block.WATERBLOCK){
+                    /**
+                     * Equalizes to empty for Super Blaze Block
+                     * Turns blaze into water some of the time, sometimes just turns empty
+                     * grows onto all others except
+                     */
                     switch(toChangeType){
+                        case (Block.SUPERBLAZEBLOCK):
+                            grid.g[x][y].replace(Block.EMPTYBLOCK);
+                            break;
                         case (Block.ELECTRICITYBLOCK):
                             break;
                         case (Block.BLAZEBLOCK):
+                            grid.g[x][y].replace(highest);
                             break;
                         default:
-                            if(grid.g[x][y].get(0).getSymbiosis() == 0)
+                            if(Block.getSymbiosis(grid.g[x][y].get(0).getType()) < Block.WATERBLOCKSYMBIOSIS)
                                 grid.g[x][y].replace(highest);
                     }
                 } else if (highest == Block.BLAZEBLOCK) {
+                    /**
+                     * Blaze moving onto electricity turns into Super Blaze
+                     * Cannot grow onto water.
+                     */
+
                     switch(toChangeType){
                         case (Block.ELECTRICITYBLOCK):
+                            L.CLTR("lol");
+                            grid.g[x][y].replace(Block.SUPERBLAZEBLOCK);
                             break;
                         case (Block.WATERBLOCK):
+                            // Do nothing, as if it can't grow onto water
                             break;
                         default:
-                            if(grid.g[x][y].get(0).getSymbiosis() == 0)
+                            if(Block.getSymbiosis(grid.g[x][y].get(0).getType()) < Block.BLAZEBLOCKSYMBIOSIS)
                                 grid.g[x][y].replace(highest);
+                    }
+                } else if (highest == Block.SUPERBLAZEBLOCK) {
+                    /**
+                     * Super Blaze equalizes Water with empty block when it grows on it.
+                     * otherwise, it can grow on pretty much anything
+                     */
+                    switch(toChangeType){
+                        case (Block.WATERBLOCK):
+                            grid.g[x][y].replace(Block.EMPTYBLOCK);
+                            break;
+                        case (Block.OBSTACLEBLOCK):
+                            break;
+                        default:
+                            grid.g[x][y].replace(highest);
                     }
                 } else {
                     switch(toChangeType){

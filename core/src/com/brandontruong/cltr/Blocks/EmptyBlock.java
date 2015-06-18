@@ -19,7 +19,6 @@ public class EmptyBlock extends Block{
         setX(x);
         setY(y);
         setType(EMPTYBLOCK);
-        setSymbiosis(0);
     }
 
 }

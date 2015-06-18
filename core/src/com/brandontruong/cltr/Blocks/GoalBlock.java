@@ -19,6 +19,5 @@ public class GoalBlock extends Block {
         setX(x);
         setY(y);
         setType(GOALBLOCK);
-        setSymbiosis(0);
     }
 }

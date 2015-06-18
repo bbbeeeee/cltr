@@ -17,6 +17,5 @@ public class PoisonBlock extends Block {
         setX(x);
         setY(y);
         setType(POISONBLOCK);
-        setSymbiosis(-1);
     }
 }

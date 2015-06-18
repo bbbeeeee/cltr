@@ -19,6 +19,5 @@ public class FoodBlock extends Block {
         setX(x);
         setY(y);
         setType(FOODBLOCK);
-        setSymbiosis(0);
     }
 }

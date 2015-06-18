@@ -27,7 +27,7 @@ public class BlockSpace extends ArrayList<Block>{
     public BlockSpace(int x, int y){
         setX(x);
         setY(y);
-        potentials = new int[9];
+        potentials = new int[12];
     }
 
     public void replace(Block b){

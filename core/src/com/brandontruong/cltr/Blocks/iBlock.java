@@ -19,7 +19,6 @@ public class iBlock extends Block {
         setX(x);
         setY(y);
         setType(IBLOCK);
-        setSymbiosis(1);
     }
 
     public int prevX, prevY;

@@ -2,6 +2,7 @@ package com.brandontruong.cltr;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.brandontruong.cltr.Blocks.iBlock;
 
 /**
  * Created by btru on 5/6/15.
@@ -108,7 +109,7 @@ public class Grid {
             return Block.GOALBLOCK;
         } else if(type.contains("iblock")){
             return Block.IBLOCK;
-        } else if(type.contains("light")){
+        } else if(type.contains("light") || type.contains("electricity")){
             return Block.ELECTRICITYBLOCK;
         } else if(type.contains("obstacle")){
             return Block.OBSTACLEBLOCK;
@@ -234,11 +235,12 @@ public class Grid {
      * @param y
      * @param factor
      */
-    public void changeProbabilityAroundRandom(int type, int x, int y, float factor){
-        int[] above = getValidGrowSpace(ABOVE, x, y, 1);
-        int[] below = getValidGrowSpace(BELOW, x, y, 1);
-        int[] left = getValidGrowSpace(LEFT, x, y, 1);
-        int[] right = getValidGrowSpace(RIGHT, x, y, 1);
+    public void changeProbabilityAroundRandom(int type, int symbiosis, int x, int y, float factor){
+        int[] above = getValidGrowSpace(ABOVE, symbiosis, x, y, 1);
+        int[] below = getValidGrowSpace(BELOW, symbiosis, x, y, 1);
+        int[] left = getValidGrowSpace(LEFT, symbiosis, x, y, 1);
+        int[] right = getValidGrowSpace(RIGHT, symbiosis, x, y, 1);
+
 
         changeProbabilityRandom(type, above[0], above[1], factor);
         changeProbabilityRandom(type, below[0], below[1], factor);
@@ -256,7 +258,7 @@ public class Grid {
         double c = Sentinel.chance(factor);
 
         if(c >= 5){
-            changeProbabilityTo(type, x, y, 10);
+            changeProbabilityTo(type, x, y, 11);
         }
     }
 
@@ -311,12 +313,14 @@ public class Grid {
         }
     }
 
-    public int[] getValidGrowSpace(int direction, int x, int y, int distance){
+    public int[] getValidGrowSpace(int direction, int symbiosis, int x, int y, int distance){
+
         switch(direction){
             case(HERE):
                 return new int[]{x, y};
             case(ABOVE):
-                if(g[x][y + distance].get(0).getSymbiosis() == 0){
+                L.CLTR(g[x][y + distance].get(0).getType());
+                if(Block.getSymbiosis(g[x][y + distance].get(0).getType()) <= symbiosis){
                     if(isNotOutOfBounds(x, y + distance)){
                         return new int[]{x, y + distance};
                     } else {
@@ -326,7 +330,7 @@ public class Grid {
                     return new int[]{x, y};
                 }
             case(RIGHT):
-                if(g[x + distance][y].get(0).getSymbiosis() == 0){
+                if(Block.getSymbiosis(g[x + distance][y].get(0).getType()) <= symbiosis){
                     if(isNotOutOfBounds(x + distance, y)){
                         return new int[]{x + distance, y};
                     }
@@ -337,7 +341,7 @@ public class Grid {
                     return new int[]{x, y};
                 }
             case(BELOW):
-                if(g[x][y - distance].get(0).getSymbiosis() == 0){
+                if(Block.getSymbiosis(g[x][y - distance].get(0).getType()) <= symbiosis){
                     if(isNotOutOfBounds(x, y - distance)){
                         return new int[]{x, y - distance};
                     }
@@ -348,7 +352,7 @@ public class Grid {
                     return new int[]{x, y};
                 }
             case(LEFT):
-                if(g[x - distance][y].get(0).getSymbiosis() == 0){
+                if(Block.getSymbiosis(g[x - distance][y].get(0).getType()) <= symbiosis){
                     if(isNotOutOfBounds(x - distance, y)){
                         return new int[]{x - distance, y};
                     }
@@ -376,7 +380,7 @@ public class Grid {
             case(HERE):
                 return new int[]{x, y};
             case(ABOVE):
-                if(g[x][y + distance].get(0).getSymbiosis() == 0){
+                if(Block.getSymbiosis(g[x][y + distance].get(0).getType()) <= Block.IBLOCKSYMBIOSIS){
                     if(isNotOutOfBounds(x, y + distance)){
                         return new int[]{x, y + distance};
                     }
@@ -388,7 +392,7 @@ public class Grid {
                     return new int[]{x, y};
                 }
             case(RIGHT):
-                if(g[x + distance][y].get(0).getSymbiosis() == 0){
+                if(Block.getSymbiosis(g[x + distance][y].get(0).getType()) <= Block.IBLOCKSYMBIOSIS){
                     if(isNotOutOfBounds(x + distance, y)){
                         return new int[]{x + distance, y};
                     }
@@ -400,7 +404,7 @@ public class Grid {
                     return new int[]{x, y};
                 }
             case(BELOW):
-                if(g[x][y - distance].get(0).getSymbiosis() == 0){
+                if(Block.getSymbiosis(g[x][y - distance].get(0).getType()) <= Block.IBLOCKSYMBIOSIS){
                     if(isNotOutOfBounds(x, y - distance)){
                         return new int[]{x, y - distance};
                     }
@@ -412,7 +416,7 @@ public class Grid {
                     return new int[]{x, y};
                 }
             case(LEFT):
-                if(g[x - distance][y].get(0).getSymbiosis() == 0){
+                if(Block.getSymbiosis(g[x - distance][y].get(0).getType()) <= Block.IBLOCKSYMBIOSIS){
                     if(isNotOutOfBounds(x - distance, y)){
                         return new int[]{x - distance, y};
                     }

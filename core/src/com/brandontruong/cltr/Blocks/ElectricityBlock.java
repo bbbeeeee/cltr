@@ -20,7 +20,6 @@ public class ElectricityBlock extends Block {
         setX(x);
         setY(y);
         setType(ELECTRICITYBLOCK);
-        setSymbiosis(1);
     }
 
 }
