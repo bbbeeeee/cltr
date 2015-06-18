@@ -1,9 +1,7 @@
-5,8
-blaze,5,1
-iblock,1,8
-obstacle,1,7
-obstacle,2,8
-goal,3,1
+13,7
+iblock,1,4
+obstacle,3,4
+blaze,13,4
+goal,5,4
 Toolbelt
-obstacle,3
-empty,1
+light,2
