@@ -18,7 +18,8 @@ public class Block {
     public static final int OBSTACLEBLOCK = 8;
     public static final int FOODBLOCK = 9;
     public static final int POISONBLOCK = 10;
-    public static final int totalBlocks = 10;
+    public static final int SUPERBLAZEBLOCK = 11;
+    public static final int totalBlocks = 11;
     public static Color ICOLOR = new Color(0.4f, 0.8f, 0.4f, 1);
     /**
      * Coordinates of block. Easier if everything in the game readily knows its coordinates.
@@ -34,6 +35,16 @@ public class Block {
     }
 
     private int type;
+
+    public static float getGrowthFactor() {
+        return growthFactor;
+    }
+
+    public static void setGrowthFactor(float g) {
+        growthFactor = g;
+    }
+
+    private static float growthFactor;
 
     public Color color;
 

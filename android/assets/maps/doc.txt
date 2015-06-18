@@ -1,5 +1,0 @@
-x, y
-type, x, y // each block
-Toolbelt
-type, count // toolbelt counts
-end

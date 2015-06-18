@@ -22,6 +22,9 @@ public class BlockActor extends Actor {
             case Block.BLAZEBLOCK:
                 texture = new Texture(Gdx.files.internal("blaze.png"));
                 break;
+            case Block.SUPERBLAZEBLOCK:
+                texture = new Texture(Gdx.files.internal("superblaze.png"));
+                break;
             case Block.EMPTYBLOCK:
                 texture = new Texture(Gdx.files.internal("empty.png"));
                 break;
