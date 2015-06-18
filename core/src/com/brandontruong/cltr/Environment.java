@@ -126,10 +126,8 @@ public class Environment {
         for(int x = grid.xOffset; x < grid.getCols() + grid.xOffset; x++){
             for(int y = grid.yOffset; y < grid.getRows() + grid.yOffset; y++) {
                 highest = getHighestPotential(grid.g[x][y].potentials);
-
+                toChangeType = grid.g[x][y].get(0).getType();
                 if (highest == Block.IBLOCK) {
-                    toChangeType = grid.g[x][y].get(0).getType();
-
                     switch (toChangeType) {
                         case (Block.OBSTACLEBLOCK):
                         case (Block.LIGHTBLOCK):
@@ -159,7 +157,14 @@ public class Environment {
                             break;
                     }
                 } else {
-                    grid.g[x][y].replace(highest);
+                    switch(toChangeType){
+                        case (Block.OBSTACLEBLOCK):
+                        case (Block.LIGHTBLOCK):
+                            break;
+                        default:
+                            grid.g[x][y].replace(highest);
+                            break;
+                    }
                 }
             }
         }
