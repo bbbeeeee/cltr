@@ -4,6 +4,8 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.brandontruong.cltr.Blocks.BlazeBlock;
+import com.brandontruong.cltr.Blocks.WaterBlock;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -62,7 +64,6 @@ public class Environment {
                             break;
                         case Block.BLAZEBLOCK:
                             grid.changeProbabilityTo(Block.BLAZEBLOCK, x, y, 10);
-
                             sentinels.add(new Sentinel(Block.BLAZEBLOCK, x, y));
                             break;
                         case Block.GOALBLOCK:
@@ -76,6 +77,7 @@ public class Environment {
                             sentinels.add(new Sentinel(Block.ELECTRICITYBLOCK, x, y));
                             break;
                         case Block.WATERBLOCK:
+                            grid.changeProbabilityTo(Block.WATERBLOCK, x, y, 10);
                             sentinels.add(new Sentinel(Block.WATERBLOCK, x, y));
                             break;
                         case Block.VOIDBLOCK:
@@ -95,7 +97,7 @@ public class Environment {
                     // long. Sentinels interact with blocks in question
                     switch (b.getType()) {
                         case Block.BLAZEBLOCK:
-                            grid.changeProbabilityAroundRandom(Block.BLAZEBLOCK, x, y, 5.1f);
+                            grid.changeProbabilityAroundRandom(Block.BLAZEBLOCK, x, y, BlazeBlock.getGrowthFactor());
                             break;
                         case Block.GOALBLOCK:
                             // skip, stationary
@@ -113,7 +115,7 @@ public class Environment {
                             break;
                         case Block.WATERBLOCK:
                             // random movement, not attracted to anything, only to adjacents
-                            grid.changeProbabilityAroundRandom(Block.WATERBLOCK, x, y, 5.3f);
+                            grid.changeProbabilityAroundRandom(Block.WATERBLOCK, x, y, WaterBlock.getGrowthFactor());
                         case Block.OBSTACLEBLOCK:
                             // skip, stationary
                             break;
@@ -159,7 +161,21 @@ public class Environment {
                     switch(toChangeType){
                         case (Block.ELECTRICITYBLOCK):
                             break;
-
+                        case (Block.BLAZEBLOCK):
+                            break;
+                        default:
+                            if(grid.g[x][y].get(0).getSymbiosis() == 0)
+                                grid.g[x][y].replace(highest);
+                    }
+                } else if (highest == Block.BLAZEBLOCK) {
+                    switch(toChangeType){
+                        case (Block.ELECTRICITYBLOCK):
+                            break;
+                        case (Block.WATERBLOCK):
+                            break;
+                        default:
+                            if(grid.g[x][y].get(0).getSymbiosis() == 0)
+                                grid.g[x][y].replace(highest);
                     }
                 } else {
                     switch(toChangeType){

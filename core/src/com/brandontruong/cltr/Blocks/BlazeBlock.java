@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.Color;
  */
 public class BlazeBlock extends Block {
     public final double attractiveness = .9;
-    //public static final Color color = new Color(204/255f, 102/255f, 154/255f, 1);
 
     /**
      * Standard BlazeBlock constructor. Default attractiveness.
@@ -22,6 +21,7 @@ public class BlazeBlock extends Block {
         setY(y);
         setType(BLAZEBLOCK);
         setSymbiosis(0);
+        setGrowthFactor(5.1f);
     }
 
 }

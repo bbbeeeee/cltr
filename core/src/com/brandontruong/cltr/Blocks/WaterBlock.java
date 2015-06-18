@@ -20,7 +20,8 @@ public class WaterBlock extends Block {
             setX(x);
             setY(y);
             setType(WATERBLOCK);
-            setSymbiosis(1);
+            setSymbiosis(0);
+            setGrowthFactor(5.5f);
         }
 
 }
