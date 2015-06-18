@@ -317,13 +317,8 @@ public class Grid {
             case(HERE):
                 return new int[]{x, y};
             case(ABOVE):
-                L.CLTR("ABOVE");
                 if(g[x][y + distance].get(0).getSymbiosis() == 0){
                     if(isNotOutOfBounds(x, y + distance)){
-                        L.CLTR(x);
-                        L.CLTR(y);
-                        L.CLTR(x);
-                        L.CLTR(y + distance);
                         return new int[]{x, y + distance};
                     } else {
                         return new int[]{x, y};
