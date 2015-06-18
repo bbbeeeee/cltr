@@ -15,7 +15,7 @@ public class SuperBlazeBlock extends Block {
      * @param y Y position
      */
     public SuperBlazeBlock(int x, int y){
-        setColor(new Color(255/255f, 102/255f, 154/255f, 1));
+        setColor(new Color(255/255f, 51/255f, 77/255f, 1));
         setX(x);
         setY(y);
         setType(SUPERBLAZEBLOCK);

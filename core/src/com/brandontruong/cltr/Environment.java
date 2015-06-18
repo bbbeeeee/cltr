@@ -73,6 +73,7 @@ public class Environment {
                             // Should stay, and also emits a force sentinel
                             grid.changeProbabilityTo(Block.SUPERBLAZEBLOCK, x, y, 10);
                             sentinels.add(new Sentinel(Block.BLAZEBLOCK, x, y));
+                            break;
                         case Block.GOALBLOCK:
                             // Should stay and is not growable by any other than super, which ends game if destroyed
                             grid.changeProbabilityTo(Block.GOALBLOCK, x, y, 10);
@@ -114,7 +115,7 @@ public class Environment {
                             break;
                         case Block.SUPERBLAZEBLOCK:
                             // Strong growth probability, and can grow on almost anything
-                            grid.changeProbabilityAroundRandom(Block.BLAZEBLOCK, Block.SUPERBLAZEBLOCKSYMBIOSIS, x, y, SuperBlazeBlock.getGrowthFactor());
+                            grid.changeProbabilityAroundRandom(Block.SUPERBLAZEBLOCK, Block.SUPERBLAZEBLOCKSYMBIOSIS, x, y, SuperBlazeBlock.getGrowthFactor());
                             break;
                         case Block.GOALBLOCK:
                             // skip, stationary
@@ -171,6 +172,7 @@ public class Environment {
                             L.CLTR("Food Acquired!");
                             break;
                         case (Block.BLAZEBLOCK):
+                        case (Block.SUPERBLAZEBLOCK):
                             // either
                             won = true;
                             timer.cancel();
@@ -212,7 +214,6 @@ public class Environment {
 
                     switch(toChangeType){
                         case (Block.ELECTRICITYBLOCK):
-                            L.CLTR("lol");
                             grid.g[x][y].replace(Block.SUPERBLAZEBLOCK);
                             break;
                         case (Block.WATERBLOCK):
