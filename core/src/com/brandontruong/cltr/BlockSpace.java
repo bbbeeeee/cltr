@@ -37,6 +37,7 @@ public class BlockSpace extends ArrayList<Block>{
     public void replace(int type){
         this.clear();
         this.add(newBlock(type, x, y));
+        //this.set(0, newBlock(type, x, y));
     }
 
     public void destroy(Block b){

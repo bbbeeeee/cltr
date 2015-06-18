@@ -158,11 +158,13 @@ public class Environment {
                 } else if(highest == Block.WATERBLOCK){
                     switch(toChangeType){
                         case (Block.ELECTRICITYBLOCK):
+                            break;
 
                     }
                 } else {
                     switch(toChangeType){
                         case (Block.OBSTACLEBLOCK):
+                        case (Block.GOALBLOCK):
                         case (Block.ELECTRICITYBLOCK):
                             break;
                         default:
