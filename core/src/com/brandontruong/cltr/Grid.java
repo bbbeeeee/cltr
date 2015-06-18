@@ -256,7 +256,6 @@ public class Grid {
         double c = Sentinel.chance(factor);
 
         if(c >= 5){
-            L.CLTR(c);
             changeProbabilityTo(type, x, y, 10);
         }
     }
