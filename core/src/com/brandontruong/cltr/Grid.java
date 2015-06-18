@@ -99,8 +99,12 @@ public class Grid {
      * @return
      */
     public int getTypeNum(String type){
-        if(type.contains("blaze")){
+        if(type.contains("superblaze")){
+            return Block.SUPERBLAZEBLOCK;
+        } else if(type.contains("blaze")){
             return Block.BLAZEBLOCK;
+        } else if(type.contains("poison")){
+            return Block.POISONBLOCK;
         } else if(type.contains("empty")) {
             return Block.EMPTYBLOCK;
         } else if(type.contains("food")){
@@ -117,7 +121,7 @@ public class Grid {
             return Block.VOIDBLOCK;
         } else if(type.contains("water")){
             return Block.WATERBLOCK;
-        } else{
+        } else {
             return Block.EMPTYBLOCK;
         }
     }
