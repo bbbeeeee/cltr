@@ -1,15 +1,15 @@
 // #! /home/brandon/.nvm/versions/node/v0.12.4/bin/node
 
-function generateLine(axis, type, linePos, length){
-    for(i = 1; i <= length; i++){
+function generateLine(axis, type, linePos, start, length){
+    for(i = 0; i < length; i++){
         if(axis == "y")
-            console.log(type + "," + linePos + "," + i);
+            console.log(type + "," + linePos + "," + (i + start));
         else if(axis == "x")
-            console.log(type + "," + i + "," + linePos);
+            console.log(type + "," + (i + start) + "," + linePos);
     }
 }
 
-// generateLine("x", "obstacle", 2, );
+generateLine("x", "obstacle", 9, 1, 5);
 
 function makeRect(type, startingX, startingY, endingX, endingY, filled){
 	for(x = startingX, j = 1; x <= endingX; x++){
