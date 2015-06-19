@@ -80,6 +80,11 @@ public class EnvironmentRenderer {
         stage.draw();
     }
 
+    public void addBlockActor(int type, float x, float y){
+
+        stage.addActor(new BlockActor(type, x, y, blockWidth, blockHeight));
+    }
+
     public void resize(int width, int height){
         L.CLTR("resized: " + Integer.toString(height));
         blockHeight = Gdx.graphics.getHeight() /  12;
