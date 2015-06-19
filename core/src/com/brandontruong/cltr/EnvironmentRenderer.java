@@ -19,7 +19,7 @@ public class EnvironmentRenderer {
     private Viewport viewport;
     private int worldHeight, worldWidth;
     private float aspectRatio;
-    public ToolbeltStage toolbeltStage;
+    public Stage stage;
 
     private boolean rendered;
     public float leftOffset;
@@ -47,6 +47,9 @@ public class EnvironmentRenderer {
         shapeRenderer.setProjectionMatrix(viewport.getCamera().combined);
 
         leftOffset = Gdx.graphics.getWidth() - blockWidth * 18;
+
+        stage = new Stage(viewport);
+        // stage.addActor(new BlockActor(Block.WATERBLOCK, 50, 50, 100, 100));
     }
 
     /**
@@ -72,6 +75,9 @@ public class EnvironmentRenderer {
             }
         }
         shapeRenderer.end();
+
+        stage.act();
+        stage.draw();
     }
 
     public void resize(int width, int height){

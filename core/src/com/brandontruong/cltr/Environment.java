@@ -37,7 +37,7 @@ public class Environment {
             public void run() {
                 refresh();
             }
-        }, 1000, 500);
+        }, 1000, 200);
         viewport = v;
     }
 

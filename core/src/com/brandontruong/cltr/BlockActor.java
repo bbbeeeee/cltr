@@ -12,6 +12,7 @@ import com.brandontruong.cltr.Blocks.BlazeBlock;
  */
 public class BlockActor extends Actor {
     Texture texture;
+    private int prevX, prevY;
 
     public BlockActor(int type){
 
@@ -67,4 +68,8 @@ public class BlockActor extends Actor {
         batch.draw(texture, this.getX(), this.getY(), getWidth(), getHeight());
     }
 
+    @Override
+    public void act(float delta){
+        super.act(delta);
+    }
 }
