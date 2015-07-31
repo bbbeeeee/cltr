@@ -1,6 +1,7 @@
 # cltr
 CLTR Game
 
+![Screenshot](http://i.imgur.com/VHI7X55.png)
 ## Developing
 ### Requirements
  - Android Studio or any Java IDE
